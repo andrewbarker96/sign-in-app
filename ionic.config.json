@@ -1,0 +1,8 @@
+{
+  "name": "Sign-In App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "b348e6ee"
+}
