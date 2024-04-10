@@ -14,11 +14,11 @@ function SignInForm() {
   useEffect(() => {
     async function fetchPersonnelData() {
       try {
-        const { data, error } = await supabase.from('personnel').select('first_name, last_name');
+        const { data, error } = await supabase.from('personnel').select('*');
         if (error) {
           console.error('Error fetching personnel data:', error.message);
         } else {
-          const personnelNames = data.map(person => `${person.first_name} ${person.last_name}`);
+          const personnelNames = data.map(person => `${person.first_name} ${person.last_name}, ${person.title}`);
           setPersonnelOptions(personnelNames);
         }
       } catch (error) {
@@ -44,7 +44,7 @@ function SignInForm() {
         <IonInput type='text' placeholder="Company"></IonInput>
       </IonItem>
       <IonItem>
-        <IonSelect label='Who are you meeting with?' placeholder="Select" multiple={true}>
+        <IonSelect label='Who are you meeting with?' interface='alert' placeholder="Select" multiple={true}>
           {personnelOptions.map((personnelName) => (
             <IonSelectOption key={personnelName} value={personnelName}>
               {personnelName}

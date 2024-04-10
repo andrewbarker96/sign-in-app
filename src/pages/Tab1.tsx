@@ -10,10 +10,12 @@ const Tab1: React.FC = () => {
           <IonTitle>Sign In</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent> 
+      <IonContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <IonHeader>
           <IonItem>
-            <img src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" width="300" height="100" />
+            <div style={{ margin: '20px' }}>
+              <img src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" width="300" height="100" />
+            </div>
           </IonItem>
         </IonHeader>
         <SignInForm />
