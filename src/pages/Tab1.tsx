@@ -1,5 +1,5 @@
-import { IonCard, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import SignInForm from '../components/SignInForm';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
@@ -10,30 +10,13 @@ const Tab1: React.FC = () => {
           <IonTitle>Sign In</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Sign In</IonTitle>
-          </IonToolbar>
+      <IonContent> 
+        <IonHeader>
+          <IonItem>
+            <img src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" width="300" height="100" />
+          </IonItem>
         </IonHeader>
-          <IonItem>
-            <img src = "https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt = "Stock & Associates" width = "300" height = "100" className=''/>
-          </IonItem>
-        <IonCard>
-          <IonItem>
-            <IonInput placeholder="First Name"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput placeholder="Last Name"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput placeholder="Email"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput placeholder="Password"></IonInput>
-          </IonItem>
-
-        </IonCard>
+        <SignInForm />
       </IonContent>
     </IonPage>
   );

@@ -28,4 +28,7 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
+# Environment Files
 .env
+src/environments
+config.ts
