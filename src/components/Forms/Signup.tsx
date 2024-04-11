@@ -1,6 +1,6 @@
 import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonButton, IonText } from '@ionic/react';
 import { useState } from 'react';
-import { supabase } from '../../data/supabase';
+import { supabase } from '../../util/supabase';
 
 export const SignUpForm: React.FC = () => {
     const [email, setEmail] = useState('');

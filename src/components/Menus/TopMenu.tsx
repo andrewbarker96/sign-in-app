@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../data/supabase';
+import { supabase } from '../../util/supabase';
 import { IonButton, IonIcon } from '@ionic/react';
 import { personCircleOutline, logOutOutline, menuOutline } from 'ionicons/icons';
 

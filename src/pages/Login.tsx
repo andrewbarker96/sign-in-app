@@ -1,8 +1,8 @@
 import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { loginFormInputValidation } from '../data/utils';
-import { loginFields, registerFields } from '../data/fields';
+import { loginFormInputValidation } from '../util/utils';
+import { loginFields, registerFields } from '../util/fields';
 import { LoginForm } from '../components/Forms/Login';
-import { validateForm } from '../data/utils';
+import { validateForm } from '../util/utils';
 import './Login.css';
 import { useParams } from 'react-router';
 

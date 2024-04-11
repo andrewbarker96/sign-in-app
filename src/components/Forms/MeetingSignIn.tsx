@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IonCard, IonItem, IonInput, IonList, IonSelect, IonSelectOption, IonButton, IonText } from '@ionic/react';
-import { supabase } from '../../data/supabase';
+import { supabase } from '../../util/supabase';
 
 function SignInForm() {
   const [personnelOptions, setPersonnelOptions] = useState<string[]>([]);

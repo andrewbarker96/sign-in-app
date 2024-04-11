@@ -18,7 +18,7 @@ import SignInPage from './pages/SignIn';
 import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
-import { supabase } from './data/supabase';
+import { supabase } from './util/supabase';
 import TopMenu from './components/Menus/TopMenu';
 
 
