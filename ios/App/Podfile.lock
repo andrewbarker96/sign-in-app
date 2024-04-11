@@ -1,0 +1,22 @@
+PODS:
+  - Capacitor (5.7.3):
+    - CapacitorCordova
+  - CapacitorCordova (5.7.3)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+
+SPEC CHECKSUMS:
+  Capacitor: 7b5eb47c6125e9b58a3e3cd02fe366fc58adc89c
+  CapacitorCordova: a377c52a28dbb3b895c0f71187f7b1777fee69db
+
+PODFILE CHECKSUM: 4cdaebbe46b23ce416c3ad86b4b0e5c59d47ffc1
+
+COCOAPODS: 1.15.2
