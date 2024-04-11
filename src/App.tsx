@@ -1,14 +1,16 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTab,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact
+    IonApp,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonTab,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
+    setupIonicReact,
+    IonToolbar,
+    IonTitle,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, home, pencil, person, square, triangle } from 'ionicons/icons';
@@ -17,6 +19,7 @@ import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
 import { supabase } from './data/supabase';
+import TopMenu from './components/Menus/TopMenu';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,6 +46,9 @@ setupIonicReact();
 const App: React.FC = () => (
     <IonApp>
         <IonReactRouter>
+            <IonToolbar>
+                <TopMenu />
+            </IonToolbar>
             <IonTabs>
                 <IonRouterOutlet>
                     <Route exact path="/home">

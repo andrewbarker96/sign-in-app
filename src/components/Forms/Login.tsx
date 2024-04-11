@@ -1,13 +1,30 @@
 import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonButton, IonText } from '@ionic/react';
 import { createClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../data/supabase';
 import { Route } from 'react-router';
 
 export const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        // Check if the user is already logged in
+        const checkSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            if (error) {
+                // Handle error
+                console.error('Error fetching session:', error);
+            } else if (data && data.session) {
+                // User is logged in
+                setIsLoggedIn(true);
+            } else {
+                // User is not logged in
+                setIsLoggedIn(false);
+            }
+        };
+        checkSession();
+    }, []);
 
     const handleLogin = async () => {
         // Perform validation here
@@ -23,6 +40,7 @@ export const LoginForm: React.FC = () => {
             prompt('Error logging in:', error.message);
         } else {
             console.log('Logged in successfully:', data);
+            setIsLoggedIn(true);
             window.location.href = '/home';
         }
     };
@@ -47,6 +65,7 @@ export const LoginForm: React.FC = () => {
                 <IonItem>
                     <IonButton style={{ margin: 'auto' }} onClick={handleLogin}>Login</IonButton>
                 </IonItem>
+                {isLoggedIn && <IonText color={'danger'}>You are already logged in.</IonText>}
             </IonGrid>
         </IonCard>
     );
