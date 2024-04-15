@@ -36,6 +36,7 @@ const StockPersonnel: React.FC = () => {
           phone={employee.phone}
           direct={employee.direct}
           email={employee.email}
+          on_site={employee.on_site}
         />
       ))}
       </IonCard>
