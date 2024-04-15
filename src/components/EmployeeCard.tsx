@@ -9,7 +9,7 @@ interface EmployeeCardProps {
   direct: string;
   email: string;
   image: string;
-  on_site: boolean; // Add the on_site prop to the EmployeeCardProps interface
+  on_site: boolean;
 }
 
 const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix, title, phone, direct, email, image, on_site }) => {
@@ -26,7 +26,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
   };
   
   return (
-    <div className="employee-card" style={{ margin: '2%', paddingTop: '1%', display: 'flex', alignItems: 'center' }}>
+    <div className="employee-card" style={{ margin: '2%', paddingTop: '1%', paddingBottom:'2%', display: 'flex', alignItems: 'center' }}>
       {!imageLoaded && <div style={{ width: '100px', height: '100px', borderRadius: '50%', marginRight: '2%', backgroundColor: '#ccc' }} />}
       <img 
         src={image} 
@@ -39,7 +39,6 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
         <h6><a href={`mailto:${email}`}>{email}</a></h6>
         <h6>C:<a href={`tel:${phone}`}>{phone}</a> | D:<a href={`tel:${direct}`}> {direct}</a></h6>
       </div>
-
     </div>
   );
 };
