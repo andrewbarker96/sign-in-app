@@ -34,3 +34,4 @@ src/environments
 config.ts
 
 *.csv
+.fake

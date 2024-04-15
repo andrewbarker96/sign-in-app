@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Employees.css';
 import StockPersonnel from '../components/EmployeeList';
+import EmployeeCard from '../components/EmployeeCard';
 
 const EmployeesPage: React.FC = () => {
     return (
@@ -16,7 +17,8 @@ const EmployeesPage: React.FC = () => {
                     <IonTitle size="large">Stock Employees</IonTitle>
                 </IonToolbar>
                 </IonHeader>
-                <StockPersonnel />
+              <StockPersonnel />
+              {/* <EmployeeCard /> */}
             </IonContent>
         </IonPage>
     );

@@ -13,13 +13,14 @@ import {
     IonTitle,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, home, pencil, person, square, triangle } from 'ionicons/icons';
+import { home, pencil, person, square } from 'ionicons/icons';
 import SignInPage from './pages/SignIn';
 import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
-import { supabase } from './util/supabase';
 import TopMenu from './components/Menus/TopMenu';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { useEffect } from 'react';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,7 +44,15 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  useEffect(() => {
+    SplashScreen.show({
+      showDuration: 2000,
+      autoHide: true
+    });
+
+  }, []);
+  return(
     <IonApp>
         <IonReactRouter>
             <IonToolbar>
@@ -89,6 +98,7 @@ const App: React.FC = () => (
             </IonTabs>
         </IonReactRouter>
     </IonApp>
-);
+  );
+}
 
 export default App;

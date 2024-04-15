@@ -1,45 +1,46 @@
-import { IonCard, IonItem, IonInput, IonText, IonSelect, IonSelectOption, IonButton, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonItem, IonInput, IonText, IonSelect, IonSelectOption, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonContent } from '@ionic/react';
 import { supabase } from '../util/supabase';
 import { useEffect, useState } from 'react';
+import EmployeeCard from './EmployeeCard';
 
 const StockPersonnel: React.FC = () => {
-    const [personnelOptions, setPersonnelOptions] = useState<string[]>([]);
+  const [personnel, setPersonnel] = useState<any[]>([]);
+  
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      const { data, error } = await supabase
+        .from('personnel')
+        .select('*');
 
-    useEffect(() => {
-        async function fetchPersonnelData() {
-          try {
-            const { data, error } = await supabase.from('personnel').select('*');
-            if (error) {
-              console.error('Error fetching personnel data:', error.message);
-            } else {
-              const personnelNames = data.map(person => `${person.first_name} ${person.last_name}, ${person.title} ${person.on_site}`);
-              setPersonnelOptions(personnelNames);
-            }
-          } catch (error) {
-            console.error('Error fetching personnel data:', error);
-          }
-        }
-        fetchPersonnelData();
-      }, []);
+      if (error) {
+        console.error('Error fetching employees:', error);
+      } else {
+        setPersonnel(data);
+      }
+    };
 
-    return (
-        <IonCard style={{ marginLeft: '10%', marginRight: '10%' }}>
-            <IonItem>
-                Stock Employees
-            </IonItem>
-            <IonItem>
-                <div>
-                    {personnelOptions.map((personnelName) => (
-                        <div key={personnelName}>
-                            <IonItem>
-                                <IonText>{personnelName}</IonText>
-                            </IonItem>
-                        </div>
-                    ))}
-                </div>
-            </IonItem>
-        </IonCard>
-    );
+    fetchEmployees();
+  }, []);
+
+  return (
+    <IonContent className="employee-list">
+      <IonCard>
+        {personnel.map((employee: any) => (
+        <EmployeeCard
+          key={employee.uuid}
+          image={employee.image}
+          firstName={employee.first_name}
+          lastName={employee.last_name}
+          suffix={employee.suffix}
+          title={employee.title}
+          phone={employee.phone}
+          direct={employee.direct}
+          email={employee.email}
+        />
+      ))}
+      </IonCard>
+    </IonContent>
+  );
 };
 
 export default StockPersonnel;
