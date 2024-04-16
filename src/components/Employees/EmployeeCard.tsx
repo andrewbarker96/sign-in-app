@@ -17,9 +17,9 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
 
   const renderIndicator = () => {
     if (on_site === true) {
-      return <div style={{ backgroundColor: 'green', width: '15px', height: '15px', borderRadius: '50%', marginLeft:'10px' }} />;
+      return <div style={{ backgroundColor: 'green', width: '10px', height: '10px', borderRadius: '50%', marginLeft:'10px' }} />;
     } else if (on_site === false) {
-      return <div style={{ backgroundColor: 'red', width: '15px', height: '15px', borderRadius: '50%' , marginLeft:'10px'}} />;
+      return <div style={{ backgroundColor: 'red', width: '10px', height: '10px', borderRadius: '50%' , marginLeft:'10px'}} />;
     } else {
       return null;
     }
@@ -35,7 +35,8 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
         onLoad={() => setImageLoaded(true)}
       />
       <div>
-        <h2 style={{display:'flex', alignItems:'center'}}>{firstName} {lastName}, {suffix} {title} {renderIndicator()} </h2>
+        <h3 style={{ display: 'flex', alignItems: 'center' }}>{firstName} {lastName} {renderIndicator()} </h3>
+        <h5 style={{display:'flex', alignItems:'center'}}>{suffix} {title}</h5>
         <h6><a href={`mailto:${email}`}>{email}</a></h6>
         <h6>C:<a href={`tel:${phone}`}>{phone}</a> | D:<a href={`tel:${direct}`}> {direct}</a></h6>
       </div>

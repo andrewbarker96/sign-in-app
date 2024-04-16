@@ -1,27 +1,27 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
-    IonApp,
-    IonIcon,
-    IonLabel,
-    IonRouterOutlet,
-    IonTab,
-    IonTabBar,
-    IonTabButton,
-    IonTabs,
-    setupIonicReact,
-    IonToolbar,
-    IonTitle,
+  IonApp,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTab,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  setupIonicReact,
+  IonToolbar,
+  IonTitle,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, pencil, person, square } from 'ionicons/icons';
+import { home, pencil, people, person, square } from 'ionicons/icons';
 import SignInPage from './pages/SignIn';
 import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
+import ContactsPage from './pages/Contacts';
 import TopMenu from './components/Menus/TopMenu';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { useEffect } from 'react';
-
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,53 +50,56 @@ const App: React.FC = () => {
       showDuration: 2000,
       autoHide: true
     });
-
   }, []);
-  return(
-    <IonApp>
-        <IonReactRouter>
-            <IonToolbar>
-                <TopMenu />
-            </IonToolbar>
-            <IonTabs>
-                <IonRouterOutlet>
-                    <Route exact path="/home">
-                        <HomePage />
-                    </Route>
-                    <Route exact path="/signin">
-                        <SignInPage />
-                    </Route>
-                    <Route path="/employees">
-                        <EmployeesPage />
-                    </Route>
-                    <Route exact path="/">
-                        <Redirect to="/home" />
-                    </Route>
-                    <Route exact path="/login">
-                        <LoginPage />
-                    </Route>
-                </IonRouterOutlet>
 
-                <IonTabBar slot="bottom">
-                    <IonTabButton tab="tab1" href="/login">
-                        <IonIcon aria-hidden="true" icon={home} />
-                        <IonLabel>Login</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab2" href="/signin">
-                        <IonIcon aria-hidden="true" icon={pencil} />
-                        <IonLabel>Sign In</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab3" href="/employees">
-                        <IonIcon aria-hidden="true" icon={person} />
-                        <IonLabel>Employees</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab4" href="/tab3">
-                        <IonIcon aria-hidden="true" icon={square} />
-                        <IonLabel>Tab 3</IonLabel>
-                    </IonTabButton>
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonToolbar>
+          <TopMenu />
+        </IonToolbar>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/home">
+              <HomePage />
+            </Route>
+            <Route exact path="/signin">
+              <SignInPage />
+            </Route>
+            <Route path="/employees">
+              <EmployeesPage />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path='/contacts'>
+              <ContactsPage />
+            </Route>
+          </IonRouterOutlet>
+
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="tab1" href="/login">
+              <IonIcon aria-hidden="true" icon={home} />
+              <IonLabel>Login</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab2" href="/signin">
+              <IonIcon aria-hidden="true" icon={pencil} />
+              <IonLabel>Meeting Sign In</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab3" href="/employees">
+              <IonIcon aria-hidden="true" icon={person} />
+              <IonLabel>Stock Employees</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab4" href="/contacts">
+              <IonIcon aria-hidden="true" icon={people} />
+              <IonLabel>Stock Contacts</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
     </IonApp>
   );
 }

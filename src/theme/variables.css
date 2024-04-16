@@ -98,6 +98,12 @@ http://ionicframework.com/docs/theming/ */
   align-items: center;
 }
 
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 /* @media (prefers-color-scheme: dark) {
 
   body {

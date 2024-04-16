@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'Sign-In App',
-  webDir: 'dist',
+  appName: 'Stock & Associates Internal Application',
+  webDir: 'build',
   server: {
     androidScheme: 'https'
   }

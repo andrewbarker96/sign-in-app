@@ -1,5 +1,5 @@
 import { IonCard, IonItem, IonInput, IonText, IonSelect, IonSelectOption, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonContent } from '@ionic/react';
-import { supabase } from '../util/supabase';
+import { supabase } from '../../util/supabase';
 import { useEffect, useState } from 'react';
 import EmployeeCard from './EmployeeCard';
 

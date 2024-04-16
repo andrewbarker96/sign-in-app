@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Employees.css';
-import StockPersonnel from '../components/EmployeeList';
-import EmployeeCard from '../components/EmployeeCard';
+import StockPersonnel from '../components/Employees/EmployeeList';
+import EmployeeCard from '../components/Employees/EmployeeCard';
 
 const EmployeesPage: React.FC = () => {
     return (
