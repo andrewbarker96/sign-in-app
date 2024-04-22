@@ -81,9 +81,9 @@ const App: React.FC = () => {
           </IonRouterOutlet>
 
           <IonTabBar slot="bottom" style={{paddingRight:'2.5%', paddingLeft:'2.5%'}}>
-            <IonTabButton tab="tab1" href="/login">
+            <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
-              <IonLabel>Login</IonLabel>
+              <IonLabel>Home</IonLabel>
             </IonTabButton>
             <IonTabButton tab="tab2" href="/signin">
               <IonIcon aria-hidden="true" icon={pencil} />
