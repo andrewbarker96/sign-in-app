@@ -1,3 +1,4 @@
+import { IonCard, IonCardContent } from '@ionic/react';
 import React, { useState } from 'react';
 
 interface EmployeeCardProps {
@@ -26,7 +27,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
   };
   
   return (
-    <div className="employee-card" style={{ margin: '2%', paddingTop: '1%', paddingBottom:'2%', display: 'flex', alignItems: 'center' }}>
+    <IonCard className="employee-card" style={{ margin: '2%', paddingTop: '1%', paddingBottom:'2%', display: 'flex', alignItems: 'center' }}>
       {!imageLoaded && <div style={{ width: '100px', height: '100px', borderRadius: '50%', marginRight: '2%', backgroundColor: '#ccc' }} />}
       <img 
         src={image} 
@@ -34,13 +35,13 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
         style={{ width: '100px', height: '100px', borderRadius: '50%', marginRight: '2%', objectFit:'cover', display: imageLoaded ? 'block' : 'none' }} 
         onLoad={() => setImageLoaded(true)}
       />
-      <div>
+      <IonCardContent>
         <h3 style={{ display: 'flex', alignItems: 'center' }}>{firstName} {lastName} {renderIndicator()} </h3>
         <h5 style={{display:'flex', alignItems:'center'}}>{suffix} {title}</h5>
         <h6><a href={`mailto:${email}`}>{email}</a></h6>
         <h6>C:<a href={`tel:${phone}`}>{phone}</a> | D:<a href={`tel:${direct}`}> {direct}</a></h6>
-      </div>
-    </div>
+      </IonCardContent>
+    </IonCard>
   );
 };
 
