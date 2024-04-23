@@ -1,9 +1,9 @@
 PODS:
-  - Capacitor (5.7.3):
+  - Capacitor (5.7.5):
     - CapacitorCordova
   - CapacitorApp (5.0.7):
     - Capacitor
-  - CapacitorCordova (5.7.3)
+  - CapacitorCordova (5.7.5)
   - CapacitorGeolocation (5.0.7):
     - Capacitor
   - CapacitorHaptics (5.0.7):
@@ -49,9 +49,9 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  Capacitor: 7b5eb47c6125e9b58a3e3cd02fe366fc58adc89c
+  Capacitor: 7d42085cb786b2d3ea9ac8a17ebd7e3305be7b72
   CapacitorApp: 17fecd0e6cb23feafac7eb0939417389038b0979
-  CapacitorCordova: a377c52a28dbb3b895c0f71187f7b1777fee69db
+  CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
   CapacitorGeolocation: 918a292459542bcce98433f9e7c7909f8c72838a
   CapacitorHaptics: 7c7c206f0c96a628fed073830c96d28c4b2e772e
   CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c

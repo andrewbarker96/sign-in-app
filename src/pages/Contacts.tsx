@@ -14,8 +14,8 @@ const ContactsPage: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen >
         <h2 style={{ paddingLeft: '2%' }}>Stock Contacts</h2>
-        <SigParser />
-        {/* <ContactList /> */}
+        {/* <SigParser /> */}
+        <ContactList />
       </IonContent>
     </IonPage>
   );

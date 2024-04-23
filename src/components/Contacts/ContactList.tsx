@@ -72,8 +72,8 @@ const ContactList: React.FC = () => {
             <IonIcon icon={chevronBack} style={{borderRadius:'50%', padding:'10px'}} onClick={() => setShowModal(false)} />
           </IonHeader>
           <IonCard>
-            <IonCardHeader style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-              <IonCardTitle style={{backgroundColor:'darkgray', color:'white', borderRadius:'50%', padding:'10px'}}>{selectedContact?.full_name ? selectedContact.full_name.split(' ').map((name: string) => name.charAt(0)).join('').toUpperCase().slice(0, 2) : ''}</IonCardTitle>
+            <IonCardHeader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <IonCardTitle style={{ backgroundColor: 'darkgray', color: 'white', borderRadius: '50%', padding: '15px', minWidth:'65px', minHeight:'65px'}}>{selectedContact?.full_name ? selectedContact.full_name.split(' ').map((name: string) => name.charAt(0)).join('').toUpperCase().slice(0, 2) : ''}</IonCardTitle>
             </IonCardHeader>
             
             <IonCardTitle className='contact-name'>{selectedContact?.full_name}</IonCardTitle>

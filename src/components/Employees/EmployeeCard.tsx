@@ -1,5 +1,5 @@
 import { IonCard, IonCardContent } from '@ionic/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface EmployeeCardProps {
   firstName: string;
