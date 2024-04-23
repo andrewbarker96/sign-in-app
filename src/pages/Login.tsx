@@ -20,7 +20,7 @@ import { eye, eyeOff } from 'ionicons/icons';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast ] = useIonToast();
@@ -32,6 +32,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       await showToast({ message: 'Logged in successfully!' });
+      window.location.href = '/home';
     } catch (e: any) {
       await showToast({ message: e.error_description || e.message , duration: 5000});
     } finally {
@@ -61,7 +62,7 @@ export default function LoginPage() {
             <IonItem>
               <IonInput value={password} name="password" label='Password' labelPlacement='floating' onIonChange={(e) => setPassword(e.detail.value ?? '')} type={showPassword ? "text" : "password"} />
               <IonButton fill="clear" slot="end" onClick={() => setShowPassword(!showPassword)}>
-                <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} />
+                <IonIcon slot="icon-only" style={{opacity:'65%'}} icon={showPassword ? eye : eyeOff} />
               </IonButton>
           </IonItem>
             <div className="ion-text-center">

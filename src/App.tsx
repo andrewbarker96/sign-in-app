@@ -11,6 +11,7 @@ import {
   setupIonicReact,
   IonToolbar,
   IonTitle,
+  IonHeader,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, pencil, people, person, square } from 'ionicons/icons';
@@ -19,9 +20,11 @@ import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
 import ContactsPage from './pages/Contacts';
-import TopMenu from './components/Menus/TopMenu';
+import TopMenu from './components/TopMenu';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { useEffect } from 'react';
+import { supabase } from './util/supabase';
+import TabBar from './components/TabBar';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,6 +47,28 @@ import './theme/variables.css';
 
 setupIonicReact();
 
+// const hideTabBar = (): void => {
+//   const tabBar = document.getElementById('app-tab-bar');
+//   if (tabBar !== null) {
+//     tabBar.style.display = 'none';
+//   }
+// };
+
+// const showTabBar = (): void => {
+//   const tabBar = document.getElementById('app-tab-bar');
+//   if (tabBar !== null) {
+//     tabBar.style.display = 'flex';
+//   }
+// };
+
+// useIonViewDidEnter(() => {
+//   showTabBar();
+// });
+
+const isLoggedIn = () => {
+  return supabase.auth.getSession() !== null;
+};
+
 const App: React.FC = () => {
   useEffect(() => {
     SplashScreen.show({
@@ -55,9 +80,11 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonToolbar>
-          <TopMenu />
-        </IonToolbar>
+        <IonHeader>
+          <IonToolbar>
+            <TopMenu />
+          </IonToolbar>
+        </IonHeader>
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/home">
@@ -70,9 +97,9 @@ const App: React.FC = () => {
               <EmployeesPage />
             </Route>
             <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route exact path="/login">
+                {isLoggedIn() ? <Redirect to="/home" /> : <LoginPage />}
+            </Route>  
+            <Route exact path="/">
               <LoginPage />
             </Route>
             <Route exact path='/contacts'>
@@ -80,6 +107,7 @@ const App: React.FC = () => {
             </Route>
           </IonRouterOutlet>
 
+          {isLoggedIn() && (
           <IonTabBar slot="bottom" style={{paddingRight:'2.5%', paddingLeft:'2.5%'}}>
             <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
@@ -98,6 +126,7 @@ const App: React.FC = () => {
               <IonLabel>Stock Contacts</IonLabel>
             </IonTabButton>
           </IonTabBar>
+          )}
         </IonTabs>
       </IonReactRouter>
     </IonApp>

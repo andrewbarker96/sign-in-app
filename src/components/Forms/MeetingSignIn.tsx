@@ -48,7 +48,7 @@ function SignInForm() {
     }
     
 return (
-    <IonCard style={{marginLeft:'10%', marginRight:'10%'}}>
+    <IonCard>
         <IonItem>
             <IonInput id='FirstName' type='text' labelPlacement='floating' placeholder="First Name" >
                 <div slot='label'>
@@ -89,9 +89,7 @@ return (
                 </div>
             </IonSelect>
         </IonItem>
-        <IonItem>
-            <IonButton style={{margin:'auto'}} onClick={handleFormSubmit}>Submit</IonButton>
-        </IonItem>
+        <IonButton style={{margin:'auto'}} expand='block' onClick={handleFormSubmit}>Submit</IonButton>
     </IonCard>
 );
 }

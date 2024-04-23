@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../../util/supabase';
+import { supabase } from '../util/supabase';
 import { IonButton, IonIcon } from '@ionic/react';
 import { personCircleOutline, logOutOutline, menuOutline } from 'ionicons/icons';
 
@@ -26,13 +26,14 @@ const TopMenu = () => {
     }, []);
 
     const handleLogout = async () => {
-        let { error } = await supabase.auth.signOut();
-        if (error) {
-            console.log('Error logging out:', error);
-        } else {
-            setIsLoggedIn(false); // Update isLoggedIn state
-            console.log('User logged out successfully');
-        }
+      let { error } = await supabase.auth.signOut();
+      if (error) {
+        console.log('Error logging out:', error);
+      } else {
+        setIsLoggedIn(false); 
+        console.log('User logged out successfully');
+        window.location.href = '/';
+      }
     };
 
     const toggleMenu = () => {
@@ -45,17 +46,17 @@ const TopMenu = () => {
 
     return (
         <div>
-            <IonButton onClick={toggleMenu}>
-                <IonIcon icon={menuOutline} onClick={toggleMenu}/>
+            <IonButton onClick={toggleMenu} fill='clear'>
+              <IonIcon icon={menuOutline} onClick={toggleMenu}/>
             </IonButton>
             {showMenu && (
                 <div>
-                    <IonButton>
+                    <IonButton fill='clear' expand='block'>
                         <IonIcon icon={personCircleOutline} />
                         Profile
                     </IonButton>
                     <br />
-                    <IonButton onClick={handleLogout}>
+                    <IonButton fill='clear' expand='block' onClick={handleLogout}>
                         <IonIcon icon={logOutOutline} />
                         Logout
                     </IonButton>
