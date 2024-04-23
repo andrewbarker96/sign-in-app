@@ -97,7 +97,6 @@ const App: React.FC = () => {
               <EmployeesPage />
             </Route>
             <Route exact path="/">
-                {isLoggedIn() ? <Redirect to="/home" /> : <LoginPage />}
             </Route>  
             <Route exact path="/">
               <LoginPage />
@@ -106,8 +105,6 @@ const App: React.FC = () => {
               <ContactsPage />
             </Route>
           </IonRouterOutlet>
-
-          {isLoggedIn() && (
           <IonTabBar slot="bottom" style={{paddingRight:'2.5%', paddingLeft:'2.5%'}}>
             <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
@@ -126,7 +123,6 @@ const App: React.FC = () => {
               <IonLabel>Stock Contacts</IonLabel>
             </IonTabButton>
           </IonTabBar>
-          )}
         </IonTabs>
       </IonReactRouter>
     </IonApp>
