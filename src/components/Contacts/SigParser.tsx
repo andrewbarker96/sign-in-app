@@ -1,10 +1,7 @@
 import { IonContent, IonHeader, IonToolbar, IonSearchbar, IonCard, IonModal, IonButton, IonItem, IonIcon, IonCardSubtitle, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/react';
 import { useState, useEffect } from 'react';
-import { supabase } from '../../util/supabase';
 import ContactCard from './ContactCard';
 import { chevronBack } from 'ionicons/icons';
-
-import { environment } from '../../environments/environment';
 
 const SigParser: React.FC = () => {
   const [personnel, setPersonnel] = useState<any[]>([]);
@@ -14,19 +11,17 @@ const SigParser: React.FC = () => {
 
   useEffect(() => {
     const fetchContacts = async () => {
-      // Make a request to SigParser's API to fetch contact information
-      const response = await fetch('https://ipaas.sigparser.com/api/User/Me', {
-        method: 'GET',
-        headers: {
-          'x-api-key': `${environment.sigParserAPIKey}`
-        }
-      });
+      try {
+        const response = await fetch('/api/sigparser'); // Adjust the route based on your Express server configuration
 
-      if (response.ok) {
-        const data = await response.json();
-        setPersonnel(data);
-      } else {
-        console.error('Error fetching Contacts:', response.statusText);
+        if (response.ok) {
+          const data = await response.json();
+          setPersonnel(data);
+        } else {
+          console.error('Error fetching Contacts:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching Contacts:', error);
       }
     };
 
