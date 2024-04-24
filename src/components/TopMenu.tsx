@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../util/supabase';
 import { IonButton, IonIcon, IonCard, IonCardContent, IonMenu, IonMenuButton,  IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuToggle, IonText } from '@ionic/react';
-import { personCircleOutline, logOutOutline, menuOutline, exit, close } from 'ionicons/icons';
+import { personCircleOutline, logOutOutline, menuOutline, exit, close, cog, cogSharp } from 'ionicons/icons';
 
 const TopMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,6 +59,10 @@ const TopMenu = () => {
           <IonButton fill='clear' expand='block' onClick={handleLogout}>
             <IonIcon icon={logOutOutline} />
             Logout
+          </IonButton>
+          <IonButton fill='clear' expand='block'>
+            <IonIcon icon={cogSharp} />
+            Settings
           </IonButton>
           <IonText className='copyright'>
             Copyright © {copyright}<br/>Stock & Associates Consulting Engineers, Inc. 

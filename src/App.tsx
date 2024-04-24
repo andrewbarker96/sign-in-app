@@ -75,15 +75,15 @@ const App: React.FC = () => {
             </IonTabButton>
             <IonTabButton tab="tab2" href="/signin">
               <IonIcon aria-hidden="true" icon={pencil} />
-              <IonLabel>Meeting Sign In</IonLabel>
+              <IonLabel>Sign In</IonLabel>
             </IonTabButton>
             <IonTabButton tab="tab3" href="/employees">
               <IonIcon aria-hidden="true" icon={person} />
-              <IonLabel>Stock Employees</IonLabel>
+              <IonLabel>Personnel</IonLabel>
             </IonTabButton>
             <IonTabButton tab="tab4" href="/contacts">
               <IonIcon aria-hidden="true" icon={people} />
-              <IonLabel>Stock Contacts</IonLabel>
+              <IonLabel>Contacts</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
