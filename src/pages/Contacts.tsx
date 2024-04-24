@@ -13,7 +13,6 @@ const ContactsPage: React.FC = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedContact, setEditedContact] = useState<any>(null);
   
-  
   const fetchContacts = async () => {
     const { data, error } = await supabase
       .from('contacts')

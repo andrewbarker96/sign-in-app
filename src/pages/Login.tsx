@@ -53,11 +53,8 @@ export default function LoginPage() {
   return (
     <IonPage className='login-tab'>
       <IonContent>
-        <IonCard style={{ marginRight: '15%', marginLeft:'15%', paddingTop:'20px', paddingBottom:'20px'}}>
-          <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" />
-        </IonCard>
-        <IonCard>
-          <form onSubmit={handleLogin}>
+        <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ paddingTop:'20%', width: '250', display: 'flex', margin:'auto'}}/>
+          <form onSubmit={handleLogin} style={{margin:'25px'}}>
             <IonItem>
               <IonInput value={email} name="email" label='Email' labelPlacement='floating' onIonChange={(e) => setEmail(e.detail.value ?? '')}type="email"/>
             </IonItem>
@@ -71,10 +68,7 @@ export default function LoginPage() {
               Login
             </IonButton>
           </form>
-        </IonCard>
-        <IonCard>
           <IonText className='copyright'> Copyright © {copyright}<br/>Stock & Associates Consulting Engineers, Inc. </IonText>
-        </IonCard>
       </IonContent>
     </IonPage>
   );

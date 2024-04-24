@@ -32,7 +32,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ firstName, lastName, suffix
       <img 
         src={image} 
         alt='employee' 
-        style={{ width: '100px', height: '100px', borderRadius: '50%', marginRight: '2%', objectFit:'cover', display: imageLoaded ? 'block' : 'none' }} 
+        style={{ width: '100px', height: '100px', marginRight: '2%', objectFit:'cover', display: imageLoaded ? 'block' : 'none' }} 
         onLoad={() => setImageLoaded(true)}
       />
       <IonCardContent>
