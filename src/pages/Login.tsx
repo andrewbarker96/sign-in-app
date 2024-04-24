@@ -13,6 +13,10 @@ import {
   useIonToast,
   useIonLoading,
   IonIcon,
+  IonTabBar,
+  IonText,
+  IonImg,
+  IonCard,
 } from '@ionic/react';
 import { supabase } from '../util/supabase';
 import { eye, eyeOff } from 'ionicons/icons';
@@ -29,10 +33,14 @@ export default function LoginPage() {
     e.preventDefault();
     await showLoading();
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      await showToast({ message: 'Logged in successfully!' });
-      window.location.href = '/home';
+      if (data) {
+        await showToast({ message: 'Logged in successfully!' });
+        window.location.href = '/home';
+      } else {
+        throw new Error('Invalid credentials');
+      }
     } catch (e: any) {
       await showToast({ message: e.error_description || e.message , duration: 5000});
     } finally {
@@ -40,21 +48,15 @@ export default function LoginPage() {
     }
   };
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+  const copyright = new Date().getFullYear();
 
+  return (
+    <IonPage className='login-tab'>
       <IonContent>
-        <IonItem>
-          <div style={{ marginRight: '25%', marginLeft:'25%', paddingTop:'20px', paddingBottom:'20px'}}>
-            <img src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" width="auto" height="auto" />
-          </div> 
-        </IonItem>
-        <IonList inset={true}>
+        <IonCard style={{ marginRight: '15%', marginLeft:'15%', paddingTop:'20px', paddingBottom:'20px'}}>
+          <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" />
+        </IonCard>
+        <IonCard>
           <form onSubmit={handleLogin}>
             <IonItem>
               <IonInput value={email} name="email" label='Email' labelPlacement='floating' onIonChange={(e) => setEmail(e.detail.value ?? '')}type="email"/>
@@ -64,14 +66,15 @@ export default function LoginPage() {
               <IonButton fill="clear" slot="end" onClick={() => setShowPassword(!showPassword)}>
                 <IonIcon slot="icon-only" style={{opacity:'65%'}} icon={showPassword ? eye : eyeOff} />
               </IonButton>
-          </IonItem>
-            <div className="ion-text-center">
-              <IonButton type="submit" expand='block'>
-                Login
-              </IonButton>
-            </div>
+            </IonItem>
+            <IonButton type="submit" expand='block' style={{marginTop:'10%'}}>
+              Login
+            </IonButton>
           </form>
-        </IonList>
+        </IonCard>
+        <IonCard>
+          <IonText className='copyright'> Copyright © {copyright}<br/>Stock & Associates Consulting Engineers, Inc. </IonText>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

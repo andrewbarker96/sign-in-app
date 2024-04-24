@@ -125,6 +125,27 @@ http://ionicframework.com/docs/theming/ */
   align-items: center;
 }
 
+.tab-bar [selected-tab='login'] {
+  display: none;
+}
+
+.login-tab {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-content: space-between;
+  background-color: white;
+
+}
+
+.copyright{
+  display:block;
+  text-align: center;
+  font-size: x-small;
+  color: #5d5d5d;
+
+}
+
 /* @media (prefers-color-scheme: dark) {
 
   body {

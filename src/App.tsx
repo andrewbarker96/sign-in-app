@@ -1,18 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTab,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact,
-  IonToolbar,
-  IonTitle,
-  IonHeader,
-} from '@ionic/react';
+import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTab, IonTabBar, IonTabButton, IonTabs, setupIonicReact, IonToolbar, IonTitle, IonHeader, IonImg, } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, pencil, people, person, square } from 'ionicons/icons';
 import SignInPage from './pages/SignIn';
@@ -23,8 +10,6 @@ import ContactsPage from './pages/Contacts';
 import TopMenu from './components/TopMenu';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { useEffect } from 'react';
-import { supabase } from './util/supabase';
-import TabBar from './components/TabBar';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -47,28 +32,6 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-// const hideTabBar = (): void => {
-//   const tabBar = document.getElementById('app-tab-bar');
-//   if (tabBar !== null) {
-//     tabBar.style.display = 'none';
-//   }
-// };
-
-// const showTabBar = (): void => {
-//   const tabBar = document.getElementById('app-tab-bar');
-//   if (tabBar !== null) {
-//     tabBar.style.display = 'flex';
-//   }
-// };
-
-// useIonViewDidEnter(() => {
-//   showTabBar();
-// });
-
-const isLoggedIn = () => {
-  return supabase.auth.getSession() !== null;
-};
-
 const App: React.FC = () => {
   useEffect(() => {
     SplashScreen.show({
@@ -80,7 +43,7 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonHeader>
+        <IonHeader >
           <IonToolbar>
             <TopMenu />
           </IonToolbar>

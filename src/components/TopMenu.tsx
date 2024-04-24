@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../util/supabase';
-import { IonButton, IonIcon } from '@ionic/react';
-import { personCircleOutline, logOutOutline, menuOutline } from 'ionicons/icons';
+import { IonButton, IonIcon, IonCard, IonCardContent, IonMenu, IonMenuButton,  IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuToggle, IonText } from '@ionic/react';
+import { personCircleOutline, logOutOutline, menuOutline, exit, close } from 'ionicons/icons';
 
 const TopMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {
         // Check if the user is already logged in
@@ -36,33 +35,48 @@ const TopMenu = () => {
       }
     };
 
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
-    };
+    const copyright = new Date().getFullYear();
 
-    if (!isLoggedIn) {
-        return null; // Do not render TopMenu if user is not logged in
-    }
-
-    return (
-        <div>
-            <IonButton onClick={toggleMenu} fill='clear'>
-              <IonIcon icon={menuOutline} onClick={toggleMenu}/>
-            </IonButton>
-            {showMenu && (
-                <div>
-                    <IonButton fill='clear' expand='block'>
-                        <IonIcon icon={personCircleOutline} />
-                        Profile
-                    </IonButton>
-                    <br />
-                    <IonButton fill='clear' expand='block' onClick={handleLogout}>
-                        <IonIcon icon={logOutOutline} />
-                        Logout
-                    </IonButton>
-                </div>
-            )}
-        </div>
+  return (
+    <>
+      {/* Actual Menu */}
+      <IonMenu contentId='main-content'>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot='start'>
+              <IonMenuButton>
+                <IonIcon icon={close} />
+              </IonMenuButton>
+            </IonButtons>
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonButton fill='clear' expand='block'>
+            <IonIcon icon={personCircleOutline} />
+            Profile
+          </IonButton>
+          <IonButton fill='clear' expand='block' onClick={handleLogout}>
+            <IonIcon icon={logOutOutline} />
+            Logout
+          </IonButton>
+          <IonText className='copyright'>
+            Copyright © {copyright}<br/>Stock & Associates Consulting Engineers, Inc. 
+          </IonText>
+        </IonContent>
+      </IonMenu>
+      
+      {/* Page Toolbar */}
+      <IonPage id="main-content">
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+      </IonPage>
+      </>
     );
 };
 

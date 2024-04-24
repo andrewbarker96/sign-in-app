@@ -5,11 +5,6 @@ import './SignIn.css';
 const SignInPage: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Meeting Sign In</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
         <IonItem>
           <div style={{ marginRight: '35%', marginLeft:'35%', paddingTop:'20px', paddingBottom:'20px'}}>
