@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
+import TopMenu from '../components/TopMenu';
 
 const HomePage: React.FC = () => {
   return (
@@ -8,15 +9,10 @@ const HomePage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
+          <TopMenu />
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
+      <IonContent>
       </IonContent>
     </IonPage>
   );

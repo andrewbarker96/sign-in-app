@@ -4,6 +4,7 @@ import { supabase } from '../util/supabase';
 import { add, chevronBack, pencil, checkmark, save } from 'ionicons/icons';
 import ContactCard from '../components/Contacts/ContactCard';
 import ManageContact from '../components/Contacts/ManageContact';
+import TopMenu from '../components/TopMenu';
 
 const ContactsPage: React.FC = () => {
   const [personnel, setPersonnel] = useState<any[]>([]);
@@ -78,6 +79,7 @@ const ContactsPage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Contacts</IonTitle>
+          <TopMenu />
         </IonToolbar>
       </IonHeader>
       <IonToolbar>

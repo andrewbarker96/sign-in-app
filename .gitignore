@@ -37,3 +37,7 @@ config.ts
 
 *.csv
 .fake
+ios/App/App/Info.plist
+ios/App/App/Info.plist
+ios/App/App/Info.plist
+ios/App/App.xcodeproj/project.pbxproj

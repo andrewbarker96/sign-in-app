@@ -72,13 +72,9 @@ const TopMenu = () => {
       
       {/* Page Toolbar */}
       <IonPage id="main-content">
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton />
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+        <IonButtons slot="start">
+          <IonMenuButton />
+        </IonButtons>
       </IonPage>
       </>
     );
