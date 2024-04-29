@@ -20,6 +20,8 @@ import {
 } from '@ionic/react';
 import { supabase } from '../util/supabase';
 import { eye, eyeOff } from 'ionicons/icons';
+import Copyright from '../components/CopyrightText';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -41,6 +43,7 @@ export default function LoginPage() {
       } else {
         throw new Error('Invalid credentials');
       }
+      
     } catch (e: any) {
       await showToast({ message: e.error_description || e.message , duration: 5000});
     } finally {
@@ -48,12 +51,10 @@ export default function LoginPage() {
     }
   };
 
-  const copyright = new Date().getFullYear();
-
   return (
     <IonPage className='login-tab'>
       <IonContent>
-        <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ paddingTop:'20%', width: '250', display: 'flex', margin:'auto'}}/>
+        <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='StockLogo'/>
           <form onSubmit={handleLogin} style={{margin:'25px'}}>
             <IonItem>
               <IonInput value={email} name="email" label='Email' labelPlacement='floating' onIonChange={(e) => setEmail(e.detail.value ?? '')}type="email"/>
@@ -68,7 +69,7 @@ export default function LoginPage() {
               Login
             </IonButton>
           </form>
-          <IonText className='copyright'> Copyright © {copyright}<br/>Stock & Associates Consulting Engineers, Inc. </IonText>
+          <Copyright />
       </IonContent>
     </IonPage>
   );

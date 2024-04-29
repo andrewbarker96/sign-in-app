@@ -1,4 +1,4 @@
-import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText } from '@ionic/react';
 import SignInForm from '../components/Forms/MeetingSignIn';
 import './SignIn.css';
 import TopMenu from '../components/TopMenu';
@@ -14,10 +14,9 @@ const SignInPage: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonItem>
-          <div style={{ marginRight: '35%', marginLeft:'35%', paddingTop:'20px', paddingBottom:'20px'}}>
-            <img src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" width="auto" height="auto" />
-          </div>
+        <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='StockLogo'/>
         </IonItem>
+        <IonText className='ion-padding'>Welcome to Stock & Associates. <br/>Please Sign In!</IonText>
         <SignInForm />
       </IonContent>
     </IonPage>

@@ -78,17 +78,13 @@ const ContactsPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Contacts</IonTitle>
           <TopMenu />
+          <IonTitle>Contacts</IonTitle>
         </IonToolbar>
+        <IonSearchbar className='searchbar' showCancelButton='focus' onIonInput={e => setSearchTerm(e.detail.value!)} autocapitalize="off" />
       </IonHeader>
-      <IonToolbar>
-        <IonSearchbar value={searchTerm} showClearButton="focus" onIonInput={e => setSearchTerm(e.detail.value!)} autocapitalize="off" />
-      </IonToolbar>
       <ManageContact />
       <IonContent className="contact-list">
-
-        {/* Contact List View */}
         <IonCard>
           {filteredContacts.map((contact: any, index: number) => (
             <div
