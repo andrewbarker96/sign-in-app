@@ -31,7 +31,7 @@ yarn-error.log*
 
 # Environment Files
 .env
-src/environments
+src/environments/environment.process.ts
 server/environments
 config.ts
 
