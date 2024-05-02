@@ -13,10 +13,7 @@ const SignInPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonItem>
         <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='StockLogo'/>
-        </IonItem>
-        <IonText className='ion-padding'>Welcome to Stock & Associates. <br/>Please Sign In!</IonText>
         <SignInForm />
       </IonContent>
     </IonPage>

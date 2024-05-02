@@ -57,13 +57,13 @@ const TopMenu = () => {
             <IonIcon icon={personCircleOutline} />
             Profile
           </IonButton>
-          <IonButton fill='clear' expand='block' onClick={handleLogout}>
-            <IonIcon icon={logOutOutline} />
-            Logout
-          </IonButton>
           <IonButton fill='clear' expand='block'>
             <IonIcon icon={settings} />
             Settings
+          </IonButton>
+          <IonButton fill='clear' expand='block' onClick={handleLogout}>
+            <IonIcon icon={logOutOutline} />
+            Logout
           </IonButton>
           <Copyright />
         </IonContent>
@@ -71,9 +71,13 @@ const TopMenu = () => {
       
       {/* Page Toolbar */}
       <IonPage id="main-content">
-        <IonButtons slot="start">
-          <IonMenuButton />
-        </IonButtons>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton></IonMenuButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
       </IonPage>
       </>
     );

@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonToolbar, IonSearchbar, IonCard, IonModal, IonButton, IonItem, IonIcon, IonCardSubtitle, IonCardContent, IonCardHeader, IonCardTitle, IonPage, IonTitle, IonButtons, IonFab, IonFabButton, IonInput, IonLabel } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../util/supabase';
-import { add, chevronBack, pencil, checkmark, save } from 'ionicons/icons';
+import { add, chevronBack, pencil, checkmark, save, close } from 'ionicons/icons';
 import ContactCard from '../components/Contacts/ContactCard';
 import ManageContact from '../components/Contacts/ManageContact';
 import TopMenu from '../components/TopMenu';
@@ -85,25 +85,23 @@ const ContactsPage: React.FC = () => {
       </IonHeader>
       <ManageContact />
       <IonContent className="contact-list">
-        <IonCard>
-          {filteredContacts.map((contact: any, index: number) => (
-            <div
-              key={contact.uuid || index}
-              onClick={() => { setShowModal(true); setSelectedContact(contact); }}
-            >
-              <ContactCard
-                fullName={contact.full_name}
-              />
-            </div>
-          ))}
-        </IonCard>
-
-        {/* Contact View Modal */}
+        {filteredContacts.map((contact: any, index: number) => (
+          <div
+            key={contact.uuid || index}
+            onClick={() => { setShowModal(true); setSelectedContact(contact); }}
+          >
+            <ContactCard
+              fullName={contact.full_name}
+            />
+          </div>
+        ))}
+        
+        {/* Contact View Modal */} 
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
-          <IonContent>
+          <IonContent className='ion-padding'>
             <IonHeader>
               <IonButtons slot='start'>
-                <IonIcon slot='start' icon={chevronBack} style={{ borderRadius: '50%', padding: '10px' }} onClick={() => setShowModal(false)} />
+                <IonIcon slot='start' icon={close} style={{ borderRadius: '50%', padding: '10px' }} onClick={() => setShowModal(false)} />
               </IonButtons>
             </IonHeader>
 
@@ -113,7 +111,6 @@ const ContactsPage: React.FC = () => {
               </IonFabButton>
             </IonFab>
             
-            <IonCard>
               <IonCardHeader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <IonCardTitle style={{ backgroundColor: 'darkgray', color: 'white', borderRadius: '50%', padding: '15px', minWidth: '65px', minHeight: '65px' }}>{selectedContact?.full_name ? selectedContact.full_name.split(' ').map((name: string) => name.charAt(0)).join('').toUpperCase().slice(0, 2) : ''}</IonCardTitle>
               </IonCardHeader>
@@ -220,10 +217,7 @@ const ContactsPage: React.FC = () => {
                     />
                   </IonItem>
                 ) : selectedContact?.address}
-              </IonCardContent>
-
-            </IonCard>
-
+            </IonCardContent>
           </IonContent>
         </IonModal>
       </IonContent>
