@@ -105,7 +105,7 @@ const ManageContact = () => {
           <IonHeader>
             <IonToolbar>
               <IonTitle>Add Contact</IonTitle>
-              <IonButtons slot="end">
+              <IonButtons slot="start">
                 <IonButton onClick={() => setIsOpen(false)}>
                   <IonIcon icon={close} />
                 </IonButton>

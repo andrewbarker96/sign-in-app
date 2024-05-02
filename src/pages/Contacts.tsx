@@ -51,19 +51,7 @@ const ContactsPage: React.FC = () => {
   };
   
   const filteredContacts = personnel.filter(contact => contact.full_name.toLowerCase().includes(searchTerm.toLowerCase()));
-
-  const handleCall = (phone: string | undefined) => {
-    window.open(`tel:${phone}`);
-  };
-
-  const handleText = (phone: string | undefined) => {
-    window.open(`sms:${phone}`);
-  };
-
-  const handleEmail = (email: string | undefined) => {
-    window.open(`mailto:${email}`);
-  }
-
+  
   const handleAddress = (address: string | undefined) => {
     window.open(`https://www.google.com/maps/search/?api=1&query=${address}`);
   }
@@ -98,125 +86,125 @@ const ContactsPage: React.FC = () => {
         
         {/* Contact View Modal */} 
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
+          <IonHeader>
+            <IonButtons slot='start'>
+              <IonIcon slot='start' icon={close} style={{ borderRadius: '50%', padding: '10px' }} onClick={() => setShowModal(false)} />
+            </IonButtons>
+          </IonHeader>
+          
           <IonContent className='ion-padding'>
-            <IonHeader>
-              <IonButtons slot='start'>
-                <IonIcon slot='start' icon={close} style={{ borderRadius: '50%', padding: '10px' }} onClick={() => setShowModal(false)} />
-              </IonButtons>
-            </IonHeader>
 
             <IonFab slot='fixed' vertical='bottom' horizontal='end'>
               <IonFabButton onClick={isEditMode ? handleSaveContact : handleEditContact}>
                 <IonIcon icon={isEditMode ? save : pencil} />
               </IonFabButton>
             </IonFab>
-            
-              <IonCardHeader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <IonCardTitle style={{ backgroundColor: 'darkgray', color: 'white', borderRadius: '50%', padding: '15px', minWidth: '65px', minHeight: '65px' }}>{selectedContact?.full_name ? selectedContact.full_name.split(' ').map((name: string) => name.charAt(0)).join('').toUpperCase().slice(0, 2) : ''}</IonCardTitle>
-              </IonCardHeader>
+              
+            <IonCardHeader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <IonCardTitle style={{ backgroundColor: 'darkgray', color: 'white', borderRadius: '50%', padding: '15px', minWidth: '65px', minHeight: '65px' }}>{selectedContact?.full_name ? selectedContact.full_name.split(' ').map((name: string) => name.charAt(0)).join('').toUpperCase().slice(0, 2) : ''}</IonCardTitle>
+            </IonCardHeader>
 
-              <IonCardTitle className='contact-name'>{isEditMode ? (
+            <IonCardTitle className='contact-name'>{isEditMode ? (
+              <IonItem>
+                <IonLabel position="floating">Full Name</IonLabel>
+                <IonInput
+                  value={editedContact?.full_name || ''}
+                  onIonChange={(e) =>
+                    setEditedContact({
+                      ...editedContact,
+                      full_name: e.detail.value || '',
+                    })
+                  }
+                />
+              </IonItem>
+            ) : selectedContact?.full_name}</IonCardTitle>
+            <IonCardTitle className='contact-company'>{isEditMode ? (
+              <IonItem>
+                <IonLabel position="floating">Company</IonLabel>
+                <IonInput
+                  value={editedContact?.company || ''}
+                  onIonChange={(e) =>
+                    setEditedContact({
+                      ...editedContact,
+                      company: e.detail.value || '',
+                    })
+                  }
+                />
+              </IonItem>
+            ) : selectedContact?.company}</IonCardTitle>
+
+            <IonCardContent className='contact-buttons'>
+              <IonButton fill='clear' onClick={() => {window.open(`tel:${selectedContact?.phone}`)}} disabled={!selectedContact?.phone}>Call</IonButton>
+              <IonButton fill='clear' onClick={() => {window.open(`sms:${selectedContact?.phone}`)}} disabled={!selectedContact?.phone}>Text</IonButton>
+              <IonButton fill='clear' onClick={() => {window.open(`mailto:${selectedContact?.email}`)}} disabled={!selectedContact?.email}>Email</IonButton>
+            </IonCardContent>
+
+            <IonCardSubtitle>Title</IonCardSubtitle>
+              {isEditMode ? (
                 <IonItem>
-                  <IonLabel position="floating">Full Name</IonLabel>
                   <IonInput
-                    value={editedContact?.full_name || ''}
+                    value={editedContact?.title || ''}
                     onIonChange={(e) =>
                       setEditedContact({
                         ...editedContact,
-                        full_name: e.detail.value || '',
+                        title: e.detail.value || '',
                       })
                     }
                   />
                 </IonItem>
-              ) : selectedContact?.full_name}</IonCardTitle>
-              <IonCardTitle className='contact-company'>{isEditMode ? (
-                <IonItem>
-                  <IonLabel position="floating">Company</IonLabel>
-                  <IonInput
-                    value={editedContact?.company || ''}
-                    onIonChange={(e) =>
-                      setEditedContact({
-                        ...editedContact,
-                        company: e.detail.value || '',
-                      })
-                    }
-                  />
-                </IonItem>
-              ) : selectedContact?.company}</IonCardTitle>
-
-              <IonCardContent className='contact-buttons'>
-                <IonButton fill='clear' onClick={() => handleCall(selectedContact?.phone)} disabled={!selectedContact?.phone} >Call</IonButton>
-                <IonButton fill='clear' onClick={() => handleText(selectedContact?.phone)} disabled={!selectedContact?.phone} >Text</IonButton>
-                <IonButton fill='clear' onClick={() => handleEmail(selectedContact?.email)} disabled={!selectedContact?.email} >Email</IonButton>
-              </IonCardContent>
-
-              <IonCardSubtitle>Title</IonCardSubtitle>
-
-                {isEditMode ? (
-                  <IonItem>
-                    <IonInput
-                      value={editedContact?.title || ''}
-                      onIonChange={(e) =>
-                        setEditedContact({
-                          ...editedContact,
-                          title: e.detail.value || '',
-                        })
-                      }
-                    />
-                  </IonItem>
-              ) : selectedContact?.title}
-                <IonCardContent>
-              </IonCardContent>
-
-              <IonCardSubtitle>Phone</IonCardSubtitle>
-                {isEditMode ? (
-                  <IonItem>
-                    <IonInput
-                      value={editedContact?.phone || ''}
-                      onIonChange={(e) =>
-                        setEditedContact({
-                          ...editedContact,
-                          phone: e.detail.value || '',
-                        })
-                      }
-                    />
-                  </IonItem>
-              ) : selectedContact?.phone}
-                <IonCardContent onClick={() => handleCall(selectedContact?.phone)} style={{ color: '#2575fe' }}>
-              </IonCardContent>
-
-              <IonCardSubtitle>Email</IonCardSubtitle>
-                {isEditMode ? (
-                  <IonItem>
-                    <IonInput
-                      value={editedContact?.email || ''}
-                      onIonChange={(e) =>
-                        setEditedContact({
-                          ...editedContact,
-                          email: e.detail.value || '',
-                        })
-                      }
-                    />
-                  </IonItem>
-              ) : selectedContact?.email}
-                <IonCardContent onClick={() => handleEmail(selectedContact?.email)} style={{ color: '#2575fe' }}>
-              </IonCardContent>
-
-              <IonCardSubtitle>Address</IonCardSubtitle>
+            ) : selectedContact?.title}
               <IonCardContent>
-                {isEditMode ? (
-                  <IonItem>
-                    <IonInput
-                      value={editedContact?.address || ''}
-                      onIonChange={(e) =>
-                        setEditedContact({
-                          ...editedContact,
-                          address: e.detail.value || '',
-                        })
-                      }
-                    />
-                  </IonItem>
-                ) : selectedContact?.address}
+            </IonCardContent>
+
+            <IonCardSubtitle>Phone</IonCardSubtitle>
+              {isEditMode ? (
+                <IonItem>
+                  <IonInput
+                    value={editedContact?.phone || ''}
+                    onIonChange={(e) =>
+                      setEditedContact({
+                        ...editedContact,
+                        phone: e.detail.value || '',
+                      })
+                    }
+                  />
+                </IonItem>
+            ) : selectedContact?.phone}
+              <IonCardContent onClick={() => {window.open(`tel:${selectedContact?.phone}`)}} >
+            </IonCardContent>
+
+            <IonCardSubtitle>Email</IonCardSubtitle>
+              {isEditMode ? (
+                <IonItem>
+                  <IonInput
+                    value={editedContact?.email || ''}
+                    onIonChange={(e) =>
+                      setEditedContact({
+                        ...editedContact,
+                        email: e.detail.value || '',
+                      })
+                    }
+                  />
+                </IonItem>
+            ) : selectedContact?.email}
+              <IonCardContent onClick={() => {window.open(`mailto:${selectedContact?.email}`)}} style={{ color: '#2575fe' }}>
+            </IonCardContent>
+
+            <IonCardSubtitle>Address</IonCardSubtitle>
+            <IonCardContent>
+              {isEditMode ? (
+                <IonItem>
+                  <IonInput
+                    value={editedContact?.address || ''}
+                    onIonChange={(e) =>
+                      setEditedContact({
+                        ...editedContact,
+                        address: e.detail.value || '',
+                      })
+                    }
+                  />
+                </IonItem>
+              ) : selectedContact?.address}
             </IonCardContent>
           </IonContent>
         </IonModal>

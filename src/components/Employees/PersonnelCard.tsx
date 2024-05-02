@@ -40,7 +40,7 @@ const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, su
           <IonText>{title}</IonText>
         </IonCardContent>
         <IonCardContent style={{ flex: 1, flexDirection: 'column' }}>
-          <IonButton fill='clear' onClick={() => setShowModal(true)}><IonIcon icon={chevronForward} /></IonButton>
+          <IonButton fill='clear' onClick={() => setShowModal(true)}><IonIcon icon={chevronForward} color='dark' /></IonButton>
         </IonCardContent>
       </IonItem>
 
@@ -51,7 +51,6 @@ const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, su
               <IonIcon slot='start' icon={close} style={{ borderRadius: '50%', padding: '10px' }} onClick={() => setShowModal(false)} />
             </IonButtons>
           </IonHeader>
-
           <IonCardHeader style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>
             <IonText><h2>{first_name} {last_name} {suffix}<br />{title}</h2></IonText>
           </IonCardHeader>
@@ -77,7 +76,7 @@ const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, su
               header = 'Cellphone Options'
               buttons={[
                 { text: `Text`, handler: () => {window.open(`sms:${phone}`); }},
-                { text: `Call`, handler: () => { window.open(`tel:${phone}`); }},
+                { text: `Call`, handler: () => {window.open(`tel:${phone}`); }},
                 { text: 'Cancel', role: 'cancel', handler: () => setIsOpen(false)}
               ]}
             />
