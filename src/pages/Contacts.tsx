@@ -51,7 +51,7 @@ const ContactsPage: React.FC = () => {
   };
   
   const filteredContacts = personnel.filter(contact => contact.full_name.toLowerCase().includes(searchTerm.toLowerCase()));
-  
+
   const handleAddress = (address: string | undefined) => {
     window.open(`https://www.google.com/maps/search/?api=1&query=${address}`);
   }
