@@ -1,37 +1,46 @@
 
 const environment = require('./environments/environment');
+const nodemailer = require('nodemailer');
 const cors = require('cors');
 const express = require('express');
 const crypto = require('crypto');
+const { env } = require('process');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const signingSecret = environment.sigParserSecretKey; // Replace with your actual signing secret
 
+
 app.use(cors());
+app.use(express.json());
 
-app.get('/sigparser', async (req, res) => {
-  try {
-    // Forward the request to SigParser's API
-    const response = await fetch('https://ipaas.sigparser.com/api/User/Me', {
-      method: 'GET',
-      headers: {
-        'x-api-key': `${environment.sigParserAPIKey}`,
-      }
-    });
+app.post('/send-email', async (req, res) => {
+  let transporter = nodemailer.createTransport({
+    host: environment.EMAIL_HOST,
+    port: environment.EMAIL_PORT,
+    secure: false,
+    auth: {
+      user: environment.EMAIL_USER,
+      pass: environment.EMAIL_PASS
+    }
+  });
 
-    // Pass the response back to the client
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  let mailOptions = {
+    from: environment.EMAIL_USER,
+    to: req.body.emails.join(', '),
+    subject: 'Meeting Attendee Arrival',
+    text: `Hello, ${req.body.name} has arrived for the meeting.`
+  };
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('Error occurred: ', err);
+    } else {
+      console.log('Email sent: ', data);
+    }
+  });
 });
 
 app.listen(port, () => {
-  console.log(`Proxy server listening at http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
-
-
-

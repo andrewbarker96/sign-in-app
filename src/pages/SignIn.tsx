@@ -12,7 +12,7 @@ const SignInPage: React.FC = () => {
           <IonTitle>Sign In</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
         <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='StockLogo'/>
         <SignInForm />
       </IonContent>

@@ -6,4 +6,8 @@ export const environment = {
   sigParserAPIKey: process.env.SIGPARSER_KEY,
   sigParserAPIURL: process.env.SIGPARSER_API_URL,
   sigParserSecretKey: process.env.SIGPARSER_SECRET_KEY,
+  emailSMTP: process.env.EMAIL_SMTP,
+  emailPort: process.env.EMAIL_PORT,
+  emailUser: process.env.EMAIL_USER,
+  emailPass: process.env.EMAIL_PASS,
 };
