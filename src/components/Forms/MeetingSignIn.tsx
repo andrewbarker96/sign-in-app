@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IonItem, IonInput, IonSelect, IonSelectOption, IonButton, IonText, IonModal } from '@ionic/react';
 import { supabase } from '../../util/supabase';
-import nodemailer from 'nodemailer';
-import { environment } from '../../environments/environment';
 
 function SignInForm() {
   const [personnelOptions, setPersonnelOptions] = useState<string[]>([]);

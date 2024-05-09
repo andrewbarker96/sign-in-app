@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { call, chatbubbleEllipses, chevronForward, close, mail } from 'ionicons/icons';
-import { IonActionSheet, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon, IonItem, IonModal, IonText } from '@ionic/react';
+import { IonActionSheet, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonModal, IonText } from '@ionic/react';
+import { supabaseImage } from '../../util/supabase';
+
+
 
 interface PersonnelCardProps {
   first_name: string;
@@ -14,9 +17,10 @@ interface PersonnelCardProps {
   image?: string;
 }
 
-const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, suffix, title, on_site, phone, direct, email }) => {
+const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, suffix, title, on_site, phone, direct, email, image }) => {
   const [showModal, setShowModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // const personnelImage = `${supabaseImage}/personnel/`;
 
   const renderIndicator = () => {
     if (on_site === true) {
@@ -52,6 +56,7 @@ const PersonnelCard: React.FC<PersonnelCardProps> = ({ first_name, last_name, su
             </IonButtons>
           </IonHeader>
           <IonCardHeader style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            {/* <IonImg src={`${personnelImage}${image}`} style={{ borderRadius: '50%', width: '100px', height: '100px' }} /> */}
             <IonText><h2>{first_name} {last_name} {suffix}<br />{title}</h2></IonText>
           </IonCardHeader>
           <IonCardContent>

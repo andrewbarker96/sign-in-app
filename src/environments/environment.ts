@@ -10,4 +10,6 @@ export const environment = {
   emailPort: process.env.EMAIL_PORT,
   emailUser: process.env.EMAIL_USER,
   emailPass: process.env.EMAIL_PASS,
+  imageURL: import.meta.env.VITE_SUPABASE_IMAGE_URL,
+
 };

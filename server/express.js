@@ -5,7 +5,7 @@ const cors = require('cors');
 const express = require('express');
 const crypto = require('crypto');
 const { env } = require('process');
-
+const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 3000;
 const signingSecret = environment.sigParserSecretKey; // Replace with your actual signing secret
@@ -43,4 +43,21 @@ app.post('/send-email', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+});
+
+const axios = require('axios');
+// ...
+
+app.get('/image/:imageName', async (req, res) => {
+  try {
+    const { imageName } = req.params;
+    const url = `${environment.imageURL}/${imageName}`;
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+
+    res.set('Content-Type', 'image/webp');
+    res.send(response.data);
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).send('Error fetching image');
+  }
 });
