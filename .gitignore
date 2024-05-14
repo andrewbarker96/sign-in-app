@@ -41,3 +41,6 @@ ios/App/App/Info.plist
 ios/App/App/Info.plist
 ios/App/App/Info.plist
 ios/App/App.xcodeproj/project.pbxproj
+
+resources/ios/**/*
+resources/android/**/*

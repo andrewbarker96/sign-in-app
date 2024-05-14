@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package stockassoc.app;
 
 import com.getcapacitor.BridgeActivity;
 
