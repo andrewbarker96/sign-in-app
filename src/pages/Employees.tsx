@@ -39,7 +39,7 @@ const EmployeesPage: React.FC = () => {
           <IonTitle>Personnel</IonTitle>
         </IonToolbar>
         <IonItem style={{flex:1, flexDirection:'column'}}>
-        <IonSearchbar className='searchbar' placeholder='Search Employees' showClearButton='never' showCancelButton='focus' onIonChange={e => setSearchTerm(e.detail.value ?? '')}/>
+          <IonSearchbar className='searchbar' placeholder='Search Employees' showClearButton='never' showCancelButton='focus' onIonChange={e => setSearchTerm(e.detail.value ?? '')}/>
           <IonButton fill='clear' size='default' id='open-action-sheet' onClick={() => setIsOpen(true)} style={{ margin: 'auto' }}>
             <IonIcon icon={filter} color='dark' />
           </IonButton>

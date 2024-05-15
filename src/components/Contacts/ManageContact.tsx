@@ -7,7 +7,7 @@ const addOrUpdateContact = async (contact: any) => {
   const { data: existingContacts, error } = await supabase
     .from('contacts')
     .select('*')
-    .or(`full_name.eq.${contact.full_name},email.eq.${contact.email}`);
+    .or(`firstName.eq.${contact.firstName}, middleName.eq.${contact.middleName}, lastName.eq.${contact.lastName}, ${contact.middleName} ${contact.lastName},email.eq.${contact.email}`);
 
   if (error) {
     console.error('Error fetching Contacts:', error);
@@ -42,9 +42,13 @@ const addOrUpdateContact = async (contact: any) => {
 const ManageContact = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [contact, setContact] = React.useState({
-    full_name: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
     email: '',
-    phone: '',
+    phoneWork: '',
+    phoneMobile: '',
+    phoneFax: '',
     company: '',
     title: ''
   });
@@ -62,7 +66,7 @@ const ManageContact = () => {
     const { data: existingContacts, error } = await supabase
       .from('contacts')
       .select('*')
-      .or(`full_name.eq.${contact.full_name}, company.eq.${contact.company}, email.eq.${contact.email}, phone.eq.${contact.phone}, title.eq.${contact.title}`);
+      .or(`firstName.eq.${contact.firstName}, middleName.eq.${contact.middleName}, lasstName.eq.${contact.lastName} company.eq.${contact.company}, email.eq.${contact.email}, phone.eq.${contact.phoneWork}, phone.eq.${contact.phoneMobile}, phone.eq.${contact.phoneFax}, title.eq.${contact.title}`);
     if (error) {
       console.error('Error fetching Contacts:', error);
       return;
@@ -115,7 +119,13 @@ const ManageContact = () => {
           <IonContent>
             <IonList>
               <IonItem>
-                <IonInput type='text' label='Name' labelPlacement='floating' />
+                <IonInput type='text' label='First Name' labelPlacement='floating' />
+              </IonItem>
+              <IonItem>
+                <IonInput type='text' label='Middle Name' labelPlacement='floating' />
+              </IonItem>
+              <IonItem>
+                <IonInput type='text' label='Last Name' labelPlacement='floating' />
               </IonItem>
               <IonItem>
                 <IonInput type='text' label='Company' labelPlacement='floating' />
@@ -127,7 +137,13 @@ const ManageContact = () => {
                 <IonInput type='email' label='Email' labelPlacement='floating' />
               </IonItem>
               <IonItem>
-                <IonInput type='tel' label='Phone' labelPlacement='floating' />
+                <IonInput type='tel' label='Phone-Work' labelPlacement='floating' />
+              </IonItem>
+              <IonItem>
+                <IonInput type='tel' label='Phone-Mobile' labelPlacement='floating' />
+              </IonItem>
+              <IonItem>
+                <IonInput type='tel' label='Phone-Fax' labelPlacement='floating' />
               </IonItem>
             </IonList>
             <IonButton expand="full" onClick={addOrUpdateContact}>
