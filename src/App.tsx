@@ -3,10 +3,8 @@ import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTab, IonTabBar, IonTabBu
 import { IonReactRouter } from '@ionic/react-router';
 import { home, pencil, people, person, square } from 'ionicons/icons';
 import SignInPage from './pages/SignIn';
-import EmployeesPage from './pages/Employees';
 import LoginPage from './pages/Login';
 import HomePage from './pages/Home';
-import ContactsPage from './pages/Contacts';
 import TopMenu from './components/TopMenu';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { useEffect } from 'react';
@@ -30,7 +28,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import DesktopContactsPage from './pages/StockContacts';
 
 setupIonicReact();
 
@@ -51,29 +48,20 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/home">
-              <HomePage />
-            </Route>
             <Route exact path="/signin">
               <SignInPage />
             </Route>
-            <Route path="/employees">
-              <EmployeesPage />
+            <Route exact path="/home">
+              <HomePage />
             </Route>
             <Route exact path="/">
             </Route>  
             <Route exact path="/">
               <LoginPage />
             </Route>
-            <Route exact path='/contacts'>
-              <ContactsPage />
-            </Route>
-            <Route exact path='stockcontacts'>
-              <DesktopContactsPage />
-            </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom" style={{paddingRight:'2.5%', paddingLeft:'2.5%'}}>
-            <IonTabButton tab="tab1" href="/home">
+            {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
             </IonTabButton>
@@ -88,11 +76,7 @@ const App: React.FC = () => {
             <IonTabButton tab="tab4" href="/contacts">
               <IonIcon aria-hidden="true" icon={people} />
               <IonLabel>Contacts</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab5" href="/stockcontacts">
-              <IonIcon aria-hidden="true" icon={square} />
-              <IonLabel>Stock Contacts</IonLabel>
-            </IonTabButton>
+            </IonTabButton> */}
           </IonTabBar>
         </IonTabs>
       </IonReactRouter>

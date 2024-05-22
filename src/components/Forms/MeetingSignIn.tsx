@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { IonItem, IonInput, IonSelect, IonSelectOption, IonButton, IonText, IonModal } from '@ionic/react';
+import { IonItem, IonInput, IonSelect, IonSelectOption, IonButton, IonText, IonModal, IonActionSheet, IonIcon } from '@ionic/react';
 import { supabase } from '../../util/supabase';
+import { addSharp } from 'ionicons/icons';
 
 function SignInForm() {
   const [personnelOptions, setPersonnelOptions] = useState<string[]>([]);
   const [selectedIndividuals, setSelectedIndividuals] = useState([]);
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [addAnotherPerson, setAddAnotherPerson] = useState(false);
 
   useEffect(() => {
     async function fetchPersonnelData() {
@@ -67,35 +70,35 @@ function SignInForm() {
   return (
     <>
       <IonItem>
-        <IonInput id='FirstName' type='text' labelPlacement='floating'  >
-          <div slot='label'>
-            First Name <IonText color='danger'>*</IonText>
-          </div>
+        <IonInput id='FirstName' type='text' labelPlacement='floating' placeholder='ex. John' >
+          <IonText slot='label'>First Name
+            <IonText color='danger'>*</IonText>
+          </IonText>
         </IonInput>
       </IonItem>
       <IonItem>
-        <IonInput id='LastName' type='text' labelPlacement='floating'>
-          <div slot='label'>
+        <IonInput id='LastName' type='text' labelPlacement='floating' placeholder='ex. Doe'>
+          <IonText slot='label'>
             Last Name <IonText color='danger'>*</IonText>
-          </div>
+          </IonText>
         </IonInput>
       </IonItem>
       <IonItem>
-        <IonInput type='email' labelPlacement='floating'>
-          <div slot='label'>
+        <IonInput type='email' labelPlacement='floating' placeholder='ex. johndoe@company.com'>
+          <IonText slot='label'>
             Email <IonText color='danger'>*</IonText>
-          </div>
+          </IonText>
         </IonInput>
       </IonItem>
       <IonItem>
-        <IonInput type='text' labelPlacement='floating'>
-          <div slot='label'>
+        <IonInput type='text' labelPlacement='floating' placeholder='ex. Stock & Associates'>
+          <IonText slot='label'>
             Company <IonText color='danger'>*</IonText>
-          </div>
+          </IonText>
         </IonInput>
       </IonItem>
       <IonItem>
-        <IonSelect 
+        {/* <IonSelect 
           label='Who are you meeting with?' 
           interface='alert' 
           placeholder="Select" 
@@ -107,8 +110,9 @@ function SignInForm() {
               {personnelName}
             </IonSelectOption>
           ))}
-        </IonSelect>
+        </IonSelect> */}
       </IonItem>
+      <IonButton expand='block' color={'medium'} onClick={() => setShowActionSheet(true)}><IonIcon icon={addSharp} slot='start' /> Add Another Person</IonButton>
       <IonButton expand='block' onClick={handleFormSubmit}>Submit</IonButton>
     </>
   );

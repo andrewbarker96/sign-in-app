@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../util/supabase';
 import { IonButton, IonIcon, IonCard, IonCardContent, IonMenu, IonMenuButton,  IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuToggle, IonText } from '@ionic/react';
-import { personCircleOutline, logOutOutline, menuOutline, exit, close, cog, cogSharp, settings } from 'ionicons/icons';
+import { personCircleOutline, logOutOutline, menuOutline, exit, close, cog, cogSharp, settings, list, clipboard, clipboardOutline, calendarClear, calendarOutline } from 'ionicons/icons';
 import Copyright from './CopyrightText';
 
 const TopMenu = () => {
@@ -25,6 +25,10 @@ const TopMenu = () => {
         checkSession();
     }, []);
 
+    const handleSignIn = async () => {
+      window.location.href = '/signin';
+    }
+  
     const handleLogout = async () => {
       let { error } = await supabase.auth.signOut();
       if (error) {
@@ -53,17 +57,13 @@ const TopMenu = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-          <IonButton fill='clear' expand='block'>
-            <IonIcon icon={personCircleOutline} />
-            Profile
+          <IonButton fill='clear' expand='block' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleSignIn}>
+            <IonIcon slot='start' icon={calendarOutline} style={{ marginRight: '10px' }} />
+            <IonText>Meeting Sign In</IonText>
           </IonButton>
-          <IonButton fill='clear' expand='block'>
-            <IonIcon icon={settings} />
-            Settings
-          </IonButton>
-          <IonButton fill='clear' expand='block' onClick={handleLogout}>
-            <IonIcon icon={logOutOutline} />
-            Logout
+          <IonButton fill='clear' expand='block' onClick={handleLogout} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <IonIcon slot='start' icon={logOutOutline} style={{ marginRight: '10px' }} />
+            <IonText>Logout</IonText>
           </IonButton>
           <Copyright />
         </IonContent>
