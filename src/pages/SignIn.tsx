@@ -1,8 +1,7 @@
 import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent } from '@ionic/react';
 import SignInForm from '../components/Forms/MeetingSignIn';
-import './SignIn.css';
 import TopMenu from '../components/TopMenu';
-import { supabase } from '../util/supabase';
+import './SignIn.css';
 
 const SignInPage: React.FC = () => {
   

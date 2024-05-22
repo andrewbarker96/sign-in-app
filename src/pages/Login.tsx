@@ -2,74 +2,128 @@ import { useState } from 'react';
 import {
   IonButton,
   IonContent,
-  IonHeader,
   IonInput,
   IonItem,
   IonLabel,
-  IonList,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  useIonToast,
-  useIonLoading,
-  IonIcon,
-  IonTabBar,
   IonText,
+  IonIcon,
   IonImg,
   IonCard,
+  IonCardContent,
+  IonModal,
 } from '@ionic/react';
-import { supabase } from '../util/supabase';
-import { eye, eyeOff } from 'ionicons/icons';
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { firebase } from '../util/firebase';
+import { close, eye, eyeOff, send } from 'ionicons/icons';
 import Copyright from '../components/CopyrightText';
-
+import { IonRefresher } from '@ionic/react';
+import { IonLoading } from '@ionic/react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailVerification, setEmailVerification] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const [showLoading, hideLoading] = useIonLoading();
-  const [showToast ] = useIonToast();
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await showLoading();
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      if (data) {
-        await showToast({ message: 'Logged in successfully!' });
-        window.location.href = '/home';
-      } else {
-        throw new Error('Invalid credentials');
-      }
-      
-    } catch (e: any) {
-      await showToast({ message: e.error_description || e.message , duration: 5000});
-    } finally {
-      await hideLoading();
-    }
+  const auth = getAuth(firebase);
+  
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('User signed in:', user);
+        window.location.href = '/signin';
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Error signing in:', errorCode, errorMessage);
+        setInvalid(true);
+        setEmail('');
+        setPassword('');
+      });
   };
 
+  const clickForgotPassword = () => {
+    setShowModal(true);
+  }
+
+  const handleForgotPassword = () => {
+    sendPasswordResetEmail(auth, emailVerification)
+      .then(() => {
+        console.log('Password reset email sent');
+        setSuccess(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error('Error sending password reset email:', errorCode, errorMessage);
+        setInvalid(true);
+        setEmailVerification('');
+      });
+  }
+
+
+
+
   return (
+    // Main Login Form
     <IonPage className='login-tab'>
-      <IonContent>
-        <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='StockLogo'/>
-          <form onSubmit={handleLogin} style={{margin:'25px'}}>
-            <IonItem>
-              <IonInput value={email} name="email" label='Email' labelPlacement='floating' onIonChange={(e) => setEmail(e.detail.value ?? '')}type="email"/>
-            </IonItem>
-            <IonItem>
-              <IonInput value={password} name="password" label='Password' labelPlacement='floating' onIonChange={(e) => setPassword(e.detail.value ?? '')} type={showPassword ? "text" : "password"} />
-              <IonButton fill="clear" slot="end" onClick={() => setShowPassword(!showPassword)}>
-                <IonIcon slot="icon-only" style={{opacity:'65%'}} icon={showPassword ? eye : eyeOff} />
-              </IonButton>
-            </IonItem>
-            <IonButton type="submit" expand='block' style={{marginTop:'10%'}}>
-              Login
-            </IonButton>
-          </form>
+      <IonContent class='ion-padding'>
+        <IonCardContent>
+          <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
+        </IonCardContent>
+        <IonCardContent>
+          <IonItem>
+            <IonInput type='email' labelPlacement='floating' label='Email' placeholder='Enter Email Address' value={email} onIonChange={e => setEmail(e.detail.value!)} />
+          </IonItem>
+          <IonItem>  
+            <IonInput type={showPassword ? 'text' : 'password'} labelPlacement='floating' label='Password' placeholder='Enter your Password' value={password} onIonChange={e => setPassword(e.detail.value!)} />
+            <IonIcon slot='end' icon={showPassword ? eye : eyeOff} size='small' color='medium' onClick={() => setShowPassword(!showPassword)} />
+          </IonItem>
+          <IonItem>
+            <IonLabel position='stacked' color='danger'>{invalid ? 'Invalid email or password' : ''}</IonLabel>
+            <IonButton slot='end' fill='clear' onClick={clickForgotPassword}>Forgot Password?</IonButton>
+          </IonItem>
+
+        </IonCardContent>
+        <IonCardContent>
+          <IonButton id='open-loading' expand='block' onClick={handleLogin}>Login</IonButton>
+          <IonLoading className='custom-loading' trigger='open-loading' isOpen={false} onDidDismiss={() => setInvalid(false)} message='Logging in...' duration={2000} />
+        </IonCardContent>
+        <IonCardContent>
           <Copyright />
+        </IonCardContent>
+
+        {/* Reset Password Modal */}
+        <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
+          <IonCard>
+            <IonCardContent>
+              <IonIcon onClick={() => setShowModal(false)} icon={close} size='large' color='primary' slot='start' />
+            </IonCardContent>
+            <IonCardContent>
+              <IonText class='ion-text-center'><h1>Reset Password</h1></IonText>
+              <IonText class='ion-text-center'><h3>Enter your email address to receive a password reset link.</h3></IonText>
+            </IonCardContent>
+            <IonCardContent>
+              <IonItem>
+                <IonInput type='email' labelPlacement='floating' label='Email' placeholder='Enter Email Address' value={emailVerification} onIonChange={e => setEmailVerification(e.detail.value!)} />
+              </IonItem>
+              <IonItem>
+                <IonLabel position='stacked' color='danger'>{invalid ? 'Email does not exist and/or is invalid' : ''}</IonLabel>
+                <IonLabel position='stacked' color='primary'>{success ? '' : ''}Password reset email sent.<br/><br/>Email may take 5-10 minutes.<br/>If you do not receive contact your Stock & Associates IT Admin. </IonLabel>
+              </IonItem>
+            </IonCardContent>
+            <IonCardContent>
+              <IonButton id='open-loading' expand='block' onClick={handleForgotPassword}>Send Verification Email</IonButton>
+              <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Sending Email...' duration={2000} />
+            </IonCardContent>
+          </IonCard>
+        </IonModal>
       </IonContent>
     </IonPage>
   );

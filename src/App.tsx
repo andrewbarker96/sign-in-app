@@ -45,6 +45,9 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
+      <IonToolbar>
+        <TopMenu />
+      </IonToolbar>
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
@@ -60,7 +63,7 @@ const App: React.FC = () => {
               <LoginPage />
             </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" style={{paddingRight:'2.5%', paddingLeft:'2.5%'}}>
+          <IonTabBar slot="bottom">
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
