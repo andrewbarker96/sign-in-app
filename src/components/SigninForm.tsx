@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent } from '@ionic/react';
-import { firestore } from '../../util/firebase';
+import { firestore } from '../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
 function SignInForm() {

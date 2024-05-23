@@ -1,5 +1,5 @@
 import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonMenuButton } from '@ionic/react';
-import SignInForm from '../components/Forms/SigninForm';
+import SignInForm from '../components/SigninForm';
 import TopMenu from '../components/TopMenu';
 import { useState } from 'react';
 import './Home.css'
