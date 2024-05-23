@@ -5,12 +5,14 @@ import { useState } from 'react';
 import './Home.css'
 import { Margin } from '@mui/icons-material';
 import { close } from 'ionicons/icons';
+import { set } from 'lodash';
 
 const HomePage: React.FC = () => {
   
   const date = new Date();
   const monthDayYear = date.toDateString();
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
 
   return (
     <IonPage className='ion-align-items-center'>
@@ -25,6 +27,8 @@ const HomePage: React.FC = () => {
         </IonCardContent>
         <IonCardContent style={{marginLeft:'20%', marginRight:'20%'}}>
           <IonButton onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
+          <br />
+          <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton>
         </IonCardContent>
         </IonContent>
         
@@ -40,6 +44,18 @@ const HomePage: React.FC = () => {
           </IonHeader>
           <SignInForm />
         </IonModal>
+      
+        <IonModal isOpen={showModal2}>
+          <IonHeader>
+            <IonToolbar style={{ display: 'flex' }}>
+              <IonTitle>Set Up Meeting</IonTitle>
+              <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal2(false)}>
+                <IonIcon icon={close} slot='start' />
+              </IonButton>
+            </IonToolbar>
+          </IonHeader>
+        </IonModal>
+
 
     </IonPage>
   );
