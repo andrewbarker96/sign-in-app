@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './util/firebase'; // Ensure correct path
 import TopMenu from './components/TopMenu';
-import SignInPage from './pages/SignIn';
+import MeetingSignIn from './pages/SignIn';
 import HomePage from './pages/Home';
 import SplashScreen from '@capacitor/splash-screen';
 import { useMediaQuery } from 'react-responsive';
@@ -52,17 +52,14 @@ const App: React.FC = () => {
       </IonToolbar>
       <IonReactRouter>
         <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/login">
-              {!authUser ? <LoginPage /> : <Redirect to="/" />}
-            </Route>
-            <Route exact path="/">
-              {authUser ? <HomePage /> : <Redirect to="/home" />}
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-          </IonRouterOutlet>
+        <IonRouterOutlet>
+          <Route exact path="/">
+            {authUser ? <HomePage /> : <LoginPage />}
+          </Route>
+          <Route exact path="/signin">
+            <MeetingSignIn />
+          </Route>
+        </IonRouterOutlet>
             <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />

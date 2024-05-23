@@ -18,12 +18,13 @@ import { auth } from '../util/firebase';
 import { signOut } from 'firebase/auth';
 import { IonLoading } from '@ionic/react';
 import { useState } from 'react';
+import { Route } from 'react-router';
 
 
 const TopMenu: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const handleSignIn = async () => {
-    window.location.href = '/signin';
+    <Route path="/signin" />
   };
 
   const handleLogout = async () => {
