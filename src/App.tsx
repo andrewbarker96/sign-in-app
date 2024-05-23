@@ -73,12 +73,12 @@ const App: React.FC = () => {
           <Route exact path="/Admin">
             <AdminPage />
           </Route>
-          <Route exact path="/contacts">
+          {/* <Route exact path="/contacts">
             <ContactsPage />
           </Route>
           <Route exact path="/employees">
             <EmployeesPage />
-          </Route>         
+          </Route>          */}
              
           </IonRouterOutlet>
             <IonTabBar slot={'bottom'}>
