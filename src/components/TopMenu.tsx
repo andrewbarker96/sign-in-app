@@ -12,7 +12,7 @@ import {
   IonButtons,
   IonText,
 } from '@ionic/react';
-import { logOutOutline, close, calendarOutline } from 'ionicons/icons';
+import { logOutOutline, close, calendarOutline, shieldHalf, home } from 'ionicons/icons';
 import Copyright from './CopyrightText';
 import { auth } from '../util/firebase';
 import { signOut } from 'firebase/auth';
@@ -23,9 +23,6 @@ import { Route } from 'react-router';
 
 const TopMenu: React.FC = () => {
   const [success, setSuccess] = useState(false);
-  const handleSignIn = async () => {
-    <Route path="/signin" />
-  };
 
   const handleLogout = async () => {
     try {
@@ -34,7 +31,7 @@ const TopMenu: React.FC = () => {
     } catch (error) {
       console.error('Error signing out:', error);
     }
-  };
+  }
 
   return (
     <>
@@ -54,10 +51,19 @@ const TopMenu: React.FC = () => {
             fill="clear"
             expand="block"
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onClick={handleSignIn}
+            onClick={() => window.location.href = '/'}
           >
-            <IonIcon slot="start" icon={calendarOutline} style={{ marginRight: '10px' }} />
-            <IonText>Meeting Sign In</IonText>
+            <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
+            <IonText>Home</IonText>
+          </IonButton>
+          <IonButton
+            fill="clear"
+            expand="block"
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            onClick={() => window.location.href = '/admin'}
+          >
+            <IonIcon slot="start" icon={shieldHalf} style={{ marginRight: '10px' }} />
+            <IonText>Admin Portal</IonText>
           </IonButton>
           <IonButton
             id='open-loading'
@@ -67,8 +73,9 @@ const TopMenu: React.FC = () => {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
           >
             <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
-            <IonText>Logout</IonText>
+            <IonText>Sign Out</IonText>
           </IonButton>
+
               <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />
         </IonContent>

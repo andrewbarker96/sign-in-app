@@ -1,31 +1,43 @@
-import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar } from '@ionic/react';
+import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar, IonHeader } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './util/firebase'; // Ensure correct path
 import TopMenu from './components/TopMenu';
-import MeetingSignIn from './pages/SignIn';
 import HomePage from './pages/Home';
 import SplashScreen from '@capacitor/splash-screen';
 import { useMediaQuery } from 'react-responsive';
 import { setupIonicReact } from '@ionic/react';
+import LoginPage from './pages/Login';
+import AdminPage from './pages/Admin';
 
+/* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+import '@ionic/react/css/padding.css';
+import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/text-alignment.css';
+import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import LoginPage from './pages/Login';
+import ContactsPage from './pages/Contacts';
+import EmployeesPage from './pages/Employees';
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const [authUser, setAuthUser] = useState(false);
+  const [adminUser, setAdminUser] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -47,18 +59,27 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonToolbar>
-        <TopMenu />
-      </IonToolbar>
+      <IonHeader>
+        <IonToolbar>
+          <TopMenu />
+        </IonToolbar>
+      </IonHeader>
       <IonReactRouter>
         <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/">
             {authUser ? <HomePage /> : <LoginPage />}
           </Route>
-          <Route exact path="/signin">
-            <MeetingSignIn />
+          <Route exact path="/Admin">
+            <AdminPage />
           </Route>
+          <Route exact path="/contacts">
+            <ContactsPage />
+          </Route>
+          <Route exact path="/employees">
+            <EmployeesPage />
+          </Route>         
+             
         </IonRouterOutlet>
             <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
