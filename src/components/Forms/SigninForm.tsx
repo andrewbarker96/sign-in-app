@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IonCardContent, IonInput, IonButton, IonText, IonLabel } from '@ionic/react';
+import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent } from '@ionic/react';
 import { firestore } from '../../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 
@@ -41,7 +41,7 @@ function SignInForm() {
   };
 
   return (
-    <>
+    <IonContent className='ion-padding'>
       <IonCardContent>
         <IonInput
           id='FirstName'
@@ -122,7 +122,7 @@ function SignInForm() {
         </IonLabel>
         
       )}
-    </>
+    </IonContent>
   );
 }
 

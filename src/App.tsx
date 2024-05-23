@@ -80,7 +80,7 @@ const App: React.FC = () => {
             <EmployeesPage />
           </Route>         
              
-        </IonRouterOutlet>
+          </IonRouterOutlet>
             <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />

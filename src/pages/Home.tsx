@@ -1,8 +1,8 @@
-import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon } from '@ionic/react';
+import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonMenuButton } from '@ionic/react';
 import SignInForm from '../components/Forms/SigninForm';
 import TopMenu from '../components/TopMenu';
 import { useState } from 'react';
-import './SignIn.css';
+import './Home.css'
 import { Margin } from '@mui/icons-material';
 import { close } from 'ionicons/icons';
 
@@ -13,13 +13,8 @@ const HomePage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>{monthDayYear}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent >
+    <IonPage className='ion-align-items-center'>
+      <IonContent className='ion-padding'>
         <IonCardContent>
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='ion-padding' style={{ height: '175px' }} />
         </IonCardContent>
@@ -36,14 +31,14 @@ const HomePage: React.FC = () => {
         
         <IonModal isOpen={showModal}>
           <IonHeader>
-            <IonToolbar>
-              <IonIcon icon={close} size='large' color='primary' onClick={() => setShowModal(false)} />
-              <IonTitle>Guest Sign In</IonTitle>
+          <IonToolbar style={{ display: 'flex' }}>
+            <IonTitle>Sign In</IonTitle>
+              <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal(false)}>
+                <IonIcon icon={close} slot='start' />
+              </IonButton>
             </IonToolbar>
           </IonHeader>
-          <IonCardContent>
-            <SignInForm />
-          </IonCardContent>
+          <SignInForm />
         </IonModal>
 
     </IonPage>
