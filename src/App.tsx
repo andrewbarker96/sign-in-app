@@ -1,42 +1,44 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTab, IonTabBar, IonTabButton, IonTabs, setupIonicReact, IonToolbar, IonTitle, IonHeader, IonImg, } from '@ionic/react';
+import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, pencil, people, person, square } from 'ionicons/icons';
-import SignInPage from './pages/SignIn';
-import LoginPage from './pages/Login';
-import HomePage from './pages/Home';
+import { Route, Redirect } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './util/firebase'; // Ensure correct path
 import TopMenu from './components/TopMenu';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { useEffect } from 'react';
-import useMediaQuery from 'react-responsive';
+import SignInPage from './pages/SignIn';
+import HomePage from './pages/Home';
+import SplashScreen from '@capacitor/splash-screen';
+import { useMediaQuery } from 'react-responsive';
+import { setupIonicReact } from '@ionic/react';
 
-/* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import LoginPage from './pages/Login';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  const [authUser, setAuthUser] = useState(false);
+
   useEffect(() => {
-    SplashScreen.show({
-      showDuration: 2000,
-      autoHide: true
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthUser(true);
+      } else {
+        setAuthUser(false);
+      }
     });
+    
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   const screenSize = useMediaQuery({
@@ -51,19 +53,17 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/signin">
-              <SignInPage />
-            </Route>
-            <Route exact path="/home">
-              <HomePage />
+            <Route exact path="/login">
+              {!authUser ? <LoginPage /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/">
-            </Route>  
+              {authUser ? <HomePage /> : <Redirect to="/home" />}
+            </Route>
             <Route exact path="/">
-              <LoginPage />
+              <Redirect to="/home" />
             </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom">
+            <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
@@ -86,5 +86,6 @@ const App: React.FC = () => {
     </IonApp>
   );
 };
-  
+
 export default App;
+

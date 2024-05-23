@@ -35,8 +35,9 @@ export default function LoginPage() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('User signed in:', user);
-        window.location.href = '/signin';
+        const uid = user.uid;
+        console.log('User signed in:', user, uid);
+        window.location.href = '/';
       })
       .catch((error) => {
         const errorCode = error.code;
