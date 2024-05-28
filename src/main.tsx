@@ -5,7 +5,6 @@ import LoginPage from './pages/Login';
 import TopMenu from './components/TopMenu';
 import { auth } from './util/firebase'; // Ensure correct path
 import { onAuthStateChanged } from 'firebase/auth';
-import { IonApp } from '@ionic/react';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -13,16 +12,16 @@ const root = createRoot(container!);
 onAuthStateChanged(auth, (user) => {
   if (user) {
     root.render(
-      <IonApp>
+      <React.StrictMode>
         <TopMenu />
         <App />
-      </IonApp>
+      </React.StrictMode>
     );
   } else {
     root.render(
-      <IonApp>
+      <React.StrictMode>
         <LoginPage />
-      </IonApp>
+      </React.StrictMode>
     );
   }
 });

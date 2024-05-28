@@ -45,7 +45,7 @@ const App: React.FC = () => {
         setAuthUser(false);
       }
     });
-
+    
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
@@ -56,7 +56,7 @@ const App: React.FC = () => {
   });
 
   return (
-    <>
+    <IonApp>
       <IonHeader>
         <IonToolbar>
           <TopMenu />
@@ -64,22 +64,22 @@ const App: React.FC = () => {
       </IonHeader>
       <IonReactRouter>
         <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/">
-              {authUser ? <HomePage /> : <LoginPage />}
-            </Route>
-            <Route exact path="/Admin">
-              <AdminPage />
-            </Route>
-            {/* <Route exact path="/contacts">
+        <IonRouterOutlet>
+          <Route exact path="/">
+            {authUser ? <HomePage /> : <LoginPage />}
+          </Route>
+          <Route exact path="/Admin">
+            <AdminPage />
+          </Route>
+          {/* <Route exact path="/contacts">
             <ContactsPage />
           </Route>
           <Route exact path="/employees">
             <EmployeesPage />
           </Route>          */}
-
+             
           </IonRouterOutlet>
-          <IonTabBar slot={'bottom'}>
+            <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
@@ -99,7 +99,7 @@ const App: React.FC = () => {
           </IonTabBar>
         </IonTabs>
       </IonReactRouter>
-    </>
+    </IonApp>
   );
 };
 
