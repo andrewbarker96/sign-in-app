@@ -15,9 +15,12 @@ const HomePage: React.FC = () => {
   const [showModal2, setShowModal2] = useState(false);
 
   return (
-    <IonPage className='ion-align-items-center'>
+    <IonPage>
+      <IonHeader>
+          <IonTitle>Home</IonTitle>
+      </IonHeader>
       <IonContent className='ion-padding'>
-        <IonCardContent>
+        <IonCardContent className='ion-margin-top'>
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='ion-padding' style={{ height: '175px' }} />
         </IonCardContent>
         <IonCardContent>
