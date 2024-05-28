@@ -158,6 +158,14 @@ http://ionicframework.com/docs/theming/ */
 }
 
 
+.top-menu-button{
+  padding:10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 /* @media (prefers-color-scheme: dark) {
 

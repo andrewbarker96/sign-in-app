@@ -14,10 +14,14 @@ const HomePage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
+  async function canDismiss(data?: any, role?: string) {
+    return role !== 'gesture';
+  }
+
   return (
     <IonPage>
       <IonHeader>
-          <IonTitle>Home</IonTitle>
+        <IonTitle>Home</IonTitle>
       </IonHeader>
       <IonContent className='ion-padding'>
         <IonCardContent className='ion-margin-top'>
@@ -29,14 +33,14 @@ const HomePage: React.FC = () => {
           </IonText>
         </IonCardContent>
         <IonCardContent style={{ marginLeft: '20%', marginRight: '20%' }}>
-          <IonButton onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
+          <IonButton id='open-modal' onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
           <br />
           {/* <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton> */}
         </IonCardContent>
       </IonContent>
 
 
-      <IonModal isOpen={showModal}>
+      <IonModal trigger='open-modal' canDismiss={canDismiss} isOpen={showModal} initialBreakpoint={1} breakpoints={[0, 1]}>
         <IonHeader>
           <IonToolbar style={{ display: 'flex' }}>
             <IonTitle>Sign In</IonTitle>
