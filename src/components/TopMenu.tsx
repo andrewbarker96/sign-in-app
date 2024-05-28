@@ -47,6 +47,7 @@ const TopMenu: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
+
           <IonButton
             fill="clear"
             expand="block"
@@ -56,6 +57,7 @@ const TopMenu: React.FC = () => {
             <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
             <IonText>Home</IonText>
           </IonButton>
+
           <IonButton
             fill="clear"
             expand="block"
@@ -65,6 +67,17 @@ const TopMenu: React.FC = () => {
             <IonIcon slot="start" icon={shieldHalf} style={{ marginRight: '10px' }} />
             <IonText>Admin Portal</IonText>
           </IonButton>
+
+          <IonButton
+            fill="clear"
+            expand="block"
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            onClick={() => window.location.href = '/calendar'}
+          >
+            <IonIcon slot="start" icon={calendarOutline} style={{ marginRight: '10px' }} />
+            <IonText>Set up Meeting</IonText>
+          </IonButton>
+
           <IonButton
             id='open-loading'
             fill="clear"
@@ -76,7 +89,7 @@ const TopMenu: React.FC = () => {
             <IonText>Sign Out</IonText>
           </IonButton>
 
-              <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
+          <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />
         </IonContent>
       </IonMenu>

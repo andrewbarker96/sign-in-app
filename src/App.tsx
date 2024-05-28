@@ -30,8 +30,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import ContactsPage from './pages/Contacts';
-import EmployeesPage from './pages/Employees';
 
 setupIonicReact();
 

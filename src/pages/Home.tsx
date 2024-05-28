@@ -8,7 +8,7 @@ import { close } from 'ionicons/icons';
 import { set } from 'lodash';
 
 const HomePage: React.FC = () => {
-  
+
   const date = new Date();
   const monthDayYear = date.toDateString();
   const [showModal, setShowModal] = useState(false);
@@ -25,27 +25,27 @@ const HomePage: React.FC = () => {
             <h1>Welcome to Stock & Associates!</h1>
           </IonText>
         </IonCardContent>
-        <IonCardContent style={{marginLeft:'20%', marginRight:'20%'}}>
+        <IonCardContent style={{ marginLeft: '20%', marginRight: '20%' }}>
           <IonButton onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
           <br />
-          <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton>
+          {/* <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton> */}
         </IonCardContent>
-        </IonContent>
-        
-        
-        <IonModal isOpen={showModal}>
-          <IonHeader>
+      </IonContent>
+
+
+      <IonModal isOpen={showModal}>
+        <IonHeader>
           <IonToolbar style={{ display: 'flex' }}>
             <IonTitle>Sign In</IonTitle>
-              <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal(false)}>
-                <IonIcon icon={close} slot='start' />
-              </IonButton>
-            </IonToolbar>
-          </IonHeader>
-          <SignInForm />
-        </IonModal>
-      
-        <IonModal isOpen={showModal2}>
+            <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal(false)}>
+              <IonIcon icon={close} slot='start' />
+            </IonButton>
+          </IonToolbar>
+        </IonHeader>
+        <SignInForm />
+      </IonModal>
+
+      {/* <IonModal isOpen={showModal2}>
           <IonHeader>
             <IonToolbar style={{ display: 'flex' }}>
               <IonTitle>Set Up Meeting</IonTitle>
@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
               </IonButton>
             </IonToolbar>
           </IonHeader>
-        </IonModal>
+        </IonModal> */}
 
 
     </IonPage>
