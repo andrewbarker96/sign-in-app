@@ -11,6 +11,9 @@ import {
   IonPage,
   IonButtons,
   IonText,
+  IonGrid,
+  IonCol,
+  IonRow,
 } from '@ionic/react';
 import { logOutOutline, close, calendarOutline, shieldHalf, home } from 'ionicons/icons';
 import Copyright from './CopyrightText';
@@ -47,48 +50,53 @@ const TopMenu: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
+          <IonButtons className='top-menu-button'>
+            <IonButton
+              fill="clear"
+              expand="full"
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              onClick={() => window.location.href = '/'}
+              slot='start'
+            >
+              <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
+              <IonText>Home</IonText>
+            </IonButton>
+          </IonButtons>
+          <IonButtons className='top-menu-button'>
+            <IonButton
+              fill="clear"
+              expand="block"
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              onClick={() => window.location.href = '/admin'}
+            >
+              <IonIcon slot="start" icon={shieldHalf} style={{ marginRight: '10px' }} />
+              <IonText>Admin Portal</IonText>
+            </IonButton>
+          </IonButtons>
+          <IonButtons className='top-menu-button'>
+            <IonButton
+              fill="clear"
+              expand="block"
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              onClick={() => window.location.href = '/calendar'}
+            >
+              <IonIcon slot="start" icon={calendarOutline} style={{ marginRight: '10px' }} />
+              <IonText>Set up Meeting</IonText>
+            </IonButton>
+          </IonButtons>
+          <IonButtons className='top-menu-button'>
+            <IonButton
+              id='open-loading'
+              fill="clear"
+              expand="block"
+              onClick={handleLogout}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 
-          <IonButton
-            fill="clear"
-            expand="block"
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onClick={() => window.location.href = '/'}
-          >
-            <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
-            <IonText>Home</IonText>
-          </IonButton>
-
-          <IonButton
-            fill="clear"
-            expand="block"
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onClick={() => window.location.href = '/admin'}
-          >
-            <IonIcon slot="start" icon={shieldHalf} style={{ marginRight: '10px' }} />
-            <IonText>Admin Portal</IonText>
-          </IonButton>
-
-          <IonButton
-            fill="clear"
-            expand="block"
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onClick={() => window.location.href = '/calendar'}
-          >
-            <IonIcon slot="start" icon={calendarOutline} style={{ marginRight: '10px' }} />
-            <IonText>Set up Meeting</IonText>
-          </IonButton>
-
-          <IonButton
-            id='open-loading'
-            fill="clear"
-            expand="block"
-            onClick={handleLogout}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-          >
-            <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
-            <IonText>Sign Out</IonText>
-          </IonButton>
-
+            >
+              <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
+              <IonText>Sign Out</IonText>
+            </IonButton>
+          </IonButtons>
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />
         </IonContent>
