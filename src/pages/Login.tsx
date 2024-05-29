@@ -30,7 +30,7 @@ export default function LoginPage() {
   const [showModal, setShowModal] = useState(false);
 
   const auth = getAuth(firebase);
-  
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -74,15 +74,15 @@ export default function LoginPage() {
   return (
     // Main Login Form
     <IonPage className='login-tab'>
-      <IonContent class='ion-padding'>
+      <IonContent className='ion-padding'>
         <IonCardContent>
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
         </IonCardContent>
-        <IonCardContent>
+        <IonCardContent className='form'>
           <IonItem>
             <IonInput type='email' labelPlacement='floating' label='Email' placeholder='Enter Email Address' value={email} onIonChange={e => setEmail(e.detail.value!)} />
           </IonItem>
-          <IonItem>  
+          <IonItem>
             <IonInput type={showPassword ? 'text' : 'password'} labelPlacement='floating' label='Password' placeholder='Enter your Password' value={password} onIonChange={e => setPassword(e.detail.value!)} />
             <IonIcon slot='end' icon={showPassword ? eye : eyeOff} size='small' color='medium' onClick={() => setShowPassword(!showPassword)} />
           </IonItem>
@@ -90,9 +90,7 @@ export default function LoginPage() {
             <IonLabel position='stacked' color='danger'>{invalid ? 'Invalid email or password' : ''}</IonLabel>
             <IonButton slot='end' fill='clear' onClick={clickForgotPassword}>Forgot Password?</IonButton>
           </IonItem>
-
-        </IonCardContent>
-        <IonCardContent>
+          <br />
           <IonButton id='open-loading' expand='block' onClick={handleLogin}>Login</IonButton>
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={false} onDidDismiss={() => setInvalid(false)} message='Logging in...' duration={2000} />
         </IonCardContent>
@@ -116,7 +114,7 @@ export default function LoginPage() {
               </IonItem>
               <IonItem>
                 <IonLabel position='stacked' color='danger'>{invalid ? 'Email does not exist and/or is invalid' : ''}</IonLabel>
-                <IonLabel position='stacked' color='primary'>{success ? '' : ''}Password reset email sent.<br/><br/>Email may take 5-10 minutes.<br/>If you do not receive contact your Stock & Associates IT Admin. </IonLabel>
+                <IonLabel position='stacked' color='primary'>{success ? '' : ''}Password reset email sent.<br /><br />Email may take 5-10 minutes.<br />If you do not receive contact your Stock & Associates IT Admin. </IonLabel>
               </IonItem>
             </IonCardContent>
             <IonCardContent>

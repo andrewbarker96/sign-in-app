@@ -135,7 +135,12 @@ http://ionicframework.com/docs/theming/ */
   align-content: center;
   align-content: space-between;
   background-color: white;
+  padding:5%;
+}
 
+.form{
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .copyright{
@@ -167,6 +172,21 @@ http://ionicframework.com/docs/theming/ */
   width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+  .top-menu-button{
+    padding:5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .form{
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+  
+}
 /* @media (prefers-color-scheme: dark) {
 
   body {

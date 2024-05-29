@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent } from '@ionic/react';
 import { firestore } from '../../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { Keyboard } from '@capacitor/keyboard';
 
 function SignInForm() {
   const [firstName, setFirstName] = useState('');
@@ -15,30 +16,39 @@ function SignInForm() {
   const hour = new Date().toLocaleTimeString();
   const date = (new Date().getMonth() + 1) + '-' + (new Date().getDate()) + '-' + new Date().getFullYear();
 
+  const keyboard = Keyboard;
+
   const handleFormSubmit = async () => {
-    try {
-      const docRef = await addDoc(collection(firestore, `guests`), {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        company: company,
-        date: `${date}`,
-        time: `${time}`,
-      });
-      console.log('Document written with ID: ', docRef.id);
-      setSuccess(true);
-      setError(false);
-      setTime(new Date().toLocaleTimeString());
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setCompany('');
-      
-    } catch (error) {
-      console.error('Error writing document: ', error);
+    if (!firstName || !lastName || !email || !company) {
       setError(true);
+      <IonText color='danger'>All fields must be filled in.</IonText>;
+      return;
     }
-  };
+    else {
+      try {
+        const docRef = await addDoc(collection(firestore, `guests`), {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          company: company,
+          date: `${date}`,
+          time: `${time}`,
+        });
+        console.log('Document written with ID: ', docRef.id);
+        setSuccess(true);
+        setError(false);
+        setTime(new Date().toLocaleTimeString());
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setCompany('');
+
+      } catch (error) {
+        console.error('Error writing document: ', error);
+        setError(true);
+      }
+    };
+  }
 
   return (
     <IonContent className='ion-padding'>
@@ -107,9 +117,9 @@ function SignInForm() {
       </IonCardContent>
 
       {error && (
-        <IonLabel position='stacked' color='danger'>
-          Error: Unable to sign you in. Please speak to Receptionist.
-        </IonLabel>
+        <IonText color='danger' className='ion-text-center'>
+          <p>Unable to sign you in. Ensure all fields are filled out.</p>
+        </IonText>
       )}
 
       <IonButton expand='block' onClick={handleFormSubmit}>
@@ -117,10 +127,10 @@ function SignInForm() {
       </IonButton>
 
       {success && (
-        <IonLabel position='stacked' color='success'>
-          Success: You have been successfully signed in!<br/>Welcome to Stock & Associates!
-        </IonLabel>
-        
+        <IonText color='success' className='ion-text-center'>
+          You have been successfully signed in!<br />Welcome to Stock & Associates!
+        </IonText>
+
       )}
     </IonContent>
   );

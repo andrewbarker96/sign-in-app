@@ -19,20 +19,16 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonTitle>Home</IonTitle>
-      </IonHeader>
+    <IonPage className='login-tab'>
       <IonContent className='ion-padding'>
-        <IonCardContent className='ion-margin-top'>
-          <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" className='ion-padding' style={{ height: '175px' }} />
-        </IonCardContent>
         <IonCardContent>
+          <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
+        </IonCardContent>
+        <IonCardContent className='form'>
           <IonText class='ion-text-center' >
             <h1>Welcome to Stock & Associates!</h1>
           </IonText>
-        </IonCardContent>
-        <IonCardContent style={{ marginLeft: '20%', marginRight: '20%' }}>
+          <br />
           <IonButton id='open-modal' onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
           <br />
           {/* <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton> */}
@@ -40,7 +36,7 @@ const HomePage: React.FC = () => {
       </IonContent>
 
 
-      <IonModal trigger='open-modal' canDismiss={canDismiss} isOpen={showModal} initialBreakpoint={1} breakpoints={[0, 1]}>
+      <IonModal trigger='open-modal' canDismiss={canDismiss} isOpen={showModal} initialBreakpoint={1} breakpoints={[0, 0]}>
         <IonHeader>
           <IonToolbar style={{ display: 'flex' }}>
             <IonTitle>Sign In</IonTitle>
