@@ -77,6 +77,9 @@ const App: React.FC = () => {
             <Route exact path="/Admin">
               {adminUser ? <AdminPage /> : <Redirect to="/" />}
             </Route>
+            <Route exact path="/Admin">
+              {adminUser && <AdminPage />}
+            </Route>
             {/* <Route exact path="/contacts">
             <ContactsPage />
           </Route>
