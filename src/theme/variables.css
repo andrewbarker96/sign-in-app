@@ -138,6 +138,15 @@ http://ionicframework.com/docs/theming/ */
   padding:5%;
 }
 
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-content: space-between;
+  background-color: white;
+  padding: 2.5%;
+}
+
 .form{
   padding-left: 20%;
   padding-right: 20%;

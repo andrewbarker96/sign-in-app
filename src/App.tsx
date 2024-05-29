@@ -11,6 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 import { setupIonicReact } from '@ionic/react';
 import LoginPage from './pages/Login';
 import AdminPage from './pages/Admin';
+import { adminAuth } from './util/firebase';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -41,11 +42,16 @@ const App: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(true);
+        if (adminAuth.includes(user.uid)) {
+          setAdminUser(true);
+        } else {
+          setAdminUser(false);
+        }
       } else {
         setAuthUser(false);
+        setAdminUser(false);
       }
     });
-    
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
@@ -64,22 +70,22 @@ const App: React.FC = () => {
       </IonHeader>
       <IonReactRouter>
         <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/">
-            {authUser ? <HomePage /> : <LoginPage />}
-          </Route>
-          <Route exact path="/Admin">
-            <AdminPage />
-          </Route>
-          {/* <Route exact path="/contacts">
+          <IonRouterOutlet>
+            <Route exact path="/">
+              {authUser ? <HomePage /> : <LoginPage />}
+            </Route>
+            <Route exact path="/Admin">
+              {adminUser ? <AdminPage /> : <Redirect to="/" />}
+            </Route>
+            {/* <Route exact path="/contacts">
             <ContactsPage />
           </Route>
           <Route exact path="/employees">
             <EmployeesPage />
           </Route>          */}
-             
+
           </IonRouterOutlet>
-            <IonTabBar slot={'bottom'}>
+          <IonTabBar slot={'bottom'}>
             {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
@@ -104,4 +110,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
