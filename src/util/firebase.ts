@@ -14,9 +14,13 @@ const firebaseConfig = {
   appId: "1:1080703289236:web:a13f5bec71795e62083181",
   measurementId: "G-3MHPJHP7BR",
 };
+const adminAuth = [
+  "yYMmzbnFnXPCclmWWmi0oyLulqh1",
+  "RmgwiiugPWTEL3YyfJOyro3aq3I2",
+];
 
 const firebase = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebase);
 const auth = getAuth(firebase);
 
-export { firebase, auth, firestore };
+export { firebase, auth, firestore, adminAuth };

@@ -33,6 +33,7 @@ function SignInForm() {
           company: company,
           date: `${date}`,
           time: `${time}`,
+          notes: ''
         });
         console.log('Document written with ID: ', docRef.id);
         setSuccess(true);
@@ -128,7 +129,7 @@ function SignInForm() {
 
       {success && (
         <IonText color='success' className='ion-text-center'>
-          You have been successfully signed in!<br />Welcome to Stock & Associates!
+          <p>You have been successfully signed in!<br />Welcome to Stock & Associates!</p>
         </IonText>
 
       )}
