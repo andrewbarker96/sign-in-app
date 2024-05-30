@@ -3,7 +3,7 @@ import { firestore } from "../util/firebase";
 import { useState, useEffect } from "react";
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover } from "@ionic/react";
 import TopMenu from "../components/TopMenu";
-import { close, create, createOutline, filter, filterOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
+import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 
@@ -173,19 +173,15 @@ export default function AdminPage() {
                     </IonCol>
                   </IonRow>
                   <IonRow>
-                    <IonCol size="1">
-                      <br />
-                      <IonText>
-                        <p>Signed In:</p>
-                        <p>Signed Out:</p>
-                      </IonText>
-                    </IonCol>
-                    <IonCol size="1">
-                      <br />
-                      <IonText>
-                        <p>{guest.signInTime}</p>
-                        <p>{guest.signOutTime}</p>
-                      </IonText>
+                    <IonCol size="12">
+                      <IonButtons>
+                        <IonIcon slot="start" color="success" icon={checkmarkCircle} />
+                        <IonText>{guest.signInTime}</IonText>
+                      </IonButtons>
+                      <IonButtons>
+                        <IonIcon slot="start" color='danger' icon={closeCircle} />
+                        <IonText>{guest.signOutTime}</IonText>
+                      </IonButtons>
                     </IonCol>
                   </IonRow>
                 </IonGrid>
