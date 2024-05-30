@@ -3,7 +3,7 @@ import { firestore } from "../util/firebase";
 import { useState, useEffect } from "react";
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover } from "@ionic/react";
 import TopMenu from "../components/TopMenu";
-import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
+import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, logOutOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 
@@ -82,6 +82,31 @@ export default function AdminPage() {
     }
   };
 
+  // Sign out a guest
+  const signOutGuest = async (id: string, currentSignOutTime: string) => {
+    if (currentSignOutTime !== '') {
+      alert("This guest has already been signed out.");
+      return;
+    }
+
+    const confirmSignOut = window.confirm("Are you sure you want to sign out this guest?");
+    if (confirmSignOut) {
+      try {
+        const guestDoc = doc(firestore, "guests", id);
+        const signOutTime = new Date().toLocaleTimeString();
+        await updateDoc(guestDoc, { signOutTime });
+        console.log("Guest Signed Out:", id);
+
+        // Update the local state to reflect the sign-out time change
+        setGuestData(guestData.map(guest =>
+          guest.id === id ? { ...guest, signOutTime } : guest
+        ));
+      } catch (error) {
+        console.error("Error signing out guest:", error);
+      }
+    }
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding">
@@ -150,26 +175,23 @@ export default function AdminPage() {
                       )}
                     </IonCol>
 
-                    {/* Save & Delete Buttons */}
+                    {/* Save & Sign Out Buttons */}
                     <IonCol size="1">
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <IonButtons slot="primary">
-                          {editingGuestId === guest.id ? (
-                            <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); handleGuestUpdate(guest.id, 'notes', guestNotes || ''); setEditingGuestId(null); }}>
-                              <IonIcon icon={saveOutline} />
-                            </IonButton>
-                          ) : (
-                            <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); setEditingGuestId(guest.id); setGuestNotes(guest.notes || ''); }}>
-                              <IonIcon icon={createOutline} />
-                            </IonButton>
-                          )}
-                        </IonButtons>
-                        {/* <IonButtons slot="secondary">
-                          <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); removeGuest(guest.id) }}>
-                            <IonIcon icon={trashBinOutline} />
+                      <IonButtons>
+                        {editingGuestId === guest.id ? (
+                          <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); handleGuestUpdate(guest.id, 'notes', guestNotes || ''); setEditingGuestId(null); }}>
+                            <IonIcon icon={saveOutline} />
                           </IonButton>
-                        </IonButtons> */}
-                      </div>
+                        ) : (
+                          <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); setEditingGuestId(guest.id); setGuestNotes(guest.notes || ''); }}>
+                            <IonIcon icon={createOutline} />
+                          </IonButton>
+                        )}
+
+                        <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); signOutGuest(guest.id, guest.signOutTime); }}>
+                          <IonIcon icon={logOutOutline} />
+                        </IonButton>
+                      </IonButtons>
                     </IonCol>
                   </IonRow>
                   <IonRow>
@@ -232,7 +254,6 @@ export default function AdminPage() {
             placeholder="Search"
             showCancelButton="focus"
             cancelButtonIcon={close}
-
           />
         </IonPopover>
       </IonContent>
