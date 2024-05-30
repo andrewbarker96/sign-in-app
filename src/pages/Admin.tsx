@@ -118,7 +118,7 @@ export default function AdminPage() {
                   <IonRow>
 
                     {/* Guest Information */}
-                    <IonCol size="3">
+                    <IonCol size="4">
                       <IonText>
                         <h2>{guest.firstName} {guest.lastName}</h2>
                       </IonText>
@@ -151,8 +151,8 @@ export default function AdminPage() {
                     </IonCol>
 
                     {/* Save & Delete Buttons */}
-                    <IonCol size="2">
-                      <div style={{ display: 'flex', justifyContent: 'right' }}>
+                    <IonCol size="1">
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <IonButtons slot="primary">
                           {editingGuestId === guest.id ? (
                             <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); handleGuestUpdate(guest.id, 'notes', guestNotes || ''); setEditingGuestId(null); }}>
@@ -164,11 +164,11 @@ export default function AdminPage() {
                             </IonButton>
                           )}
                         </IonButtons>
-                        <IonButtons slot="secondary">
+                        {/* <IonButtons slot="secondary">
                           <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); removeGuest(guest.id) }}>
                             <IonIcon icon={trashBinOutline} />
                           </IonButton>
-                        </IonButtons>
+                        </IonButtons> */}
                       </div>
                     </IonCol>
                   </IonRow>
