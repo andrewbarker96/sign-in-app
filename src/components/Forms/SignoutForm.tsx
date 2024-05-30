@@ -1,12 +1,13 @@
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { firestore } from "../../util/firebase";
 import { useState, useEffect } from "react";
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonGrid, IonRow, IonCol } from "@ionic/react";
-import { exitOutline } from "ionicons/icons";
-import { groupBy } from "lodash";
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonGrid, IonRow, IonCol, IonButtons, IonToast } from "@ionic/react";
+import { checkmarkCircle, exitOutline } from "ionicons/icons";
+import { groupBy, set } from "lodash";
 
 export default function SignOut() {
   const [guestData, setGuestData] = useState<any[]>([]);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const fetchGuestData = async () => {
@@ -29,6 +30,7 @@ export default function SignOut() {
         const signOutTime = new Date().toLocaleTimeString();
         await updateDoc(guestDoc, { signOutTime });
         console.log("Guest Signed Out:", id);
+        setSuccess(true);
 
         // Update the local state to reflect the sign-out time change
         setGuestData(guestData.map(guest =>
@@ -44,55 +46,44 @@ export default function SignOut() {
   const signedInGuests = guestData.filter(guest => !guest.signOutTime);
 
   return (
-    <IonPage className="main-content">
-      <IonContent fullscreen className="ion-padding">
+    <IonContent fullscreen className="ion-padding">
+      {Object.entries(groupBy(signedInGuests, 'date')).map(([date, guests], index) => (
+        <IonCard key={index} className="ion-padding">
+          <IonCardHeader>
+            <IonCardTitle>{date}</IonCardTitle>
+          </IonCardHeader>
+          {guests.map((guest, index) => (
+            <IonCardContent key={index}>
+              <IonGrid>
+                <IonRow>
 
-        {/* Guest Entries Sorted by Date then Time */}
-        {Object.entries(groupBy(signedInGuests, 'date')).map(([date, guests], index) => (
-          <IonCard key={index} className="ion-padding">
-            <IonCardHeader>
-              <IonCardTitle>{date}</IonCardTitle>
-            </IonCardHeader>
-            {guests.map((guest, index) => (
-              <IonCardContent key={index}>
-                <IonGrid>
-                  <IonRow>
-
-                    {/* Guest Information */}
-                    <IonCol size="12">
+                  {/* Guest Information */}
+                  <IonCol size="12">
+                    <IonText>
+                      <h2>{guest.firstName} {guest.lastName} | {guest.company}</h2>
+                    </IonText>
+                    <IonText color={'primary'}>
+                      <h2>{guest.email}</h2>
+                    </IonText>
+                  </IonCol>
+                  <IonCol size="12">
+                    <IonButtons>
+                      <IonIcon icon={checkmarkCircle} color='success' slot="start" />
                       <IonText>
-                        <h2>{guest.firstName} {guest.lastName}</h2>
+                        <h2>{guest.signInTime}</h2>
                       </IonText>
-                      <IonText>
-                        <p>{guest.company}</p>
-                      </IonText>
-                      <IonText color={'primary'}>
-                        <p>{guest.email}</p>
-                      </IonText>
-                      <br />
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol size="3">
-                      <IonText>
-                        <p>Sign In Time:</p>
-                      </IonText>
-                    </IonCol>
-                    <IonCol size="3">
-                      <IonText>
-                        <p>{guest.signInTime}</p>
-                      </IonText>
-                    </IonCol>
-                    <IonCol size="12">
-                      <IonButton expand="block" onClick={() => handleSignOut(guest.id)}><IonIcon slot="end" icon={exitOutline} />Sign Out</IonButton>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
-              </IonCardContent>
-            ))}
-          </IonCard>
-        ))}
-      </IonContent>
-    </IonPage>
+                    </IonButtons>
+                  </IonCol>
+                  <IonCol size="12">
+                    <IonButton expand="block" onClick={() => handleSignOut(guest.id)}><IonIcon slot="end" icon={exitOutline} />Sign Out</IonButton>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonCardContent>
+          ))}
+        </IonCard>
+      ))}
+      <IonToast color={'success'} isOpen={success} onDidDismiss={() => setSuccess(false)} message="Guest signed out successfully!" duration={2000} />
+    </IonContent>
   );
 }

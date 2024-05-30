@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent } from '@ionic/react';
+import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent, IonGrid, IonCol, IonRow, IonToast } from '@ionic/react';
 import { firestore } from '../../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { Keyboard } from '@capacitor/keyboard';
@@ -21,7 +21,6 @@ function SignInForm() {
   const handleFormSubmit = async () => {
     if (!firstName || !lastName || !email || !company) {
       setError(true);
-      <IonText color='danger'>All fields must be filled in.</IonText>;
       return;
     }
     else {
@@ -54,69 +53,72 @@ function SignInForm() {
 
   return (
     <IonContent className='ion-padding'>
-      <IonCardContent>
-        <IonInput
-          id='FirstName'
-          type='text'
-          labelPlacement='floating'
-          placeholder='ex. John'
-          value={firstName}
-          onIonChange={e => setFirstName(e.detail.value || '')}
-        >
-          <IonText slot='label'>
-            First Name
-            <IonText color='danger'>*</IonText>
-          </IonText>
-        </IonInput>
-      </IonCardContent>
-
-      <IonCardContent>
-        <IonInput
-          id='LastName'
-          type='text'
-          labelPlacement='floating'
-          placeholder='ex. Doe'
-          value={lastName}
-          onIonChange={e => setLastName(e.detail.value || '')}
-        >
-          <IonText slot='label'>
-            Last Name
-            <IonText color='danger'>*</IonText>
-          </IonText>
-        </IonInput>
-      </IonCardContent>
-
-      <IonCardContent>
-        <IonInput
-          id='email'
-          type='email'
-          labelPlacement='floating'
-          placeholder='ex. johndoe@company.com'
-          value={email}
-          onIonChange={e => setEmail(e.detail.value || '')}
-        >
-          <IonText slot='label'>
-            Email
-            <IonText color='danger'>*</IonText>
-          </IonText>
-        </IonInput>
-      </IonCardContent>
-
-      <IonCardContent>
-        <IonInput
-          id='company'
-          type='text'
-          labelPlacement='floating'
-          placeholder='ex. Stock & Associates'
-          value={company}
-          onIonChange={e => setCompany(e.detail.value || '')}
-        >
-          <IonText slot='label'>
-            Company
-            <IonText color='danger'>*</IonText>
-          </IonText>
-        </IonInput>
-      </IonCardContent>
+      <IonGrid>
+        <IonRow>
+          <IonCol size='12'>
+            <IonInput
+              id='FirstName'
+              type='text'
+              labelPlacement='floating'
+              placeholder='ex. John'
+              value={firstName}
+              onIonChange={e => setFirstName(e.detail.value || '')}
+            >
+              <IonText slot='label'>
+                First Name
+                <IonText color='danger'>*</IonText>
+              </IonText>
+            </IonInput>
+          </IonCol>
+          <IonCol size='12'>
+            <IonInput
+              id='LastName'
+              type='text'
+              labelPlacement='floating'
+              placeholder='ex. Doe'
+              value={lastName}
+              onIonChange={e => setLastName(e.detail.value || '')}
+            >
+              <IonText slot='label'>
+                Last Name
+                <IonText color='danger'>*</IonText>
+              </IonText>
+            </IonInput>
+          </IonCol>
+          <IonCol size='12'>
+            <IonInput
+              id='email'
+              type='email'
+              labelPlacement='floating'
+              placeholder='ex. johndoe@company.com'
+              value={email}
+              onIonChange={e => setEmail(e.detail.value || '')}
+            >
+              <IonText slot='label'>
+                Email
+                <IonText color='danger'>*</IonText>
+              </IonText>
+            </IonInput>
+          </IonCol>
+          <IonCol size='12'>
+            <IonInput
+              id='company'
+              type='text'
+              labelPlacement='floating'
+              placeholder='ex. Stock & Associates'
+              value={company}
+              onIonChange={e => setCompany(e.detail.value || '')}
+            >
+              <IonText slot='label'>
+                Company
+                <IonText color='danger'>*</IonText>
+              </IonText>
+            </IonInput>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+      <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={3000} />
+      <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={3000} />
 
       {error && (
         <IonText color='danger' className='ion-text-center'>
@@ -124,7 +126,7 @@ function SignInForm() {
         </IonText>
       )}
 
-      <IonButton expand='block' onClick={handleFormSubmit}>
+      <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
         Sign In
       </IonButton>
 
