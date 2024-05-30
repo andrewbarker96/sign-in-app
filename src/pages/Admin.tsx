@@ -169,7 +169,7 @@ export default function AdminPage() {
         {/* Guest Entries Sorted by Date then Time */}
         <IonAccordionGroup>
           {sortedGuestData.map(([date, guests], index) => (
-            <IonAccordion key={index} value={date}>
+            <IonAccordion key={index} value={date} className="accordion">
               <IonItem slot="header" color={'secondary'}>
                 <IonLabel><h2>{date}</h2></IonLabel>
               </IonItem>

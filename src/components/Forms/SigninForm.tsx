@@ -19,7 +19,7 @@ function SignInForm() {
   const keyboard = Keyboard;
 
   const handleFormSubmit = async () => {
-    if (!firstName || !lastName || !company) {
+    if (!firstName || !lastName || !email || !company) {
       setError(true);
       return;
     }
@@ -60,8 +60,7 @@ function SignInForm() {
               id='FirstName'
               type='text'
               labelPlacement='floating'
-              placeholder='First Name'
-              required={true}
+              placeholder='ex. John'
               value={firstName}
               onIonChange={e => setFirstName(e.detail.value || '')}
             >
@@ -76,8 +75,7 @@ function SignInForm() {
               id='LastName'
               type='text'
               labelPlacement='floating'
-              placeholder='Last Name'
-              required={true}
+              placeholder='ex. Doe'
               value={lastName}
               onIonChange={e => setLastName(e.detail.value || '')}
             >
@@ -89,11 +87,25 @@ function SignInForm() {
           </IonCol>
           <IonCol size='12'>
             <IonInput
+              id='email'
+              type='email'
+              labelPlacement='floating'
+              placeholder='ex. johndoe@company.com'
+              value={email}
+              onIonChange={e => setEmail(e.detail.value || '')}
+            >
+              <IonText slot='label'>
+                Email
+                <IonText color='danger'>*</IonText>
+              </IonText>
+            </IonInput>
+          </IonCol>
+          <IonCol size='12'>
+            <IonInput
               id='company'
               type='text'
               labelPlacement='floating'
-              placeholder='Company'
-              required={true}
+              placeholder='ex. Stock & Associates'
               value={company}
               onIonChange={e => setCompany(e.detail.value || '')}
             >
@@ -103,25 +115,27 @@ function SignInForm() {
               </IonText>
             </IonInput>
           </IonCol>
-          <IonCol size='12'>
-            <IonInput
-              id='email'
-              type='email'
-              label='Email'
-              labelPlacement='floating'
-              placeholder='Email'
-              required={false}
-              value={email}
-              onIonChange={e => setEmail(e.detail.value || '')}
-            />
-          </IonCol>
         </IonRow>
       </IonGrid>
-      <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all Required fields are filled out.' duration={5000} />
-      <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={5000} />
+      <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={3000} />
+      <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={3000} />
+
+      {error && (
+        <IonText color='danger' className='ion-text-center'>
+          <p>Unable to sign you in. Ensure all fields are filled out.</p>
+        </IonText>
+      )}
+
       <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
         Sign In
       </IonButton>
+
+      {success && (
+        <IonText color='success' className='ion-text-center'>
+          <p>You have been successfully signed in!<br />Welcome to Stock & Associates!</p>
+        </IonText>
+
+      )}
     </IonContent>
   );
 }
