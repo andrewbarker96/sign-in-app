@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <IonPage className='login-tab'>
+    <IonPage>
       <IonContent className='ion-padding'>
         <IonCardContent>
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
