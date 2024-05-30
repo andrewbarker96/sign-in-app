@@ -6,13 +6,15 @@ import './Home.css'
 import { Margin } from '@mui/icons-material';
 import { close } from 'ionicons/icons';
 import { set } from 'lodash';
+import SignOut from '../components/Forms/SignoutForm';
 
 const HomePage: React.FC = () => {
 
   const date = new Date();
   const monthDayYear = date.toDateString();
-  const [showModal, setShowModal] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
+  const [signInModal, setSignInModal] = useState(false);
+  const [signOutModal, setSignOutModal] = useState(false);
+  const [signInModal2, setSignInModal2] = useState(false);
 
   async function canDismiss(data?: any, role?: string) {
     return role !== 'gesture';
@@ -29,18 +31,20 @@ const HomePage: React.FC = () => {
             <h1>Welcome to Stock & Associates!</h1>
           </IonText>
           <br />
-          <IonButton id='open-modal' onClick={() => setShowModal(true)} expand="block">Sign In</IonButton>
+          <IonButton id='openSignInModal' onClick={() => setSignInModal(true)} expand="block">Sign In</IonButton>
           <br />
-          {/* <IonButton color='medium' onClick={() => setShowModal2(true)} expand="block">Set Up Meeting</IonButton> */}
+          <IonButton id='openSignOutModal' color={'secondary'} onClick={() => setSignOutModal(true)} expand="block">Sign Out</IonButton>
+          <br />
+          {/* <IonButton color='medium' onClick={() => setSignInModal2(true)} expand="block">Set Up Meeting</IonButton> */}
         </IonCardContent>
       </IonContent>
 
-
-      <IonModal trigger='open-modal' canDismiss={canDismiss} isOpen={showModal} initialBreakpoint={1} breakpoints={[0, 0]}>
+      {/* Sign In Modal */}
+      <IonModal trigger='openSignInModal' canDismiss={canDismiss} isOpen={signInModal} initialBreakpoint={1} breakpoints={[0, 0]}>
         <IonHeader>
           <IonToolbar style={{ display: 'flex' }}>
             <IonTitle>Sign In</IonTitle>
-            <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal(false)}>
+            <IonButton fill='clear' slot='start' shape='round' onClick={() => setSignInModal(false)}>
               <IonIcon icon={close} slot='start' />
             </IonButton>
           </IonToolbar>
@@ -48,11 +52,24 @@ const HomePage: React.FC = () => {
         <SignInForm />
       </IonModal>
 
-      {/* <IonModal isOpen={showModal2}>
+      {/* Sign Out Modal */}
+      <IonModal trigger='openSignOutModal' canDismiss={canDismiss} isOpen={signOutModal} initialBreakpoint={1} breakpoints={[0, 0]}>
+        <IonHeader>
+          <IonToolbar style={{ display: 'flex' }}>
+            <IonTitle>Sign In</IonTitle>
+            <IonButton fill='clear' slot='start' shape='round' onClick={() => setSignInModal(false)}>
+              <IonIcon icon={close} slot='start' />
+            </IonButton>
+          </IonToolbar>
+        </IonHeader>
+        <SignOut />
+      </IonModal>
+
+      {/* <IonModal isOpen={signInModal2}>
           <IonHeader>
             <IonToolbar style={{ display: 'flex' }}>
               <IonTitle>Set Up Meeting</IonTitle>
-              <IonButton fill='clear' slot='start' shape='round' onClick={() => setShowModal2(false)}>
+              <IonButton fill='clear' slot='start' shape='round' onClick={() => setSignInModal2(false)}>
                 <IonIcon icon={close} slot='start' />
               </IonButton>
             </IonToolbar>

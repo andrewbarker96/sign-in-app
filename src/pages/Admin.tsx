@@ -55,7 +55,7 @@ export default function AdminPage() {
     const confirmExport = window.confirm("Are you sure you want to export this data?");
     if (confirmExport) {
       const csv = guestData.map(guest => {
-        const csv = `First Name,Last Name,Company,Email,Date,Time,Notes\n${guestData.map(guest => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.time},${guest.notes}`).join('\n')}`;
+        const csv = `First Name,Last Name,Company,Email,Date,Sign In Time,Sign Out Time,Notes\n${guestData.map(guest => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime}, ${guest.signOutTime},${guest.notes}`).join('\n')}`;
       }).join('\n');
 
       const csvBlob = new Blob([csv], { type: 'text/csv' });
@@ -114,7 +114,7 @@ export default function AdminPage() {
               <IonCardTitle>{date}</IonCardTitle>
             </IonCardHeader>
             {selectedDate === date && guests.map((guest, index) => (
-              <IonCardContent key={index} style={{ display: 'flex', justifyContent: 'space-between', alignContent: "center", marginLeft: '2%', marginRight: '2%' }}>
+              <IonCardContent key={index}>
                 <IonGrid>
                   <IonRow>
 
@@ -128,11 +128,6 @@ export default function AdminPage() {
                       </IonText>
                       <IonText color={'primary'}>
                         <p>{guest.email}</p>
-                      </IonText>
-                      <br />
-                      <IonText>
-                        <p>Arrival:</p>
-                        <p>{guest.date} | {guest.time}</p>
                       </IonText>
                     </IonCol>
 
@@ -178,6 +173,22 @@ export default function AdminPage() {
                       </div>
                     </IonCol>
                   </IonRow>
+                  <IonRow>
+                    <IonCol size="1">
+                      <br />
+                      <IonText>
+                        <p>Signed In:</p>
+                        <p>Signed Out:</p>
+                      </IonText>
+                    </IonCol>
+                    <IonCol size="1">
+                      <br />
+                      <IonText>
+                        <p>{guest.signInTime}</p>
+                        <p>{guest.signOutTime}</p>
+                      </IonText>
+                    </IonCol>
+                  </IonRow>
                 </IonGrid>
               </IonCardContent>
             ))}
@@ -216,7 +227,7 @@ export default function AdminPage() {
             }
           ]}
         />
-        
+
         <IonPopover trigger="search-bar">
           <IonSearchbar
             value={searchText}
@@ -226,8 +237,8 @@ export default function AdminPage() {
             placeholder="Search"
             showCancelButton="focus"
             cancelButtonIcon={close}
-            
-            />
+
+          />
         </IonPopover>
       </IonContent>
     </IonPage>
