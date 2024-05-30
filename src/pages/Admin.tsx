@@ -1,9 +1,39 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../util/firebase";
 import { useState, useEffect } from "react";
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover, IonChip } from "@ionic/react";
-import TopMenu from "../components/TopMenu";
-import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, logOutOutline, pencil, save, saveOutline, search, time, timeOutline, trash, trashBinOutline } from "ionicons/icons";
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonIcon,
+  IonPage,
+  IonText,
+  IonItem,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonTextarea,
+  IonActionSheet,
+  IonPopover,
+  IonChip,
+  IonAccordionGroup,
+  IonAccordion,
+  IonLabel,
+  IonCardContent,
+} from "@ionic/react";
+import {
+  close,
+  createOutline,
+  filterOutline,
+  logIn,
+  logInOutline,
+  logOut,
+  logOutOutline,
+  saveOutline,
+  search,
+  time,
+  timeOutline,
+} from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 
@@ -21,7 +51,10 @@ export default function AdminPage() {
     const fetchGuestData = async () => {
       const guestCollection = collection(firestore, "guests");
       const guestSnapshot = await getDocs(guestCollection);
-      const guests = guestSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const guests = guestSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       console.log("Guests:", guests);
       setGuestData(guests);
     };
@@ -31,7 +64,7 @@ export default function AdminPage() {
 
   // Update a guest's information and store it in Firestore
   const handleGuestUpdate = async (id: string, field: string, value: string) => {
-    const updatedGuestData = guestData.map(guest => {
+    const updatedGuestData = guestData.map((guest) => {
       if (guest.id === id) {
         return { ...guest, [field]: value };
       }
@@ -54,16 +87,20 @@ export default function AdminPage() {
   const handleExport = () => {
     const confirmExport = window.confirm("Are you sure you want to export this data?");
     if (confirmExport) {
-      const csv = guestData.map(guest => {
-        const csv = `First Name,Last Name,Company,Email,Date,Sign In Time,Sign Out Time,Notes\n${guestData.map(guest => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime}, ${guest.signOutTime},${guest.notes}`).join('\n')}`;
-      }).join('\n');
+      const csv = guestData
+        .map(
+          (guest) =>
+            `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime},${guest.signOutTime},${guest.notes}`
+        )
+        .join("\n");
 
-      const csvBlob = new Blob([csv], { type: 'text/csv' });
+      const csvHeader = `First Name,Last Name,Company,Email,Date,Sign In Time,Sign Out Time,Notes\n`;
+      const csvBlob = new Blob([csvHeader + csv], { type: "text/csv" });
       const csvUrl = URL.createObjectURL(csvBlob);
 
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = csvUrl;
-      a.download = 'guests.csv';
+      a.download = "guests.csv";
       a.click();
     }
   };
@@ -74,7 +111,7 @@ export default function AdminPage() {
     if (confirmRemove) {
       try {
         await deleteDoc(doc(firestore, "guests", id));
-        const updatedGuestData = guestData.filter(guest => guest.id !== id);
+        const updatedGuestData = guestData.filter((guest) => guest.id !== id);
         setGuestData(updatedGuestData);
       } catch (error) {
         console.error("Error removing guest:", error);
@@ -84,7 +121,7 @@ export default function AdminPage() {
 
   // Sign out a guest
   const signOutGuest = async (id: string, currentSignOutTime: string) => {
-    if (currentSignOutTime !== '') {
+    if (currentSignOutTime !== "") {
       alert("This guest has already been signed out.");
       return;
     }
@@ -98,9 +135,9 @@ export default function AdminPage() {
         console.log("Guest Signed Out:", id);
 
         // Update the local state to reflect the sign-out time change
-        setGuestData(guestData.map(guest =>
-          guest.id === id ? { ...guest, signOutTime } : guest
-        ));
+        setGuestData(
+          guestData.map((guest) => (guest.id === id ? { ...guest, signOutTime } : guest))
+        );
       } catch (error) {
         console.error("Error signing out guest:", error);
       }
@@ -111,19 +148,30 @@ export default function AdminPage() {
     <IonPage>
       <IonContent fullscreen className="ion-padding">
         {/* Top Bar (Search & Filter) */}
-        <IonGrid style={{ alignContent: 'center' }}>
-          <IonRow style={{ display: 'flex', alignContent: 'center' }}>
-            <IonCol size='11' style={{ display: 'flex' }}>
+        <IonGrid style={{ alignContent: "center" }}>
+          <IonRow style={{ display: "flex", alignContent: "center" }}>
+            <IonCol size="11" style={{ display: "flex" }}>
               <IonText>
                 <h2>Admin Portal</h2>
               </IonText>
             </IonCol>
-            <IonCol size='1' style={{ display: 'flex', justifyContent: 'right' }}>
+            <IonCol size="1" style={{ display: "flex", justifyContent: "right" }}>
               <IonButtons>
-                <IonButton id='search-bar' size="large" slot="icon-only" fill="clear" onClick={() => setShowSearchbar(true)}>
+                <IonButton
+                  id="search-bar"
+                  size="large"
+                  slot="icon-only"
+                  fill="clear"
+                  onClick={() => setShowSearchbar(true)}
+                >
                   <IonIcon icon={search} />
                 </IonButton>
-                <IonButton size="large" slot="icon-only" fill="clear" onClick={() => setShowActionSheet(true)}>
+                <IonButton
+                  size="large"
+                  slot="icon-only"
+                  fill="clear"
+                  onClick={() => setShowActionSheet(true)}
+                >
                   <IonIcon icon={filterOutline} />
                 </IonButton>
               </IonButtons>
@@ -132,120 +180,153 @@ export default function AdminPage() {
         </IonGrid>
 
         {/* Guest Entries Sorted by Date then Time */}
-        {Object.entries(groupBy(guestData, 'date')).map(([date, guests], index) => (
-          <IonCard key={index} className="ion-padding" onClick={() => setSelectedDate(selectedDate === date ? undefined : date)}>
-            <IonCardHeader>
-              <IonCardTitle>{date}</IonCardTitle>
-            </IonCardHeader>
-            {selectedDate === date && guests.map((guest, index) => (
-              <IonCardContent key={index}>
-                <IonGrid>
-                  <IonRow>
+        <IonAccordionGroup>
+          {Object.entries(groupBy(guestData, "date")).map(([date, guests], index) => (
+            <IonAccordion key={index} value={date}>
+              <IonItem slot="header" color={'primary'}>
+                <IonLabel><h2>{date}</h2></IonLabel>
+              </IonItem>
 
-                    {/* Guest Information */}
-                    <IonCol size="4">
-                      <IonText>
-                        <h2>{guest.firstName} {guest.lastName}</h2>
-                      </IonText>
-                      <IonText>
-                        <p>{guest.company}</p>
-                      </IonText>
-                      <IonText color={'primary'}>
-                        <p>{guest.email}</p>
-                      </IonText>
-                      <IonChip outline={true} color={'success'}>
-                        <IonIcon icon={time} />
-                        <IonText>{guest.signInTime}</IonText>
-                      </IonChip>
-                      <IonChip outline={true} color={'danger'}>
-                        <IonIcon icon={timeOutline} />
-                        <IonText>{guest.signOutTime}</IonText>
-                      </IonChip>
-                    </IonCol>
-
-                    {/* Notes */}
-                    <IonCol size="1" style={{ display: 'flex', justifyContent: 'right' }}>
-                      <IonText>
-                        <h2>Notes:</h2>
-                      </IonText>
-                    </IonCol>
-
-                    {/* Notes Editable Text Area */}
-                    <IonCol size="6">
-                      {editingGuestId === guest.id ? (
-                        <IonItem onClick={(e) => e.stopPropagation()}>
-                          <IonTextarea value={guestNotes} onIonChange={(e) => setGuestNotes(e.detail.value!)} />
-                        </IonItem>
-                      ) : (
+              {/* Guest Information */}
+              <IonCardContent className="ion-padding" slot="content">
+                {guests.map((guest, index) => (
+                  <IonGrid key={index}>
+                    <IonRow>
+                      <IonCol sizeLg="5">
                         <IonText>
-                          <h2>{guest.notes}</h2>
+                          <h2>{guest.firstName} {guest.lastName}</h2>
                         </IonText>
-                      )}
-                    </IonCol>
+                        <IonText>
+                          <p>{guest.company}</p>
+                        </IonText>
+                        <IonText color={"primary"}>
+                          <p>{guest.email}</p>
+                        </IonText>
+                        <IonChip color={"success"}>
+                          <IonText>{guest.signInTime}</IonText>
+                        </IonChip>
+                        <IonChip color={"danger"}>
+                          <IonText>{guest.signOutTime}</IonText>
+                        </IonChip>
+                      </IonCol>
 
-                    {/* Save & Sign Out Buttons */}
-                    <IonCol size="1">
-                      <IonButtons>
+                      {/* Notes */}
+                      <IonCol sizeLg="1" style={{ display: "flex", justifyContent: "right" }}>
+                        <IonText>
+                          <p>Notes:</p>
+                        </IonText>
+                      </IonCol>
+
+                      {/* Notes Editable Text Area */}
+                      <IonCol sizeLg="5">
                         {editingGuestId === guest.id ? (
-                          <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); handleGuestUpdate(guest.id, 'notes', guestNotes || ''); setEditingGuestId(null); }}>
-                            <IonIcon icon={saveOutline} />
-                          </IonButton>
+                          <IonItem onClick={(e) => e.stopPropagation()}>
+                            <IonTextarea
+                              value={guestNotes}
+                              onIonChange={(e) => setGuestNotes(e.detail.value!)}
+                            />
+                          </IonItem>
                         ) : (
-                          <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); setEditingGuestId(guest.id); setGuestNotes(guest.notes || ''); }}>
-                            <IonIcon icon={createOutline} />
-                          </IonButton>
+                          <IonText>
+                            <h2>{guest.notes}</h2>
+                          </IonText>
                         )}
+                      </IonCol>
 
-                        <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); signOutGuest(guest.id, guest.signOutTime); }}>
-                          <IonIcon icon={logOutOutline} />
-                        </IonButton>
-                      </IonButtons>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
+                      {/* Save & Sign Out Buttons */}
+                      <IonCol sizeLg="1">
+                        <IonButtons>
+                          {editingGuestId === guest.id ? (
+                            <IonButton
+                              size="large"
+                              slot="icon-only"
+                              fill="clear"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleGuestUpdate(guest.id, "notes", guestNotes || "");
+                                setEditingGuestId(null);
+                              }}
+                            >
+                              <IonIcon icon={saveOutline} />
+                            </IonButton>
+                          ) : (
+                            <IonButton
+                              size="large"
+                              slot="icon-only"
+                              fill="clear"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingGuestId(guest.id);
+                                setGuestNotes(guest.notes || "");
+                              }}
+                            >
+                              <IonIcon icon={createOutline} />
+                            </IonButton>
+                          )}
+
+                          <IonButton
+                            size="large"
+                            slot="icon-only"
+                            fill="clear"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              signOutGuest(guest.id, guest.signOutTime);
+                            }}
+                          >
+                            <IonIcon icon={logOutOutline} />
+                          </IonButton>
+                        </IonButtons>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                ))}
+                <IonButton expand="block" onClick={(e) => handleExport()}>
+                  Export Guests for {date}
+                </IonButton>
               </IonCardContent>
-            ))}
-            <IonButton onClick={(e) => { e.stopPropagation(); handleExport(); }}>Export</IonButton>
-          </IonCard>
-        ))}
+            </IonAccordion>
+          ))}
+        </IonAccordionGroup>
 
+        {/* Action Sheet for Filtering */}
         <IonActionSheet
           isOpen={showActionSheet}
           onDidDismiss={() => setShowActionSheet(false)}
           buttons={[
             {
-              text: 'Filter by Date',
+              text: "Filter by Date",
               handler: () => {
-                console.log('Filter by Date clicked');
-              }
+                console.log("Filter by Date clicked");
+              },
             },
             {
-              text: 'Filter by Time',
+              text: "Filter by Time",
               handler: () => {
-                console.log('Filter by Time clicked');
-              }
+                console.log("Filter by Time clicked");
+              },
             },
             {
-              text: 'Filter by Company',
+              text: "Filter by Company",
               handler: () => {
-                console.log('Filter by Company clicked');
-              }
+                console.log("Filter by Company clicked");
+              },
             },
             {
-              text: 'Cancel',
-              role: 'cancel',
+              text: "Cancel",
+              role: "cancel",
               handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
+                console.log("Cancel clicked");
+              },
+            },
           ]}
         />
 
+        {/* Search Bar Popover */}
         <IonPopover trigger="search-bar">
           <IonSearchbar
             value={searchText}
             onIonChange={(e) => setSearchText(e.detail.value!)}
-            onIonClear={() => setSearchText('')}
+            onIonClear={() => setSearchText("")}
             onIonCancel={() => setShowSearchbar(false)}
             placeholder="Search"
             showCancelButton="focus"
