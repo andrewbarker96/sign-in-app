@@ -25,27 +25,23 @@ import {
   close,
   createOutline,
   filterOutline,
-  logIn,
-  logInOutline,
-  logOut,
   logOutOutline,
   saveOutline,
   search,
-  time,
-  timeOutline,
+  arrowDownOutline,
+  arrowUpOutline,
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 
 export default function AdminPage() {
   const [guestData, setGuestData] = useState<any[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | undefined>();
   const [editingGuestId, setEditingGuestId] = useState<string | null>(null);
   const [guestNotes, setGuestNotes] = useState<string | undefined>();
   const [searchText, setSearchText] = useState<string | undefined>();
-  const [filteredGuestData, setFilteredGuestData] = useState<any[]>([]);
   const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchGuestData = async () => {
@@ -105,20 +101,6 @@ export default function AdminPage() {
     }
   };
 
-  // Remove a guest from the database
-  const removeGuest = async (id: string) => {
-    const confirmRemove = window.confirm("Are you sure you want to remove this guest?");
-    if (confirmRemove) {
-      try {
-        await deleteDoc(doc(firestore, "guests", id));
-        const updatedGuestData = guestData.filter((guest) => guest.id !== id);
-        setGuestData(updatedGuestData);
-      } catch (error) {
-        console.error("Error removing guest:", error);
-      }
-    }
-  };
-
   // Sign out a guest
   const signOutGuest = async (id: string, currentSignOutTime: string) => {
     if (currentSignOutTime !== "") {
@@ -144,18 +126,23 @@ export default function AdminPage() {
     }
   };
 
+  // Sort guest data by date
+  const sortedGuestData = Object.entries(groupBy(guestData, "date")).sort(([dateA], [dateB]) => {
+    return sortOrder === 'asc' ? new Date(dateA).getTime() - new Date(dateB).getTime() : new Date(dateB).getTime() - new Date(dateA).getTime();
+  });
+
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding">
-        {/* Top Bar (Search & Filter) */}
+        {/* Top Bar (Search, Filter, and Sort) */}
         <IonGrid style={{ alignContent: "center" }}>
           <IonRow style={{ display: "flex", alignContent: "center" }}>
-            <IonCol size="11" style={{ display: "flex" }}>
+            <IonCol size="10" style={{ display: "flex" }}>
               <IonText>
                 <h2>Admin Portal</h2>
               </IonText>
             </IonCol>
-            <IonCol size="1" style={{ display: "flex", justifyContent: "right" }}>
+            <IonCol size="2" style={{ display: "flex", justifyContent: "right" }}>
               <IonButtons>
                 <IonButton
                   id="search-bar"
@@ -170,9 +157,9 @@ export default function AdminPage() {
                   size="large"
                   slot="icon-only"
                   fill="clear"
-                  onClick={() => setShowActionSheet(true)}
+                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                 >
-                  <IonIcon icon={filterOutline} />
+                  <IonIcon icon={sortOrder === 'asc' ? arrowUpOutline : arrowDownOutline} />
                 </IonButton>
               </IonButtons>
             </IonCol>
@@ -181,9 +168,9 @@ export default function AdminPage() {
 
         {/* Guest Entries Sorted by Date then Time */}
         <IonAccordionGroup>
-          {Object.entries(groupBy(guestData, "date")).map(([date, guests], index) => (
+          {sortedGuestData.map(([date, guests], index) => (
             <IonAccordion key={index} value={date}>
-              <IonItem slot="header" color={'primary'}>
+              <IonItem slot="header" color={'secondary'}>
                 <IonLabel><h2>{date}</h2></IonLabel>
               </IonItem>
 
@@ -281,45 +268,12 @@ export default function AdminPage() {
                   </IonGrid>
                 ))}
                 <IonButton expand="block" onClick={(e) => handleExport()}>
-                  Export Guests for {date}
+                  Export
                 </IonButton>
               </IonCardContent>
             </IonAccordion>
           ))}
         </IonAccordionGroup>
-
-        {/* Action Sheet for Filtering */}
-        <IonActionSheet
-          isOpen={showActionSheet}
-          onDidDismiss={() => setShowActionSheet(false)}
-          buttons={[
-            {
-              text: "Filter by Date",
-              handler: () => {
-                console.log("Filter by Date clicked");
-              },
-            },
-            {
-              text: "Filter by Time",
-              handler: () => {
-                console.log("Filter by Time clicked");
-              },
-            },
-            {
-              text: "Filter by Company",
-              handler: () => {
-                console.log("Filter by Company clicked");
-              },
-            },
-            {
-              text: "Cancel",
-              role: "cancel",
-              handler: () => {
-                console.log("Cancel clicked");
-              },
-            },
-          ]}
-        />
 
         {/* Search Bar Popover */}
         <IonPopover trigger="search-bar">
