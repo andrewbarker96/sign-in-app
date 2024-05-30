@@ -22,7 +22,7 @@ export default function SignOut() {
 
   // Update the sign-out time for a guest in the database
   const handleSignOut = async (id: string) => {
-    const confirmSignOut = window.confirm("Are you sure you want to sign out this guest?");
+    const confirmSignOut = window.confirm("Are you sure you want to sign out?");
     if (confirmSignOut) {
       try {
         const guestDoc = doc(firestore, "guests", id);
