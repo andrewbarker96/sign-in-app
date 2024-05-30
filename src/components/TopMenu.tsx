@@ -13,7 +13,7 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { logOutOutline, close, calendarOutline, shieldHalf, home } from 'ionicons/icons';
+import { logOutOutline, close, calendarOutline, shieldHalf, home, personAdd } from 'ionicons/icons';
 import Copyright from './CopyrightText';
 import { adminAuth, auth } from '../util/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -73,8 +73,8 @@ const TopMenu: React.FC = () => {
               onClick={() => window.location.href = '/'}
               slot='start'
             >
-              <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
-              <IonText>Home</IonText>
+              <IonIcon slot="start" icon={personAdd} style={{ marginRight: '10px' }} />
+              <IonText>Sign In</IonText>
             </IonButton>
           </IonButtons>
           {adminUser && (
@@ -110,7 +110,7 @@ const TopMenu: React.FC = () => {
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
               <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
-              <IonText>Sign Out</IonText>
+              <IonText>Logout</IonText>
             </IonButton>
           </IonButtons>
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />

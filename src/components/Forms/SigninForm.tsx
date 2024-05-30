@@ -32,7 +32,8 @@ function SignInForm() {
           email: email,
           company: company,
           date: `${date}`,
-          time: `${time}`,
+          signInTime: `${time}`,
+          signOutTime: '',
           notes: ''
         });
         console.log('Document written with ID: ', docRef.id);

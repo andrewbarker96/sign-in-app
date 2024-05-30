@@ -1,16 +1,21 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../util/firebase";
 import { useState, useEffect } from "react";
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonPage, IonText, IonToolbar, IonInput, IonItem, IonLabel, IonGrid, IonRow, IonCol, IonTextarea } from "@ionic/react";
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover } from "@ionic/react";
 import TopMenu from "../components/TopMenu";
-import { create, createOutline, pencil, save, saveOutline, trash, trashBinOutline } from "ionicons/icons";
+import { close, create, createOutline, filter, filterOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
 import { groupBy } from "lodash";
+import { IonSearchbar } from "@ionic/react";
 
 export default function AdminPage() {
   const [guestData, setGuestData] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | undefined>();
   const [editingGuestId, setEditingGuestId] = useState<string | null>(null);
   const [guestNotes, setGuestNotes] = useState<string | undefined>();
+  const [searchText, setSearchText] = useState<string | undefined>();
+  const [filteredGuestData, setFilteredGuestData] = useState<any[]>([]);
+  const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
+  const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchGuestData = async () => {
@@ -50,7 +55,7 @@ export default function AdminPage() {
     const confirmExport = window.confirm("Are you sure you want to export this data?");
     if (confirmExport) {
       const csv = guestData.map(guest => {
-        const csv = `First Name,Last Name,Company,Email,Date,Time,Notes\n${guestData.map(guest => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.time},${guest.notes}`).join('\n')}`;
+        const csv = `First Name,Last Name,Company,Email,Date,Sign In Time,Sign Out Time,Notes\n${guestData.map(guest => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime}, ${guest.signOutTime},${guest.notes}`).join('\n')}`;
       }).join('\n');
 
       const csvBlob = new Blob([csv], { type: 'text/csv' });
@@ -80,16 +85,36 @@ export default function AdminPage() {
   return (
     <IonPage className="main-content">
       <IonContent fullscreen className="ion-padding">
-        <IonText>
-          <h1>Admin</h1>
-        </IonText>
+
+        {/* Top Bar (Search & Filter) */}
+        <IonGrid style={{ alignContent: 'center' }}>
+          <IonRow style={{ display: 'flex', alignContent: 'center' }}>
+            <IonCol size='11' style={{ display: 'flex' }}>
+              <IonText>
+                <h2>Admin Portal</h2>
+              </IonText>
+            </IonCol>
+            <IonCol size='1' style={{ display: 'flex', justifyContent: 'right' }}>
+              <IonButtons>
+                <IonButton id='search-bar' size="large" slot="icon-only" fill="clear" onClick={() => setShowSearchbar(true)}>
+                  <IonIcon icon={search} />
+                </IonButton>
+                <IonButton size="large" slot="icon-only" fill="clear" onClick={() => setShowActionSheet(true)}>
+                  <IonIcon icon={filterOutline} />
+                </IonButton>
+              </IonButtons>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
+        {/* Guest Entries Sorted by Date then Time */}
         {Object.entries(groupBy(guestData, 'date')).map(([date, guests], index) => (
           <IonCard key={index} className="ion-padding" onClick={() => setSelectedDate(selectedDate === date ? undefined : date)}>
             <IonCardHeader>
               <IonCardTitle>{date}</IonCardTitle>
             </IonCardHeader>
             {selectedDate === date && guests.map((guest, index) => (
-              <IonCardContent key={index} style={{ display: 'flex', justifyContent: 'space-between', alignContent: "center", marginLeft: '2%', marginRight: '2%' }}>
+              <IonCardContent key={index}>
                 <IonGrid>
                   <IonRow>
 
@@ -103,11 +128,6 @@ export default function AdminPage() {
                       </IonText>
                       <IonText color={'primary'}>
                         <p>{guest.email}</p>
-                      </IonText>
-                      <br />
-                      <IonText>
-                        <p>Arrival:</p>
-                        <p>{guest.date} | {guest.time}</p>
                       </IonText>
                     </IonCol>
 
@@ -153,12 +173,73 @@ export default function AdminPage() {
                       </div>
                     </IonCol>
                   </IonRow>
+                  <IonRow>
+                    <IonCol size="1">
+                      <br />
+                      <IonText>
+                        <p>Signed In:</p>
+                        <p>Signed Out:</p>
+                      </IonText>
+                    </IonCol>
+                    <IonCol size="1">
+                      <br />
+                      <IonText>
+                        <p>{guest.signInTime}</p>
+                        <p>{guest.signOutTime}</p>
+                      </IonText>
+                    </IonCol>
+                  </IonRow>
                 </IonGrid>
               </IonCardContent>
             ))}
             <IonButton onClick={(e) => { e.stopPropagation(); handleExport(); }}>Export</IonButton>
           </IonCard>
         ))}
+
+        <IonActionSheet
+          isOpen={showActionSheet}
+          onDidDismiss={() => setShowActionSheet(false)}
+          buttons={[
+            {
+              text: 'Filter by Date',
+              handler: () => {
+                console.log('Filter by Date clicked');
+              }
+            },
+            {
+              text: 'Filter by Time',
+              handler: () => {
+                console.log('Filter by Time clicked');
+              }
+            },
+            {
+              text: 'Filter by Company',
+              handler: () => {
+                console.log('Filter by Company clicked');
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]}
+        />
+
+        <IonPopover trigger="search-bar">
+          <IonSearchbar
+            value={searchText}
+            onIonChange={(e) => setSearchText(e.detail.value!)}
+            onIonClear={() => setSearchText('')}
+            onIonCancel={() => setShowSearchbar(false)}
+            placeholder="Search"
+            showCancelButton="focus"
+            cancelButtonIcon={close}
+
+          />
+        </IonPopover>
       </IonContent>
     </IonPage>
   );
