@@ -1,9 +1,9 @@
 import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../util/firebase";
 import { useState, useEffect } from "react";
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover } from "@ionic/react";
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonPage, IonText, IonItem, IonGrid, IonRow, IonCol, IonTextarea, IonActionSheet, IonPopover, IonChip } from "@ionic/react";
 import TopMenu from "../components/TopMenu";
-import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, logOutOutline, pencil, save, saveOutline, search, trash, trashBinOutline } from "ionicons/icons";
+import { checkmark, checkmarkCircle, close, closeCircle, create, createOutline, filter, filterOutline, logOutOutline, pencil, save, saveOutline, search, time, timeOutline, trash, trashBinOutline } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 
@@ -153,6 +153,14 @@ export default function AdminPage() {
                       <IonText color={'primary'}>
                         <p>{guest.email}</p>
                       </IonText>
+                      <IonChip outline={true} color={'success'}>
+                        <IonIcon icon={time} />
+                        <IonText>{guest.signInTime}</IonText>
+                      </IonChip>
+                      <IonChip outline={true} color={'danger'}>
+                        <IonIcon icon={timeOutline} />
+                        <IonText>{guest.signOutTime}</IonText>
+                      </IonChip>
                     </IonCol>
 
                     {/* Notes */}
@@ -191,18 +199,6 @@ export default function AdminPage() {
                         <IonButton size="large" slot="icon-only" fill="clear" onClick={(e) => { e.stopPropagation(); signOutGuest(guest.id, guest.signOutTime); }}>
                           <IonIcon icon={logOutOutline} />
                         </IonButton>
-                      </IonButtons>
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol size="12">
-                      <IonButtons>
-                        <IonIcon slot="start" color="success" icon={checkmarkCircle} />
-                        <IonText>{guest.signInTime}</IonText>
-                      </IonButtons>
-                      <IonButtons>
-                        <IonIcon slot="start" color='danger' icon={closeCircle} />
-                        <IonText>{guest.signOutTime}</IonText>
                       </IonButtons>
                     </IonCol>
                   </IonRow>
