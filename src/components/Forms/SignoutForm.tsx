@@ -75,7 +75,7 @@ export default function SignOut() {
                     </IonButtons>
                   </IonCol>
                   <IonCol size="12">
-                    <IonButton expand="block" onClick={() => handleSignOut(guest.id)}><IonIcon slot="end" icon={exitOutline} />Sign Out</IonButton>
+                    <IonButton shape="round" color={'dark'} expand="block" onClick={() => handleSignOut(guest.id)}><IonIcon slot="end" icon={exitOutline} />Sign Out</IonButton>
                   </IonCol>
                 </IonRow>
               </IonGrid>

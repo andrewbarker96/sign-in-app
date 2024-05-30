@@ -120,22 +120,9 @@ function SignInForm() {
       <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={3000} />
       <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={3000} />
 
-      {error && (
-        <IonText color='danger' className='ion-text-center'>
-          <p>Unable to sign you in. Ensure all fields are filled out.</p>
-        </IonText>
-      )}
-
-      <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
+      <IonButton shape='round' id='signIn' expand='block' onClick={handleFormSubmit}>
         Sign In
       </IonButton>
-
-      {success && (
-        <IonText color='success' className='ion-text-center'>
-          <p>You have been successfully signed in!<br />Welcome to Stock & Associates!</p>
-        </IonText>
-
-      )}
     </IonContent>
   );
 }

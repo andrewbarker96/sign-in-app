@@ -32,9 +32,9 @@ const HomePage: React.FC = () => {
             <h1>Welcome to Stock & Associates!</h1>
           </IonText>
           <br />
-          <IonButton id='openSignInModal' onClick={() => setSignInModal(true)} expand="block">Sign In</IonButton>
+          <IonButton id='openSignInModal' shape='round' onClick={() => setSignInModal(true)} expand="block">Sign In</IonButton>
           <br />
-          <IonButton id='openSignOutModal' color={'secondary'} onClick={() => setSignOutModal(true)} expand="block">Sign Out</IonButton>
+          <IonButton id='openSignOutModal' fill='outline' shape='round' color={'dark'} onClick={() => setSignOutModal(true)} expand="block">Sign Out</IonButton>
           <br />
           {/* <IonButton color='medium' onClick={() => setSignInModal2(true)} expand="block">Set Up Meeting</IonButton> */}
         </IonCardContent>

@@ -13,7 +13,6 @@ import {
   IonRow,
   IonCol,
   IonTextarea,
-  IonActionSheet,
   IonPopover,
   IonChip,
   IonAccordionGroup,
@@ -24,12 +23,12 @@ import {
 import {
   close,
   createOutline,
-  filterOutline,
-  logOutOutline,
   saveOutline,
   search,
   arrowDownOutline,
   arrowUpOutline,
+  shareOutline,
+  timeOutline,
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
@@ -79,15 +78,13 @@ export default function AdminPage() {
     }
   };
 
-  // Export the guest data to a CSV file
-  const handleExport = () => {
+  // Export the guest data to a CSV file for a specific date
+  const handleExport = (date: string) => {
     const confirmExport = window.confirm("Are you sure you want to export this data?");
     if (confirmExport) {
-      const csv = guestData
-        .map(
-          (guest) =>
-            `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime},${guest.signOutTime},${guest.notes}`
-        )
+      const filteredGuests = guestData.filter((guest) => guest.date === date);
+      const csv = filteredGuests
+        .map((guest) => `${guest.firstName},${guest.lastName},${guest.company},${guest.email},${guest.date},${guest.signInTime},${guest.signOutTime},${guest.notes}`)
         .join("\n");
 
       const csvHeader = `First Name,Last Name,Company,Email,Date,Sign In Time,Sign Out Time,Notes\n`;
@@ -96,7 +93,7 @@ export default function AdminPage() {
 
       const a = document.createElement("a");
       a.href = csvUrl;
-      a.download = "guests.csv";
+      a.download = `guests_${date}.csv`;
       a.click();
     }
   };
@@ -260,15 +257,16 @@ export default function AdminPage() {
                               signOutGuest(guest.id, guest.signOutTime);
                             }}
                           >
-                            <IonIcon icon={logOutOutline} />
+                            <IonIcon icon={timeOutline} />
                           </IonButton>
                         </IonButtons>
                       </IonCol>
                     </IonRow>
                   </IonGrid>
                 ))}
-                <IonButton expand="block" onClick={(e) => handleExport()}>
-                  Export
+                <IonButton shape="round" color={'primary'} fill="solid" onClick={() => handleExport(date)}>
+                  <IonIcon slot="end" icon={shareOutline} />
+                  <IonText>Export Guests for {date}</IonText>
                 </IonButton>
               </IonCardContent>
             </IonAccordion>
