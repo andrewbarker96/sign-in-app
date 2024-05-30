@@ -44,9 +44,9 @@ const HomePage: React.FC = () => {
       <IonModal trigger='openSignInModal' canDismiss={canDismiss} isOpen={signInModal}>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Sign Out</IonTitle>
+            <IonTitle>Sign In</IonTitle>
             <IonButtons slot='start'>
-              <IonButton slot='icon-only' onClick={() => setSignOutModal(false)}>
+              <IonButton slot='icon-only' onClick={() => setSignInModal(false)}>
                 <IonIcon icon={close} slot='start' />
               </IonButton>
             </IonButtons>
