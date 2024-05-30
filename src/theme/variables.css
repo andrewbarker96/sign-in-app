@@ -148,8 +148,8 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .form{
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 25%;
+  padding-right: 25%;
 }
 
 .copyright{
@@ -181,7 +181,7 @@ http://ionicframework.com/docs/theming/ */
   width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
   .top-menu-button{
     padding:5px;
     margin-top: 5px;
@@ -191,10 +191,27 @@ http://ionicframework.com/docs/theming/ */
     width: 100%;
   }
   .form{
-    padding-left: 0%;
-    padding-right: 0%;
+    padding-left: 15%;
+    padding-right: 15%;
   }
   
+}
+
+@media screen and (max-width: 460px) {
+  .top-menu-button {
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .form {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  }
+
 }
 /* @media (prefers-color-scheme: dark) {
 
