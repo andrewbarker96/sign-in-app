@@ -73,14 +73,14 @@ export default function LoginPage() {
 
   return (
     // Main Login Form
-    <IonPage className='login-tab'>
+    <IonPage>
       <IonContent className='ion-padding'>
         <IonCardContent>
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
         </IonCardContent>
         <IonCardContent className='form'>
           <IonItem>
-            <IonInput type='email' labelPlacement='floating' label='Email' placeholder='Enter Email Address' value={email} onIonChange={e => setEmail(e.detail.value!)} />
+            <IonInput type='email' labelPlacement='floating' label='Email' placeholder='Email' value={email} onIonChange={e => setEmail(e.detail.value!)} />
           </IonItem>
           <IonItem>
             <IonInput type={showPassword ? 'text' : 'password'} labelPlacement='floating' label='Password' placeholder='Enter your Password' value={password} onIonChange={e => setPassword(e.detail.value!)} />

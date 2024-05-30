@@ -1,4 +1,4 @@
-import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar, IonHeader } from '@ionic/react';
+import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar, IonHeader, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -68,6 +68,7 @@ const App: React.FC = () => {
           <TopMenu />
         </IonToolbar>
       </IonHeader>
+      <IonContent className='main-content'>
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
@@ -107,7 +108,8 @@ const App: React.FC = () => {
             </IonTabButton> */}
           </IonTabBar>
         </IonTabs>
-      </IonReactRouter>
+        </IonReactRouter>
+      </IonContent>
     </IonApp>
   );
 };

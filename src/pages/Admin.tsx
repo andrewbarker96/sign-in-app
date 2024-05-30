@@ -83,9 +83,8 @@ export default function AdminPage() {
   };
 
   return (
-    <IonPage className="main-content">
+    <IonPage>
       <IonContent fullscreen className="ion-padding">
-
         {/* Top Bar (Search & Filter) */}
         <IonGrid style={{ alignContent: 'center' }}>
           <IonRow style={{ display: 'flex', alignContent: 'center' }}>
