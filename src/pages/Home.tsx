@@ -1,9 +1,7 @@
-import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonMenuButton, IonButtons } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonButtons } from '@ionic/react';
 import SignInForm from '../components/Forms/SigninForm';
-import TopMenu from '../components/TopMenu';
 import { useState } from 'react';
 import './Home.css'
-import { Margin } from '@mui/icons-material';
 import { close } from 'ionicons/icons';
 import { set } from 'lodash';
 import SignOut from '../components/Forms/SignoutForm';
