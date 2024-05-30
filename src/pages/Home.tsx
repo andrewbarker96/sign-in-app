@@ -1,4 +1,4 @@
-import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonMenuButton } from '@ionic/react';
+import { IonCard, IonGrid, IonRow, IonContent, IonHeader, IonInput, IonItem, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonMenuButton, IonButtons } from '@ionic/react';
 import SignInForm from '../components/Forms/SigninForm';
 import TopMenu from '../components/TopMenu';
 import { useState } from 'react';
@@ -20,6 +20,7 @@ const HomePage: React.FC = () => {
     return role !== 'gesture';
   }
 
+
   return (
     <IonPage>
       <IonContent className='ion-padding'>
@@ -40,26 +41,30 @@ const HomePage: React.FC = () => {
       </IonContent>
 
       {/* Sign In Modal */}
-      <IonModal trigger='openSignInModal' canDismiss={canDismiss} isOpen={signInModal} initialBreakpoint={1} breakpoints={[0, 0]}>
+      <IonModal trigger='openSignInModal' canDismiss={canDismiss} isOpen={signInModal}>
         <IonHeader>
-          <IonToolbar style={{ display: 'flex' }}>
-            <IonTitle>Sign In</IonTitle>
-            <IonButton fill='clear' slot='start' shape='round' onClick={() => setSignInModal(false)}>
-              <IonIcon icon={close} slot='start' />
-            </IonButton>
+          <IonToolbar>
+            <IonTitle>Sign Out</IonTitle>
+            <IonButtons slot='start'>
+              <IonButton slot='icon-only' onClick={() => setSignOutModal(false)}>
+                <IonIcon icon={close} slot='start' />
+              </IonButton>
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
         <SignInForm />
       </IonModal>
 
       {/* Sign Out Modal */}
-      <IonModal trigger='openSignOutModal' canDismiss={canDismiss} isOpen={signOutModal} initialBreakpoint={1} breakpoints={[0, 0]}>
+      <IonModal trigger='openSignOutModal' canDismiss={canDismiss} isOpen={signOutModal}>
         <IonHeader>
-          <IonToolbar style={{ display: 'flex' }}>
-            <IonTitle>Sign In</IonTitle>
-            <IonButton fill='clear' slot='start' shape='round' onClick={() => setSignInModal(false)}>
-              <IonIcon icon={close} slot='start' />
-            </IonButton>
+          <IonToolbar>
+            <IonTitle>Sign Out</IonTitle>
+            <IonButtons slot='start'>
+              <IonButton slot='icon-only' onClick={() => setSignOutModal(false)}>
+                <IonIcon icon={close} slot='start' />
+              </IonButton>
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
         <SignOut />
