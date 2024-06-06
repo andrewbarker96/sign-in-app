@@ -77,6 +77,7 @@ function SignInPage() {
                 labelPlacement='floating'
                 placeholder='ex. John'
                 value={firstName}
+                autoCapitalize='on'
                 onIonChange={e => setFirstName(e.detail.value || '')}
               >
                 <IonText slot='label'>
@@ -91,6 +92,7 @@ function SignInPage() {
                 type='text'
                 labelPlacement='floating'
                 placeholder='ex. Doe'
+                autoCapitalize='on'
                 value={lastName}
                 onIonChange={e => setLastName(e.detail.value || '')}
               >
@@ -121,6 +123,7 @@ function SignInPage() {
                 type='text'
                 labelPlacement='floating'
                 placeholder='ex. Stock & Associates'
+                autoCapitalize='on'
                 value={company}
                 onIonChange={e => setCompany(e.detail.value || '')}
               >
