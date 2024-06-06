@@ -57,7 +57,7 @@ const TopMenu: React.FC = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton>
+              <IonMenuButton color={'dark'}>
                 <IonIcon icon={close} />
               </IonMenuButton>
             </IonButtons>
@@ -73,8 +73,8 @@ const TopMenu: React.FC = () => {
               onClick={() => window.location.href = '/'}
               slot='start'
             >
-              <IonIcon slot="start" icon={personAdd} style={{ marginRight: '10px' }} />
-              <IonText>Sign In</IonText>
+              <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
+              <IonText>Home</IonText>
             </IonButton>
           </IonButtons>
           {adminUser && (
@@ -90,7 +90,7 @@ const TopMenu: React.FC = () => {
               </IonButton>
             </IonButtons>
           )}
-          <IonButtons className='top-menu-button'>
+          {/* <IonButtons className='top-menu-button'>
             <IonButton
               fill="clear"
               expand="block"
@@ -112,7 +112,7 @@ const TopMenu: React.FC = () => {
               <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
               <IonText>Logout</IonText>
             </IonButton>
-          </IonButtons>
+          </IonButtons> */}
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />
         </IonContent>
@@ -122,7 +122,7 @@ const TopMenu: React.FC = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton />
+              <IonMenuButton color={'dark'} />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
