@@ -27,12 +27,12 @@ const HomePage: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol size='12'>
-              <IonButton shape='round' routerLink='/sign-in' color={'dark'} expand='block'>Sign In</IonButton>
+              <IonButton size='large' shape='round' routerLink='/sign-in' color={'dark'} expand='block'>Guest Sign In</IonButton>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol size='12'>
-              <IonButton id='openSignOutModal' fill='outline' shape='round' color={'dark'} onClick={() => setSignOutModal(true)} expand="block">Sign Out</IonButton>
+              <IonButton size='large' id='openSignOutModal' fill='outline' shape='round' color={'dark'} onClick={() => setSignOutModal(true)} expand="block">Guest Sign Out</IonButton>
             </IonCol>
           </IonRow>
           <IonRow>

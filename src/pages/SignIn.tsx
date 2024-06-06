@@ -133,8 +133,10 @@ function SignInPage() {
                 </IonText>
               </IonInput>
             </IonCol>
+          </IonRow>
+          <IonRow>
             <IonCol size='12'>
-              <IonButton shape='round' id='signIn' expand='block' onClick={handleFormSubmit}>
+              <IonButton size='large' shape='round' id='signIn' expand='block' onClick={handleFormSubmit}>
                 Sign In
               </IonButton>
             </IonCol>
