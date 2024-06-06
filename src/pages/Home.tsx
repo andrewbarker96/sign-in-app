@@ -27,18 +27,18 @@ const HomePage: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol size='12'>
-              <IonButton size='large' shape='round' routerLink='/sign-in' color={'dark'} expand='block'>Guest Sign In</IonButton>
+              <IonButton size='large' shape='round' routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol size='12'>
-              <IonButton size='large' id='openSignOutModal' fill='outline' shape='round' color={'dark'} onClick={() => setSignOutModal(true)} expand="block">Guest Sign Out</IonButton>
+              <IonButton size='large' id='openSignOutModal' fill='outline' shape='round' color={'primary'} onClick={() => setSignOutModal(true)} expand="block">Guest Sign Out</IonButton>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol size='12'>
               <div className='ion-text-center'>
-                <IonButton shape='round' fill='clear' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
+                <IonButton fill='clear' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
               </div>
             </IonCol>
           </IonRow>

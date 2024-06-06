@@ -57,7 +57,7 @@ const TopMenu: React.FC = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton color={'dark'}>
+              <IonMenuButton color={'medium'}>
                 <IonIcon icon={close} />
               </IonMenuButton>
             </IonButtons>
@@ -122,7 +122,7 @@ const TopMenu: React.FC = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton color={'dark'} />
+              <IonMenuButton color={'medium'} />
             </IonButtons>
           </IonToolbar>
         </IonHeader>

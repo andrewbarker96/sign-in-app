@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent, IonGrid, IonCol, IonRow, IonToast, IonPage, IonHeader, IonToolbar, IonButtons, IonIcon } from '@ionic/react';
+import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent, IonGrid, IonCol, IonRow, IonToast, IonPage, IonHeader, IonToolbar, IonButtons, IonIcon, IonItem } from '@ionic/react';
 import { firestore } from '../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { Keyboard } from '@capacitor/keyboard';
-import { arrowBackCircle } from 'ionicons/icons';
+import { arrowBack, arrowBackCircle } from 'ionicons/icons';
 
 function SignInPage() {
   const [firstName, setFirstName] = useState('');
@@ -53,7 +53,7 @@ function SignInPage() {
             <IonCol size='12'>
               <IonButtons>
                 <IonButton color={'primary'} size='large' routerLink='/'>
-                  <IonIcon icon={arrowBackCircle} slot='start' />
+                  <IonIcon icon={arrowBack} slot='start' />
                   Return
                 </IonButton>
               </IonButtons>
@@ -71,67 +71,75 @@ function SignInPage() {
               </IonText>
             </IonCol>
             <IonCol size='12'>
-              <IonInput
-                id='FirstName'
-                type='text'
-                labelPlacement='floating'
-                placeholder='ex. John'
-                value={firstName}
-                autoCapitalize='on'
-                onIonChange={e => setFirstName(e.detail.value || '')}
-              >
-                <IonText slot='label'>
-                  First Name
-                  <IonText color='danger'>*</IonText>
-                </IonText>
-              </IonInput>
+              <IonItem lines='full'>
+                <IonInput
+                  id='FirstName'
+                  type='text'
+                  labelPlacement='floating'
+                  placeholder='ex. John'
+                  value={firstName}
+                  autoCapitalize='on'
+                  onIonChange={e => setFirstName(e.detail.value || '')}
+                >
+                  <IonText slot='label'>
+                    First Name
+                    <IonText color='danger'>*</IonText>
+                  </IonText>
+                </IonInput>
+              </IonItem>
             </IonCol>
             <IonCol size='12'>
-              <IonInput
-                id='LastName'
-                type='text'
-                labelPlacement='floating'
-                placeholder='ex. Doe'
-                autoCapitalize='on'
-                value={lastName}
-                onIonChange={e => setLastName(e.detail.value || '')}
-              >
-                <IonText slot='label'>
-                  Last Name
-                  <IonText color='danger'>*</IonText>
-                </IonText>
-              </IonInput>
+              <IonItem lines='full'>
+                <IonInput
+                  id='LastName'
+                  type='text'
+                  labelPlacement='floating'
+                  placeholder='ex. Doe'
+                  autoCapitalize='on'
+                  value={lastName}
+                  onIonChange={e => setLastName(e.detail.value || '')}
+                >
+                  <IonText slot='label'>
+                    Last Name
+                    <IonText color='danger'>*</IonText>
+                  </IonText>
+                </IonInput>
+              </IonItem>
             </IonCol>
             <IonCol size='12'>
-              <IonInput
-                id='email'
-                type='email'
-                labelPlacement='floating'
-                placeholder='ex. johndoe@company.com'
-                value={email}
-                onIonChange={e => setEmail(e.detail.value || '')}
-              >
-                <IonText slot='label'>
-                  Email
-                  <IonText color='danger'>*</IonText>
-                </IonText>
-              </IonInput>
+              <IonItem lines='full'>
+                <IonInput
+                  id='email'
+                  type='email'
+                  labelPlacement='floating'
+                  placeholder='ex. johndoe@company.com'
+                  value={email}
+                  onIonChange={e => setEmail(e.detail.value || '')}
+                >
+                  <IonText slot='label'>
+                    Email
+                    <IonText color='danger'>*</IonText>
+                  </IonText>
+                </IonInput>
+              </IonItem>
             </IonCol>
             <IonCol size='12'>
-              <IonInput
-                id='company'
-                type='text'
-                labelPlacement='floating'
-                placeholder='ex. Stock & Associates'
-                autoCapitalize='on'
-                value={company}
-                onIonChange={e => setCompany(e.detail.value || '')}
-              >
-                <IonText slot='label'>
-                  Company
-                  <IonText color='danger'>*</IonText>
-                </IonText>
-              </IonInput>
+              <IonItem lines='full'>
+                <IonInput
+                  id='company'
+                  type='text'
+                  labelPlacement='floating'
+                  placeholder='ex. Stock & Associates'
+                  autoCapitalize='on'
+                  value={company}
+                  onIonChange={e => setCompany(e.detail.value || '')}
+                >
+                  <IonText slot='label'>
+                    Company
+                    <IonText color='danger'>*</IonText>
+                  </IonText>
+                </IonInput>
+              </IonItem>
             </IonCol>
           </IonRow>
           <IonRow>
