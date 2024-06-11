@@ -7,14 +7,13 @@ const PrivacyPolicyPage = () => {
     <IonPage>
       <IonContent className='ion-padding'>
         <IonGrid className='form'>
-          <IonRow style={{ display: 'flex', alignContent: 'center' }}>
-
-            <IonCol size='8'>
-              <IonText className='ion-text-start'>
+          <IonRow>
+            <IonCol size='9' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+              <IonText className='ion-text-start-flex'>
                 <h1>Privacy Policy</h1>
               </IonText>
             </IonCol>
-            <IonCol size='4'>
+            <IonCol size='3'>
               <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '100px' }} />
             </IonCol>
           </IonRow>
