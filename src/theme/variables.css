@@ -4,7 +4,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #1C75BC;
+  --ion-color-primary: #0070cb;
   --ion-color-primary-rgb: 244, 245, 248;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
@@ -176,15 +176,17 @@ http://ionicframework.com/docs/theming/ */
   margin-bottom:1.5%;
 }
 
-
-.top-menu-button{
-  padding:10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  align-content: center;
-  align-items: center;
-  width: 100%;
+ion-button{
+  height:50px;
 }
+
+ion-input{
+  background-color: rgb(219, 219, 219);
+  border-radius: 10px;
+  padding-left: 5px;
+  text-indent: 10px;
+}
+
 
 @media screen and (max-width: 920px) {
   .top-menu-button{
