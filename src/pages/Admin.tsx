@@ -29,6 +29,8 @@ import {
   arrowUpOutline,
   shareOutline,
   timeOutline,
+  arrowUp,
+  arrowDown,
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
@@ -40,7 +42,7 @@ export default function AdminPage() {
   const [searchText, setSearchText] = useState<string | undefined>();
   const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     const fetchGuestData = async () => {
@@ -125,7 +127,7 @@ export default function AdminPage() {
 
   // Sort guest data by date
   const sortedGuestData = Object.entries(groupBy(guestData, "date")).sort(([dateA], [dateB]) => {
-    return sortOrder === 'asc' ? new Date(dateA).getTime() - new Date(dateB).getTime() : new Date(dateB).getTime() - new Date(dateA).getTime();
+    return sortOrder === 'desc' ? new Date(dateA).getTime() - new Date(dateB).getTime() : new Date(dateB).getTime() - new Date(dateA).getTime();
   });
 
   return (
@@ -156,7 +158,7 @@ export default function AdminPage() {
                   fill="clear"
                   onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                 >
-                  <IonIcon icon={sortOrder === 'asc' ? arrowUpOutline : arrowDownOutline} />
+                  <IonIcon icon={sortOrder === 'asc' ? arrowDown : arrowUp} />
                 </IonButton>
               </IonButtons>
             </IonCol>
@@ -167,7 +169,7 @@ export default function AdminPage() {
         <IonAccordionGroup>
           {sortedGuestData.map(([date, guests], index) => (
             <IonAccordion key={index} value={date} className="accordion">
-              <IonItem slot="header" color={'secondary'}>
+              <IonItem slot="header" color={'clear'} lines="full">
                 <IonLabel><h2>{date}</h2></IonLabel>
               </IonItem>
 
