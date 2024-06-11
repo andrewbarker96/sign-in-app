@@ -176,6 +176,9 @@ http://ionicframework.com/docs/theming/ */
   margin-bottom:1.5%;
 }
 
+ion-button{
+  height:50px;
+}
 
 .top-menu-button{
   padding:10px;
