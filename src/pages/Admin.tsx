@@ -31,6 +31,7 @@ import {
   timeOutline,
   arrowUp,
   arrowDown,
+  filter,
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
@@ -42,7 +43,7 @@ export default function AdminPage() {
   const [searchText, setSearchText] = useState<string | undefined>();
   const [showActionSheet, setShowActionSheet] = useState<boolean>(false);
   const [showSearchbar, setShowSearchbar] = useState<boolean>(false);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchGuestData = async () => {
@@ -158,7 +159,7 @@ export default function AdminPage() {
                   fill="clear"
                   onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                 >
-                  <IonIcon icon={sortOrder === 'asc' ? arrowDown : arrowUp} />
+                  <IonIcon icon={sortOrder === 'desc' ? filter : filter} />
                 </IonButton>
               </IonButtons>
             </IonCol>
