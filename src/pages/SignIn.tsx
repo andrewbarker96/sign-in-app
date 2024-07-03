@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent, IonGrid, IonCol, IonRow, IonToast, IonPage, IonHeader, IonToolbar, IonButtons, IonIcon, IonItem, IonTitle } from '@ionic/react';
+import { IonCardContent, IonInput, IonButton, IonText, IonLabel, IonContent, IonGrid, IonCol, IonRow, IonToast, IonPage, IonHeader, IonToolbar, IonButtons, IonIcon, IonItem, IonTitle, IonImg } from '@ionic/react';
 import { firestore } from '../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { Keyboard } from '@capacitor/keyboard';
 import { arrowBack, arrowBackCircle, close } from 'ionicons/icons';
 import TopMenu from '../components/TopMenu';
 import GoBackOption from '../components/backButton';
+import { useHistory } from 'react-router';
 
 const SignInPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -23,23 +24,26 @@ const SignInPage: React.FC = () => {
 
   const handleFormSubmit = async () => {
     try {
-      const docRef = await addDoc(collection(firestore, `guests`), {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        company: company,
-        date: `${date}`,
-        signInTime: `${time}`,
-        signOutTime: '',
-        notes: ''
-      });
-      console.log('Document written with ID: ', docRef.id);
-      setSuccess(true);
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setCompany('');
-      window.location.href = '/';
+      if (firstName && lastName && email && company) {
+        const docRef = await addDoc(collection(firestore, `guests`), {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          company: company,
+          date: `${date}`,
+          signInTime: `${time}`,
+          signOutTime: '',
+          notes: ''
+        });
+        console.log('Document written with ID: ', docRef.id);
+        setSuccess(true);
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setCompany('');
+      } else {
+        setError(true);
+      }
 
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -56,99 +60,86 @@ const SignInPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding'>
-        <IonText className='ion-text-center'>
-          <h2>Welcome to Stock & Associates</h2>
-        </IonText>
-        <IonText className='ion-text-center'>
-          <h3>Please sign in below</h3>
-        </IonText>
+        <IonItem>
+          <IonText>
+            <h2>Welcome to Stock & Associates! </h2>
+            <h3>Please sign in!</h3>
+          </IonText>
+          <IonImg slot='end' src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '75px' }} />
+        </IonItem>
 
-        <div className="form">
-          <IonItem lines='none'>
-            <IonInput
-              id='FirstName'
-              type='text'
-              labelPlacement='floating'
-              placeholder='ex. John'
-              value={firstName}
-              autoCapitalize={'on'}
-              autoCorrect='on'
-              autofocus={true}
-              clearInput={true}
-              clearInputIcon={close}
-              onIonChange={e => setFirstName(e.detail.value || '')}
-            >
-              <IonText slot='label'>
-                First Name
-                <IonText color='danger'>*</IonText>
-              </IonText>
-            </IonInput>
-          </IonItem>
+        <IonItem>
+          <IonInput
+            id='FirstName'
+            type='text'
+            fill='outline'
 
-          <IonItem lines='full'>
-            <IonInput
-              id='LastName'
-              type='text'
-              labelPlacement='floating'
-              placeholder='ex. Doe'
-              autoCapitalize='on'
-              value={lastName}
-              clearOnEdit={true}
-              clearInput={true}
-              clearInputIcon={close}
-              onIonChange={e => setLastName(e.detail.value || '')}
-            >
-              <IonText slot='label'>
-                Last Name
-                <IonText color='danger'>*</IonText>
-              </IonText>
-            </IonInput>
-          </IonItem>
-
-          <IonItem lines='full'>
-            <IonInput
-              id='email'
-              type='email'
-              labelPlacement='floating'
-              placeholder='ex. johndoe@company.com'
-              autoCapitalize='on'
-              clearOnEdit={true}
-              clearInput={true}
-              clearInputIcon={close}
-              value={email}
-              onIonChange={e => setEmail(e.detail.value || '')}
-            >
-              <IonText slot='label'>
-                Email
-                <IonText color='danger'>*</IonText>
-              </IonText>
-            </IonInput>
-          </IonItem>
-
-          <IonItem lines='full'>
-            <IonInput
-              id='company'
-              type='text'
-              labelPlacement='floating'
-              placeholder='ex. Stock & Associates'
-              autoCapitalize='on'
-              value={company}
-              clearOnEdit={true}
-              clearInput={true}
-              clearInputIcon={close}
-              onIonChange={e => setCompany(e.detail.value || '')}
-            >
-              <IonText slot='label'>
-                Company
-                <IonText color='danger'>*</IonText>
-              </IonText>
-            </IonInput>
-          </IonItem>
-
-          <IonButton shape='round' id='signIn' expand='block' onClick={handleFormSubmit}>
-            Sign In
-          </IonButton>
-        </div>
+            labelPlacement='floating'
+            label='First Name'
+            placeholder='ex. John'
+            value={firstName}
+            autoCapitalize={'on'}
+            autoCorrect='on'
+            autofocus={true}
+            clearInput={true}
+            clearInputIcon={close}
+            onIonChange={e => setFirstName(e.detail.value || '')}
+          />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            fill='outline'
+            id='LastName'
+            type='text'
+            labelPlacement='floating'
+            label='Last Name'
+            required={true}
+            placeholder='ex. Doe'
+            autoCapitalize='on'
+            value={lastName}
+            clearOnEdit={true}
+            clearInput={true}
+            clearInputIcon={close}
+            onIonChange={e => setLastName(e.detail.value || '')}
+          />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            id='email'
+            type='email'
+            fill='outline'
+            required={false}
+            labelPlacement='floating'
+            label='Email'
+            placeholder='ex. johndoe@company.com'
+            autoCapitalize='on'
+            clearOnEdit={true}
+            clearInput={true}
+            clearInputIcon={close}
+            value={email}
+            onIonChange={e => setEmail(e.detail.value || '')}
+          />
+        </IonItem>
+        <IonItem>
+          <IonInput
+            id='company'
+            type='text'
+            fill='outline'
+            labelPlacement='floating'
+            label='Company'
+            placeholder='ex. Stock & Associates'
+            autoCapitalize='on'
+            required={false}
+            value={company}
+            clearOnEdit={true}
+            clearInput={true}
+            clearInputIcon={close}
+            onIonChange={e => setCompany(e.detail.value || '')}
+          />
+        </IonItem>
+        <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
+          Sign In
+        </IonButton>
 
         <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={3000} />
         <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={3000} />

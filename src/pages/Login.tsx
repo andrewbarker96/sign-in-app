@@ -87,10 +87,27 @@ const LoginPage: React.FC = () => {
 
           <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px', marginTop: '2.5%' }} />
           <IonItem lines='none'>
-            <IonInput type='email' labelPlacement='stacked' label='Email' placeholder='Email' value={email} onIonChange={e => setEmail(e.detail.value!)} />
+            <IonInput
+              type='email'
+              fill='outline'
+              required={true}
+              labelPlacement='floating'
+              label='Email'
+              placeholder='Email'
+              value={email}
+              onIonChange={e => setEmail(e.detail.value!)}
+            />
           </IonItem>
           <IonItem lines='none'>
-            <IonInput type={showPassword ? 'text' : 'password'} label='Password' labelPlacement='stacked' placeholder='Enter your Password' value={password} onIonChange={e => setPassword(e.detail.value!)}>
+            <IonInput
+              type='password'
+              label='Password'
+              fill='outline'
+              required={true}
+              labelPlacement='floating'
+              placeholder='Enter your Password'
+              value={password}
+              onIonChange={e => setPassword(e.detail.value!)}>
               <IonInputPasswordToggle slot='end' />
             </IonInput>
           </IonItem>
