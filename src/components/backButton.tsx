@@ -13,7 +13,7 @@ const GoBackOption: React.FC = () => {
   return (
     <IonButtons slot="start" id='main-content'>
       <IonButton onClick={goBack}>
-        <IonIcon slot="start" icon={arrowBack} />
+        <IonIcon slot="start" icon={arrowBack} color='medium' />
         {/* <IonText>Back</IonText> */}
       </IonButton>
     </IonButtons>
