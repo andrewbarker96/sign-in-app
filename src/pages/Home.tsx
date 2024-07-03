@@ -1,10 +1,13 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonButtons, IonCol, IonRow, IonGrid } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonButtons, IonCol, IonRow, IonGrid, IonItem, IonAlert, IonSelect, IonRouterLink } from '@ionic/react';
 import SignInForm from './SignIn';
 import { useState } from 'react';
 import './Home.css'
-import { close } from 'ionicons/icons';
+import { close, logOut, logOutOutline } from 'ionicons/icons';
 import { set } from 'lodash';
 import SignOut from '../components/Forms/SignoutForm';
+import TopMenu from '../components/TopMenu';
+import { signOut } from 'firebase/auth';
+import { auth } from '../util/firebase';
 
 const HomePage: React.FC = () => {
 
@@ -15,34 +18,43 @@ const HomePage: React.FC = () => {
     return role !== 'gesture';
   }
 
+  const handleLogout = async () => {
+    try {
+      <IonAlert>
+        <IonText>Are you sure you want to sign out?</IonText>
+        <IonSelect>
+          <IonButton onClick={() => setSignOutModal(false)}>Cancel</IonButton>
+          <IonButton onClick={() => signOut(auth)}>Sign Out</IonButton>
+        </IonSelect>
+      </IonAlert>
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  }
+
 
   return (
     <IonPage>
-      <IonContent className='ion-padding'>
-        <IonGrid className='form'>
-          <IonRow style={{ marginBottom: '10%' }}>
-            <IonCol size='12'>
-              <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px' }} />
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size='12'>
-              <IonButton shape='round' routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size='12'>
-              <IonButton id='openSignOutModal' fill='outline' shape='round' color={'primary'} onClick={() => setSignOutModal(true)} expand="block">Guest Sign Out</IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size='12'>
-              <div className='ion-text-center'>
-                <IonButton fill='clear' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
-              </div>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+      <IonHeader>
+        <IonToolbar>
+          <TopMenu />
+          <IonTitle>Stock & Associates</IonTitle>
+          <IonButtons slot='end'>
+            <IonButton onClick={handleLogout}>
+              <IonIcon icon={logOutOutline} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px', marginTop: '5%' }} />
+
+      <IonContent className='ion-padding ion-text-center'>
+        <div className="form">
+          <IonButton shape='round' routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
+          <IonButton id='openSignOutModal' fill='outline' shape='round' color={'primary'} expand="block" onClick={() => setSignOutModal(true)} >Guest Sign Out</IonButton>
+          <IonButton fill='clear' expand='block' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
+        </div>
       </IonContent>
 
       {/* Sign Out Modal */}

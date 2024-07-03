@@ -60,54 +60,27 @@ const App: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  }
-
   const screenSize = useMediaQuery({
     query: '(min-device-width: 1000px)'
   });
 
   return (
     <IonApp>
-      <IonHeader>
-        <IonToolbar>
-          <TopMenu />
-          <IonButtons slot='end'>
-            <IonButton color={'medium'} size='small' onClick={handleSignOut}>
-              <IonIcon icon={logOutOutline} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className='main-content'>
-        <IonReactRouter>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/">
-                {authUser ? <HomePage /> : <LoginPage />}
-              </Route>
-              <Route exact path="/Admin">
-                {adminUser ? <AdminPage /> : <Redirect to="/" />}
-              </Route>
-              <Route exact path="/Admin">
-                {adminUser && <AdminPage />}
-              </Route>
-              <Route exact path="/sign-in">
-                <SignInPage />
-              </Route>
-              <Route exact path="/privacy-policy">
-                <PrivacyPolicyPage />
-              </Route>
-
-            </IonRouterOutlet>
-            <IonTabBar slot={'bottom'}>
-              {/* <IonTabButton tab="tab1" href="/home">
+      <IonReactRouter>
+        <IonContent className='main-content'>
+          {authUser ? (
+            <IonTabs>
+              <IonRouterOutlet>
+                <Redirect exact path="/" to="/home" />
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/Admin">
+                  {adminUser ? <AdminPage /> : <Redirect to="/home" />}
+                </Route>
+                <Route exact path="/sign-in" component={SignInPage} />
+                <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
+              </IonRouterOutlet>
+              <IonTabBar slot={'bottom'}>
+                {/* <IonTabButton tab="tab1" href="/home">
               <IonIcon aria-hidden="true" icon={home} />
               <IonLabel>Home</IonLabel>
             </IonTabButton>
@@ -123,10 +96,18 @@ const App: React.FC = () => {
               <IonIcon aria-hidden="true" icon={people} />
               <IonLabel>Contacts</IonLabel>
             </IonTabButton> */}
-            </IonTabBar>
-          </IonTabs>
-        </IonReactRouter>
-      </IonContent>
+              </IonTabBar>
+            </IonTabs>
+          ) : (
+            <IonRouterOutlet>
+              <Route exact path="/">
+                <LoginPage />
+              </Route>
+            </IonRouterOutlet>
+          )}
+        </IonContent>
+
+      </IonReactRouter>
     </IonApp>
   );
 };

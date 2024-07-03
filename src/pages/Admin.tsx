@@ -19,6 +19,11 @@ import {
   IonAccordion,
   IonLabel,
   IonCardContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonInput,
 } from "@ionic/react";
 import {
   close,
@@ -35,6 +40,8 @@ import {
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
+import TopMenu from "../components/TopMenu";
+import './Admin.css'
 
 export default function AdminPage() {
   const [guestData, setGuestData] = useState<any[]>([]);
@@ -133,38 +140,32 @@ export default function AdminPage() {
 
   return (
     <IonPage>
-      <IonContent fullscreen className="ion-padding">
-        {/* Top Bar (Search, Filter, and Sort) */}
-        <IonGrid style={{ alignContent: "center" }}>
-          <IonRow style={{ display: "flex", alignContent: "center" }}>
-            <IonCol size="10" style={{ display: "flex" }}>
-              <IonText>
-                <h2>Admin Portal</h2>
-              </IonText>
-            </IonCol>
-            <IonCol size="2" style={{ display: "flex", justifyContent: "right" }}>
-              <IonButtons>
-                <IonButton
-                  id="search-bar"
-                  size="large"
-                  slot="icon-only"
-                  fill="clear"
-                  onClick={() => setShowSearchbar(true)}
-                >
-                  <IonIcon icon={search} />
-                </IonButton>
-                <IonButton
-                  size="large"
-                  slot="icon-only"
-                  fill="clear"
-                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                >
-                  <IonIcon icon={sortOrder === 'desc' ? filter : filter} />
-                </IonButton>
-              </IonButtons>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+      <IonHeader>
+        <IonToolbar>
+          <TopMenu />
+          <IonTitle>Admin Portal</IonTitle>
+          <IonButtons slot="end">
+            <IonButton
+              id="search-bar"
+              size="large"
+              slot="icon-only"
+              fill="clear"
+              onClick={() => setShowSearchbar(true)}
+            >
+              <IonIcon icon={search} />
+            </IonButton>
+            <IonButton
+              size="large"
+              slot="icon-only"
+              fill="clear"
+              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+            >
+              <IonIcon icon={sortOrder === 'desc' ? filter : filter} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
 
         {/* Guest Entries Sorted by Date then Time */}
         <IonAccordionGroup>
@@ -176,98 +177,131 @@ export default function AdminPage() {
 
               {/* Guest Information */}
               <IonCardContent className="ion-padding" slot="content">
+
                 {guests.map((guest, index) => (
                   <IonGrid key={index}>
                     <IonRow>
-                      <IonCol sizeLg="5">
-                        <IonText>
-                          <h2>{guest.firstName} {guest.lastName}</h2>
-                        </IonText>
-                        <IonText>
-                          <p>{guest.company}</p>
-                        </IonText>
-                        <IonText color={"primary"}>
-                          <p>{guest.email}</p>
-                        </IonText>
-                        <IonChip color={"success"}>
-                          <IonText>{guest.signInTime}</IonText>
-                        </IonChip>
-                        <IonChip color={"danger"}>
-                          <IonText>{guest.signOutTime}</IonText>
-                        </IonChip>
-                      </IonCol>
-
-                      {/* Notes */}
-                      <IonCol sizeLg="1" style={{ display: "flex", justifyContent: "right" }}>
-                        <IonText>
-                          <p>Notes:</p>
-                        </IonText>
-                      </IonCol>
-
-                      {/* Notes Editable Text Area */}
-                      <IonCol sizeLg="5">
-                        {editingGuestId === guest.id ? (
-                          <IonItem onClick={(e) => e.stopPropagation()}>
-                            <IonTextarea
-                              value={guestNotes}
-                              onIonChange={(e) => setGuestNotes(e.detail.value!)}
-                            />
-                          </IonItem>
-                        ) : (
+                      <IonCol>
+                        <IonList>
                           <IonText>
-                            <h2>{guest.notes}</h2>
+                            <div className="guestName">
+                              {editingGuestId === guest.id ? (
+                                <IonInput
+                                  onClick={(e) => e.stopPropagation()}
+                                  label="First Name"
+                                  labelPlacement="stacked"
+                                  color={"primary"}
+                                  value={guest.firstName}
+                                  onIonChange={(e) => handleGuestUpdate(guest.id, "firstName", e.detail.value!)}
+                                />
+                              ) : (
+                                <h2>{guest.firstName}</h2>
+                              )}
+                              {editingGuestId === guest.id ? (
+                                <IonInput
+                                  onClick={(e) => e.stopPropagation()}
+                                  label="Last Name"
+                                  labelPlacement="stacked"
+                                  color={"primary"}
+                                  value={guest.lastName}
+                                  onIonChange={(e) => handleGuestUpdate(guest.id, "firstName", e.detail.value!)}
+                                />
+                              ) : (
+                                <h2>{guest.lastName} </h2>
+                              )}
+                            </div>
                           </IonText>
-                        )}
+                          <IonText>
+                            {editingGuestId === guest.id ? (
+                              <IonInput
+                                onClick={(e) => e.stopPropagation()}
+                                label="Company"
+                                labelPlacement="stacked"
+                                color={"primary"}
+                                value={guest.company}
+                                onIonChange={(e) => handleGuestUpdate(guest.id, "company", e.detail.value!)}
+                              />
+                            ) : (
+                              <p>{guest.company}</p>
+                            )}
+                          </IonText>
+                          <IonText color={"medium"}>
+                            {editingGuestId === guest.id ? (
+                              <IonInput
+
+                                onClick={(e) => e.stopPropagation()}
+                                label="Notes"
+                                labelPlacement="stacked"
+                                color={"primary"}
+                                value={guestNotes}
+                                onIonChange={(e) => setGuestNotes(e.detail.value!)}
+                              />
+                            ) : (
+                              <IonText>
+                                <p>{guest.notes}</p>
+                              </IonText>
+                            )}
+                          </IonText>
+                          <IonText color={"primary"}>
+                            <p>{guest.email}</p>
+                          </IonText>
+                          <IonText color={'success'}>
+                            <p>{guest.signInTime}</p>
+                          </IonText>
+                          <IonText color={'danger'}>
+                            <p>{guest.signOutTime}</p>
+                          </IonText>
+                        </IonList>
                       </IonCol>
+                      <IonCol size="1">
+                        <IonItem lines="none">
+                          <IonButtons slot="end">
+                            {editingGuestId === guest.id ? (
+                              <IonButton
+                                size="large"
+                                slot="icon-only"
+                                fill="clear"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleGuestUpdate(guest.id, "notes", guestNotes || "");
+                                  setEditingGuestId(null);
+                                }}
+                              >
+                                <IonIcon icon={saveOutline} />
+                              </IonButton>
+                            ) : (
+                              <IonButton
+                                size="large"
+                                slot="icon-only"
+                                fill="clear"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setEditingGuestId(guest.id);
+                                  setGuestNotes(guest.notes || "");
+                                }}
+                              >
+                                <IonIcon icon={createOutline} />
+                              </IonButton>
+                            )}
 
-                      {/* Save & Sign Out Buttons */}
-                      <IonCol sizeLg="1">
-                        <IonButtons>
-                          {editingGuestId === guest.id ? (
                             <IonButton
                               size="large"
                               slot="icon-only"
                               fill="clear"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleGuestUpdate(guest.id, "notes", guestNotes || "");
-                                setEditingGuestId(null);
+                                signOutGuest(guest.id, guest.signOutTime);
                               }}
                             >
-                              <IonIcon icon={saveOutline} />
+                              <IonIcon icon={timeOutline} />
                             </IonButton>
-                          ) : (
-                            <IonButton
-                              size="large"
-                              slot="icon-only"
-                              fill="clear"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setEditingGuestId(guest.id);
-                                setGuestNotes(guest.notes || "");
-                              }}
-                            >
-                              <IonIcon icon={createOutline} />
-                            </IonButton>
-                          )}
-
-                          <IonButton
-                            size="large"
-                            slot="icon-only"
-                            fill="clear"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              signOutGuest(guest.id, guest.signOutTime);
-                            }}
-                          >
-                            <IonIcon icon={timeOutline} />
-                          </IonButton>
-                        </IonButtons>
+                          </IonButtons>
+                        </IonItem>
                       </IonCol>
                     </IonRow>
                   </IonGrid>
                 ))}
-                <IonButton shape="round" color={'primary'} fill="solid" onClick={() => handleExport(date)}>
+                <IonButton shape="round" expand="block" color={'primary'} fill="clear" onClick={() => handleExport(date)}>
                   <IonIcon slot="end" icon={shareOutline} />
                   <IonText>Export Guests for {date}</IonText>
                 </IonButton>
