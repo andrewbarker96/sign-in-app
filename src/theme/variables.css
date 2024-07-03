@@ -138,15 +138,6 @@ http://ionicframework.com/docs/theming/ */
   padding:5%;
 }
 
-.main-content {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-content: space-between;
-  background-color: white;
-  padding: 2.5%;
-}
-
 .form{
   padding-left: 25%;
   padding-right: 25%;
@@ -160,13 +151,6 @@ http://ionicframework.com/docs/theming/ */
 
 }
 
-.StockLogo{
-  padding:10%;
-  width:fill;
-  max-width: 500px;
-  margin:auto;
-}
-
 .searchbar{
   background-color: var(--ion-color-primary-contrast);
 }
@@ -178,6 +162,8 @@ http://ionicframework.com/docs/theming/ */
 
 ion-button{
   height:50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 ion-input{
@@ -185,6 +171,12 @@ ion-input{
   border-radius: 10px;
   padding-left: 5px;
   text-indent: 10px;
+  margin-top: 30px;
+}
+
+ion-item{
+  margin: 0px;
+  padding: 0px;
 }
 
 

@@ -118,16 +118,10 @@ const TopMenu: React.FC = () => {
         </IonContent>
       </IonMenu>
 
-      <IonPage id="main-content">
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton color={'medium'} />
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent />
-      </IonPage>
+
+      <IonButtons slot="start" id='main-content'>
+        <IonMenuButton color={'medium'} />
+      </IonButtons>
     </>
   );
 };
