@@ -7,8 +7,10 @@ import { arrowBack, arrowBackCircle, close } from 'ionicons/icons';
 import TopMenu from '../components/TopMenu';
 import GoBackOption from '../components/backButton';
 import { useHistory } from 'react-router';
+import { first } from 'lodash';
 
 const SignInPage: React.FC = () => {
+  const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -24,10 +26,10 @@ const SignInPage: React.FC = () => {
 
   const handleFormSubmit = async () => {
     try {
-      if (firstName && lastName && email && company) {
+      if (name && email && company) {
         const docRef = await addDoc(collection(firestore, `guests`), {
-          firstName: firstName,
-          lastName: lastName,
+          firstName: name.split(' ')[0],
+          lastName: name.split(' ')[1],
           email: email,
           company: company,
           date: `${date}`,
@@ -37,14 +39,16 @@ const SignInPage: React.FC = () => {
         });
         console.log('Document written with ID: ', docRef.id);
         setSuccess(true);
-        setFirstName('');
-        setLastName('');
+        setName('');
         setEmail('');
         setCompany('');
+        alert('You have been successfully signed in!');
+        window.location.href = '/home';
+
       } else {
         setError(true);
+        alert('Unable to sign you in. Ensure all fields are filled out.');
       }
-
     } catch (error) {
       console.error('Error writing document: ', error);
       setError(true);
@@ -70,55 +74,39 @@ const SignInPage: React.FC = () => {
 
         <IonItem>
           <IonInput
-            id='FirstName'
+            id='name'
             type='text'
             fill='outline'
-
             labelPlacement='floating'
-            label='First Name'
-            placeholder='ex. John'
-            value={firstName}
+            placeholder='ex. John Doe'
+            value={name}
             autoCapitalize={'on'}
-            autoCorrect='on'
+            autoCorrect='words'
             autofocus={true}
             clearInput={true}
             clearInputIcon={close}
-            onIonChange={e => setFirstName(e.detail.value || '')}
-          />
-        </IonItem>
-        <IonItem>
-          <IonInput
-            fill='outline'
-            id='LastName'
-            type='text'
-            labelPlacement='floating'
-            label='Last Name'
             required={true}
-            placeholder='ex. Doe'
-            autoCapitalize='on'
-            value={lastName}
-            clearOnEdit={true}
-            clearInput={true}
-            clearInputIcon={close}
-            onIonChange={e => setLastName(e.detail.value || '')}
-          />
+            onIonChange={e => setName(e.detail.value || '')}
+          >
+            <IonLabel slot='label'>Name<IonText color={'danger'}>*</IonText></IonLabel>
+          </IonInput>
         </IonItem>
         <IonItem>
           <IonInput
             id='email'
             type='email'
             fill='outline'
-            required={false}
             labelPlacement='floating'
-            label='Email'
             placeholder='ex. johndoe@company.com'
-            autoCapitalize='on'
+            required={true}
             clearOnEdit={true}
             clearInput={true}
             clearInputIcon={close}
             value={email}
             onIonChange={e => setEmail(e.detail.value || '')}
-          />
+          >
+            <IonLabel slot='label' >Email<IonText color={'danger'}>*</IonText></IonLabel>
+          </IonInput>
         </IonItem>
         <IonItem>
           <IonInput
@@ -126,23 +114,23 @@ const SignInPage: React.FC = () => {
             type='text'
             fill='outline'
             labelPlacement='floating'
-            label='Company'
             placeholder='ex. Stock & Associates'
             autoCapitalize='on'
-            required={false}
             value={company}
             clearOnEdit={true}
             clearInput={true}
             clearInputIcon={close}
             onIonChange={e => setCompany(e.detail.value || '')}
-          />
+          >
+            <IonLabel slot='label' >Company <IonText color={'danger'}>*</IonText></IonLabel>
+          </IonInput>
         </IonItem>
         <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
           Sign In
         </IonButton>
 
-        <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={3000} />
-        <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={3000} />
+        <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={5000} />
+        <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={5000} />
 
       </IonContent>
     </IonPage>

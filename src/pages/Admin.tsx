@@ -37,6 +37,7 @@ import {
   arrowUp,
   arrowDown,
   filter,
+  trashBinOutline,
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
@@ -66,6 +67,19 @@ export default function AdminPage() {
 
     fetchGuestData();
   }, []);
+
+  const deleteGuestData = async (id: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this guest?");
+    if (confirmDelete) {
+      try {
+        await deleteDoc(doc(firestore, "guests", id));
+        setGuestData(guestData.filter((guest) => guest.id !== id));
+        console.log("Guest Deleted:", id);
+      } catch (error) {
+        console.error("Error deleting guest:", error);
+      }
+    }
+  };
 
   // Update a guest's information and store it in Firestore
   const handleGuestUpdate = async (id: string, field: string, value: string) => {
@@ -165,7 +179,7 @@ export default function AdminPage() {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent className="ion-padding">
 
         {/* Guest Entries Sorted by Date then Time */}
         <IonAccordionGroup>
@@ -253,7 +267,7 @@ export default function AdminPage() {
                           </IonText>
                         </IonList>
                       </IonCol>
-                      <IonCol size="1">
+                      <IonCol size="2">
                         <IonItem lines="none">
                           <IonButtons slot="end">
                             {editingGuestId === guest.id ? (
@@ -294,6 +308,14 @@ export default function AdminPage() {
                               }}
                             >
                               <IonIcon icon={timeOutline} />
+                            </IonButton>
+                            <IonButton
+                              size="large"
+                              slot="icon-only"
+                              fill="clear"
+                              onClick={deleteGuestData.bind(null, guest.id)}
+                            >
+                              <IonIcon icon={trashBinOutline} />
                             </IonButton>
                           </IonButtons>
                         </IonItem>
