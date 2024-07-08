@@ -26,7 +26,7 @@ const SignInPage: React.FC = () => {
 
   const handleFormSubmit = async () => {
     try {
-      if (name && email && company) {
+      if (name && email) {
         const docRef = await addDoc(collection(firestore, `guests`), {
           firstName: name.split(' ')[0],
           lastName: name.split(' ')[1],
@@ -42,12 +42,12 @@ const SignInPage: React.FC = () => {
         setName('');
         setEmail('');
         setCompany('');
-        alert('You have been successfully signed in!');
+        alert('You have been successfully signed in!\nWelcome to Stock & Associates!');
         window.location.href = '/home';
 
       } else {
         setError(true);
-        alert('Unable to sign you in. Ensure all fields are filled out.');
+        alert('Unable to sign you in. Ensure name * email fields are filled out.');
       }
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -88,7 +88,7 @@ const SignInPage: React.FC = () => {
             required={true}
             onIonChange={e => setName(e.detail.value || '')}
           >
-            <IonLabel slot='label'>Name<IonText color={'danger'}>*</IonText></IonLabel>
+            <IonLabel slot='label'>Name <IonText color={'danger'}>*</IonText></IonLabel>
           </IonInput>
         </IonItem>
         <IonItem>
@@ -105,7 +105,7 @@ const SignInPage: React.FC = () => {
             value={email}
             onIonChange={e => setEmail(e.detail.value || '')}
           >
-            <IonLabel slot='label' >Email<IonText color={'danger'}>*</IonText></IonLabel>
+            <IonLabel slot='label' >Email <IonText color={'danger'}>*</IonText></IonLabel>
           </IonInput>
         </IonItem>
         <IonItem>
@@ -122,7 +122,7 @@ const SignInPage: React.FC = () => {
             clearInputIcon={close}
             onIonChange={e => setCompany(e.detail.value || '')}
           >
-            <IonLabel slot='label' >Company <IonText color={'danger'}>*</IonText></IonLabel>
+            <IonLabel slot='label' >Company</IonLabel>
           </IonInput>
         </IonItem>
         <IonButton id='signIn' expand='block' onClick={handleFormSubmit}>
