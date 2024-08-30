@@ -51,9 +51,9 @@ const HomePage: React.FC = () => {
 
       <IonContent className='ion-padding ion-text-center'>
         <div className="form">
-          <IonButton routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
-          <IonButton id='openSignOutModal' fill='outline' color={'primary'} expand="block" onClick={() => setSignOutModal(true)} >Guest Sign Out</IonButton>
-          <IonButton fill='clear' expand='block' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
+          <IonButton shape='round' routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
+          <IonButton shape='round' id='openSignOutModal' fill='outline' color={'primary'} expand="block" onClick={() => setSignOutModal(true)} >Guest Sign Out</IonButton>
+          <IonButton shape='round' fill='clear' expand='block' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
         </div>
       </IonContent>
 

@@ -54,7 +54,7 @@ const TopMenu: React.FC = () => {
   return (
     <>
       <IonMenu contentId="main-content">
-        <IonHeader>
+        <IonHeader className='ion-border-none'>
           <IonToolbar>
             <IonButtons slot="start">
               <IonMenuButton color={'medium'}>
