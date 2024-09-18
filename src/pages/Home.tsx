@@ -1,7 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonText, IonCardContent, IonButton, IonModal, IonIcon, IonButtons, IonCol, IonRow, IonGrid, IonItem, IonAlert, IonSelect, IonRouterLink } from '@ionic/react';
 import SignInForm from './SignIn';
 import { useState } from 'react';
-import './Home.css'
 import { close, logOut, logOutOutline } from 'ionicons/icons';
 import { set } from 'lodash';
 import SignOut from '../components/Forms/SignoutForm';
@@ -18,34 +17,10 @@ const HomePage: React.FC = () => {
     return role !== 'gesture';
   }
 
-  const handleLogout = async () => {
-    try {
-      <IonAlert>
-        <IonText>Are you sure you want to sign out?</IonText>
-        <IonSelect>
-          <IonButton onClick={() => setSignOutModal(false)}>Cancel</IonButton>
-          <IonButton onClick={() => signOut(auth)}>Sign Out</IonButton>
-        </IonSelect>
-      </IonAlert>
-      await signOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  }
-
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <TopMenu />
-          <IonTitle>Stock & Associates</IonTitle>
-          <IonButtons slot='end'>
-            <IonButton onClick={handleLogout}>
-              <IonIcon icon={logOutOutline} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
+      <IonHeader className="ion-no-border">
       </IonHeader>
       <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px', marginTop: '5%' }} />
 
@@ -71,7 +46,6 @@ const HomePage: React.FC = () => {
         </IonHeader>
         <SignOut />
       </IonModal>
-
     </IonPage>
   );
 };

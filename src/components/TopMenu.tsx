@@ -13,15 +13,18 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { logOutOutline, close, calendarOutline, shieldHalf, home, personAdd } from 'ionicons/icons';
+import { logOutOutline, close, calendarOutline, shieldHalf, home, personAdd, logOut, exit } from 'ionicons/icons';
 import Copyright from './CopyrightText';
 import { adminAuth, auth } from '../util/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { TopMenuButton } from './TopMenuButton';
+import { useHistory } from 'react-router';
 
 const TopMenu: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [authUser, setAuthUser] = useState(false);
   const [adminUser, setAdminUser] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,7 +48,7 @@ const TopMenu: React.FC = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      window.location.href = '/';
+      history.push('/');
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -53,66 +56,20 @@ const TopMenu: React.FC = () => {
 
   return (
     <>
-      <IonMenu contentId="main-content">
-        <IonHeader className='ion-border-none'>
+      <IonMenu contentId="main-content" swipeGesture={true}>
           <IonToolbar>
             <IonButtons slot="start">
               <IonMenuButton color={'medium'}>
                 <IonIcon icon={close} />
               </IonMenuButton>
             </IonButtons>
-            <IonTitle>Menu</IonTitle>
+            <IonTitle>Stock & Associates</IonTitle>
           </IonToolbar>
-        </IonHeader>
+        
         <IonContent className="ion-padding">
-          <IonButtons className='top-menu-button'>
-            <IonButton
-              fill="clear"
-              expand="full"
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              onClick={() => window.location.href = '/'}
-              slot='start'
-            >
-              <IonIcon slot="start" icon={home} style={{ marginRight: '10px' }} />
-              <IonText>Home</IonText>
-            </IonButton>
-          </IonButtons>
-          {adminUser && (
-            <IonButtons className='top-menu-button'>
-              <IonButton
-                fill="clear"
-                expand="block"
-                style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                onClick={() => window.location.href = '/admin'}
-              >
-                <IonIcon slot="start" icon={shieldHalf} style={{ marginRight: '10px' }} />
-                <IonText>Admin Portal</IonText>
-              </IonButton>
-            </IonButtons>
-          )}
-          {/* <IonButtons className='top-menu-button'>
-            <IonButton
-              fill="clear"
-              expand="block"
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              onClick={() => window.location.href = '/calendar'}
-            >
-              <IonIcon slot="start" icon={calendarOutline} style={{ marginRight: '10px' }} />
-              <IonText>Set up Meeting</IonText>
-            </IonButton>
-          </IonButtons>
-          <IonButtons className='top-menu-button'>
-            <IonButton
-              id='open-loading'
-              fill="clear"
-              expand="block"
-              onClick={handleLogout}
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            >
-              <IonIcon slot="start" icon={logOutOutline} style={{ marginRight: '10px' }} />
-              <IonText>Logout</IonText>
-            </IonButton>
-          </IonButtons> */}
+          <TopMenuButton icon={home} text='Meeting Sign In' routerLink='/home' />
+          <TopMenuButton icon={shieldHalf} text='Admin Portal' routerLink='/admin' />
+          <TopMenuButton icon={close} color='danger' text='Log Out Application' onClick={handleLogout} />
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />
         </IonContent>

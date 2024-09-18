@@ -11,19 +11,8 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 defineCustomElements(window);
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    root.render(
-      <React.StrictMode>
-        <TopMenu />
-        <App />
-      </React.StrictMode>
-    );
-  } else {
-    root.render(
-      <React.StrictMode>
-        <LoginPage />
-      </React.StrictMode>
-    );
-  }
-});
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)

@@ -23,6 +23,7 @@ const SignInPage: React.FC = () => {
   const date = (new Date().getMonth() + 1) + '-' + (new Date().getDate()) + '-' + new Date().getFullYear();
 
   const keyboard = Keyboard;
+  const history = useHistory();
 
   const handleFormSubmit = async () => {
     try {
@@ -43,11 +44,11 @@ const SignInPage: React.FC = () => {
         setEmail('');
         setCompany('');
         alert('You have been successfully signed in!\nWelcome to Stock & Associates!');
-        window.location.href = '/home';
+        history.push('/home');
 
       } else {
         setError(true);
-        alert('Unable to sign you in. Ensure name * email fields are filled out.');
+        alert('Unable to sign you in. Ensure name & email fields are filled out.');
       }
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -57,7 +58,7 @@ const SignInPage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className="ion-no-border">
         <IonToolbar>
           <GoBackOption />
           <IonTitle>Sign In</IonTitle>
@@ -86,7 +87,7 @@ const SignInPage: React.FC = () => {
             clearInput={true}
             clearInputIcon={close}
             required={true}
-            onIonChange={e => setName(e.detail.value || '')}
+            onIonInput={e => setName(e.detail.value || '')}
           >
             <IonLabel slot='label'>Name <IonText color={'danger'}>*</IonText></IonLabel>
           </IonInput>
@@ -99,11 +100,10 @@ const SignInPage: React.FC = () => {
             labelPlacement='floating'
             placeholder='ex. johndoe@company.com'
             required={true}
-            clearOnEdit={true}
             clearInput={true}
             clearInputIcon={close}
             value={email}
-            onIonChange={e => setEmail(e.detail.value || '')}
+            onIonInput={e => setEmail(e.detail.value || '')}
           >
             <IonLabel slot='label' >Email <IonText color={'danger'}>*</IonText></IonLabel>
           </IonInput>
@@ -117,10 +117,9 @@ const SignInPage: React.FC = () => {
             placeholder='ex. Stock & Associates'
             autoCapitalize='on'
             value={company}
-            clearOnEdit={true}
             clearInput={true}
             clearInputIcon={close}
-            onIonChange={e => setCompany(e.detail.value || '')}
+            onIonInput={e => setCompany(e.detail.value || '')}
           >
             <IonLabel slot='label' >Company</IonLabel>
           </IonInput>
@@ -129,8 +128,8 @@ const SignInPage: React.FC = () => {
           Sign In
         </IonButton>
 
-        <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={5000} />
-        <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={5000} />
+        <IonToast color='danger' isOpen={error} onDidDismiss={() => setError(false)} message='Unable to sign you in. Ensure all fields are filled out.' duration={6500} />
+        <IonToast color='success' isOpen={success} onDidDismiss={() => setSuccess(false)} message='You have been successfully signed in!' duration={6500} />
 
       </IonContent>
     </IonPage>

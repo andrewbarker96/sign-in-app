@@ -1,4 +1,4 @@
-import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar, IonHeader, IonContent, IonButtons, IonIcon, IonButton } from '@ionic/react';
+import { IonApp, IonToolbar, IonTabs, IonRouterOutlet, IonTabBar, IonHeader, IonContent, IonButtons, IonIcon, IonButton, IonMenu } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -69,35 +69,22 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonContent className='main-content'>
           {authUser ? (
-            <IonTabs>
-              <IonRouterOutlet>
-                <Redirect exact path="/" to="/home" />
-                <Route exact path="/home" component={HomePage} />
-                <Route exact path="/Admin">
-                  {adminUser ? <AdminPage /> : <Redirect to="/home" />}
-                </Route>
-                <Route exact path="/sign-in" component={SignInPage} />
-                <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
-              </IonRouterOutlet>
-              <IonTabBar slot={'bottom'}>
-                {/* <IonTabButton tab="tab1" href="/home">
-              <IonIcon aria-hidden="true" icon={home} />
-              <IonLabel>Home</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab2" href="/signin">
-              <IonIcon aria-hidden="true" icon={pencil} />
-              <IonLabel>Sign In</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/employees">
-              <IonIcon aria-hidden="true" icon={person} />
-              <IonLabel>Personnel</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab4" href="/contacts">
-              <IonIcon aria-hidden="true" icon={people} />
-              <IonLabel>Contacts</IonLabel>
-            </IonTabButton> */}
-              </IonTabBar>
-            </IonTabs>
+            <>
+              <TopMenu />
+              <IonTabs>
+                <IonRouterOutlet>
+                  <Redirect exact path="/" to="/home" />
+                  <Route exact path="/home" component={HomePage} />
+                  <Route exact path="/Admin">
+                    {adminUser ? <AdminPage /> : <Redirect to="/home" />}
+                  </Route>
+                  <Route exact path="/sign-in" component={SignInPage} />
+                  <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
+                </IonRouterOutlet>
+                <IonTabBar slot={'bottom'}>
+                </IonTabBar>
+              </IonTabs>
+            </>
           ) : (
             <IonRouterOutlet>
               <Route exact path="/">

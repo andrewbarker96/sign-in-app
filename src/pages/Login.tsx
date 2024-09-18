@@ -27,6 +27,7 @@ import Copyright from '../components/CopyrightText';
 import { IonRefresher } from '@ionic/react';
 import { IonLoading } from '@ionic/react';
 import GoBackOption from '../components/backButton';
+import { login } from '../services/firebase';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -39,21 +40,14 @@ const LoginPage: React.FC = () => {
 
   const auth = getAuth(firebase);
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const uid = user.uid;
-        console.log('User signed in:', user, uid);
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error signing in:', errorCode, errorMessage);
-        setInvalid(true);
-        setPassword('');
-      });
+  const handleLogin = async() => {
+    try {
+      await login(email, password);
+      setSuccess(true);
+    } catch (error) {
+      console.error('Error signing in:', error);
+      setSuccess(false);
+    }
   };
 
   const clickForgotPassword = () => {

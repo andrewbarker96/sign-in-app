@@ -13,7 +13,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className="ion-no-border">
         <IonToolbar>
           <GoBackOption />
           <IonTitle>Privacy Policy</IonTitle>
