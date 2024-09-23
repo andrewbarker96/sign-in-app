@@ -95,7 +95,7 @@ const LoginPage: React.FC = () => {
               label='Email'
               placeholder='Email'
               value={email}
-              onIonChange={e => setEmail(e.detail.value!)}
+              onIonInput={e => setEmail(e.detail.value!)}
             />
           </IonItem>
           <IonItem lines='none'>
@@ -107,7 +107,7 @@ const LoginPage: React.FC = () => {
               labelPlacement='floating'
               placeholder='Enter your Password'
               value={password}
-              onIonChange={e => setPassword(e.detail.value!)}>
+              onIonInput={e => setPassword(e.detail.value!)}>
               <IonInputPasswordToggle slot='end' />
             </IonInput>
           </IonItem>
