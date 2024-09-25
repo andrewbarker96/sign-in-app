@@ -50,7 +50,7 @@ export const guestSignIn = async (
 ) => {
   const date = new Date().toDateString();
   const time = new Date().toLocaleTimeString();
-  const docRef = doc(firestore, "guests", date);
+  const docRef = doc(firestore, "guests", );
   const guestData = {
     name: name,
     email: email,
@@ -58,21 +58,14 @@ export const guestSignIn = async (
     signInTime: time,
     signOutTime: "",
     notes: "",
+    date: date,
   };
   try {
-    await setDoc(
-      docRef,
-      {
-        guestList: {
-          [name]: guestData,
-        },
-      },
-      { merge: true }
-    );
-    console.log("Guest added: ", name);
+    await addDoc(collection(docRef, date), guestData);
+    console.log("Guest signed in");
   } catch (error) {
-    console.error("Error adding guest:", error);
-  }
+    console.error("Error adding document)", error);
+  };
 };
 
 export const fetchGuests = async () => {

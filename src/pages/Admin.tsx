@@ -43,6 +43,7 @@ import {
 import { IonSearchbar } from "@ionic/react";
 import TopMenu from "../components/UI/TopMenu";
 import './Admin.css'
+import { fetchGuests } from "../services/firestoreServices";
 
 export default function AdminPage() {
   const [guestData, setGuestData] = useState<any[]>([]);
@@ -54,32 +55,12 @@ export default function AdminPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
-    const fetchGuestData = async () => {
-      const guestCollection = collection(firestore, "guests");
-      const guestSnapshot = await getDocs(guestCollection);
-      const guests = guestSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log("Guests:", guests);
-      setGuestData(guests);
-    };
-
-    fetchGuestData();
-  }, []);
-
-  const deleteGuestData = async (id: string) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this guest?");
-    if (confirmDelete) {
-      try {
-        await deleteDoc(doc(firestore, "guests", id));
-        setGuestData(guestData.filter((guest) => guest.id !== id));
-        console.log("Guest Deleted:", id);
-      } catch (error) {
-        console.error("Error deleting guest:", error);
-      }
+    try {
+      fetchGuests()
+    } catch (error) {
+      console.error("Error fetching guests:", error);
     }
-  };
+  });
 
   // Update a guest's information and store it in Firestore
   const handleGuestUpdate = async (id: string, field: string, value: string) => {
