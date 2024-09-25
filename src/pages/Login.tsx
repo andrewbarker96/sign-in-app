@@ -23,11 +23,11 @@ import {
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { firebase } from '../util/firebase';
 import { close, eye, eyeOff, send } from 'ionicons/icons';
-import Copyright from '../components/CopyrightText';
+import { Copyright } from '../components/UI/CopyrightText';
 import { IonRefresher } from '@ionic/react';
 import { IonLoading } from '@ionic/react';
-import GoBackOption from '../components/backButton';
-import { login } from '../services/firebase';
+import GoBackOption from '../components/UI/backButton';
+import { login } from '../services/firestoreServices';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
 
   const auth = getAuth(firebase);
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     try {
       await login(email, password);
       setSuccess(true);
@@ -89,7 +89,7 @@ const LoginPage: React.FC = () => {
               label='Email'
               placeholder='Email'
               value={email}
-              onIonChange={e => setEmail(e.detail.value!)}
+              onIonInput={e => setEmail(e.detail.value!)}
             />
           </IonItem>
           <IonItem lines='none'>
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
               labelPlacement='floating'
               placeholder='Enter your Password'
               value={password}
-              onIonChange={e => setPassword(e.detail.value!)}>
+              onIonInput={e => setPassword(e.detail.value!)}>
               <IonInputPasswordToggle slot='end' />
             </IonInput>
           </IonItem>

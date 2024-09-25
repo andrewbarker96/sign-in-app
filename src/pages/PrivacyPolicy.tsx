@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react'
 import { arrowBackCircle } from 'ionicons/icons'
 import React from 'react'
-import GoBackOption from '../components/backButton'
+import GoBackOption from '../components/UI/backButton'
 import { useHistory } from 'react-router-dom'
 
 const PrivacyPolicyPage: React.FC = () => {

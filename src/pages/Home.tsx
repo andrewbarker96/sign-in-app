@@ -2,11 +2,10 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonText, 
 import SignInForm from './SignIn';
 import { useState } from 'react';
 import { close, logOut, logOutOutline } from 'ionicons/icons';
-import { set } from 'lodash';
-import SignOut from '../components/Forms/SignoutForm';
-import TopMenu from '../components/TopMenu';
+import { SignOut } from '../components/Forms/SignoutForm';
 import { signOut } from 'firebase/auth';
 import { auth } from '../util/firebase';
+import { StockButton } from '../components/UI/button';
 
 const HomePage: React.FC = () => {
 
@@ -24,17 +23,15 @@ const HomePage: React.FC = () => {
       </IonHeader>
       <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px', marginTop: '5%' }} />
 
-      <IonContent className='ion-padding ion-text-center'>
-        <div className="form">
-          <IonButton shape='round' routerLink='/sign-in' color={'primary'} expand='block'>Guest Sign In</IonButton>
-          <IonButton shape='round' id='openSignOutModal' fill='outline' color={'primary'} expand="block" onClick={() => setSignOutModal(true)} >Guest Sign Out</IonButton>
-          <IonButton shape='round' fill='clear' expand='block' color={'medium'} routerLink='/privacy-policy'><p>Privacy Policy</p></IonButton>
-        </div>
+      <IonContent className='ion-padding'>
+        <StockButton text='Guest Sign In' routerLink='/sign-in' />
+        <StockButton text='Guest Sign Out' fill='outline' onClick={() => setSignOutModal(true)} />
+        <StockButton text='Privacy Policy' routerLink='/privacy-policy' fill='clear' textColor='medium' />
       </IonContent>
 
       {/* Sign Out Modal */}
       <IonModal trigger='openSignOutModal' canDismiss={canDismiss} isOpen={signOutModal}>
-        <IonHeader>
+        <IonHeader className='ion-no-border'>
           <IonToolbar>
             <IonTitle>Sign Out</IonTitle>
             <IonButtons slot='start'>
@@ -44,7 +41,9 @@ const HomePage: React.FC = () => {
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <SignOut />
+        <IonContent className='ion-padding'>
+          <SignOut />
+        </IonContent>
       </IonModal>
     </IonPage>
   );

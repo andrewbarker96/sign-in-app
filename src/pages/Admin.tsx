@@ -41,7 +41,7 @@ import {
 } from "ionicons/icons";
 import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
-import TopMenu from "../components/TopMenu";
+import TopMenu from "../components/UI/TopMenu";
 import './Admin.css'
 
 export default function AdminPage() {
@@ -184,7 +184,7 @@ export default function AdminPage() {
         {/* Guest Entries Sorted by Date then Time */}
         <IonAccordionGroup>
           {sortedGuestData.map(([date, guests], index) => (
-            <IonAccordion  key={index} value={date} className="accordion">
+            <IonAccordion key={index} value={date} className="accordion">
               <IonItem slot="header" color={'clear'} lines="full">
                 <IonLabel><h2>{date}</h2></IonLabel>
               </IonItem>

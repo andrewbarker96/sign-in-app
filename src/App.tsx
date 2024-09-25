@@ -4,10 +4,9 @@ import { Route, Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './util/firebase'; // Ensure correct path
-import TopMenu from './components/TopMenu';
+import TopMenu from './components/UI/TopMenu';
 import HomePage from './pages/Home';
 import SplashScreen from '@capacitor/splash-screen';
-import { useMediaQuery } from 'react-responsive';
 import { setupIonicReact } from '@ionic/react';
 import LoginPage from './pages/Login';
 import AdminPage from './pages/Admin';
@@ -34,6 +33,7 @@ import './theme/variables.css';
 import SignInPage from './pages/SignIn';
 import { logOut, logOutOutline } from 'ionicons/icons';
 import PrivacyPolicyPage from './pages/PrivacyPolicy';
+import { QRcode } from './pages/QRcode';
 
 setupIonicReact();
 
@@ -60,40 +60,32 @@ const App: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const screenSize = useMediaQuery({
-    query: '(min-device-width: 1000px)'
-  });
-
   return (
-    <IonApp>
+    <IonApp className="main">
       <IonReactRouter>
-        <IonContent className='main-content'>
-          {authUser ? (
-            <>
-              <TopMenu />
-              <IonTabs>
-                <IonRouterOutlet>
-                  <Redirect exact path="/" to="/home" />
-                  <Route exact path="/home" component={HomePage} />
-                  <Route exact path="/Admin">
-                    {adminUser ? <AdminPage /> : <Redirect to="/home" />}
-                  </Route>
-                  <Route exact path="/sign-in" component={SignInPage} />
-                  <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
-                </IonRouterOutlet>
-                <IonTabBar slot={'bottom'}>
-                </IonTabBar>
-              </IonTabs>
-            </>
-          ) : (
-            <IonRouterOutlet>
-              <Route exact path="/">
-                <LoginPage />
-              </Route>
-            </IonRouterOutlet>
-          )}
-        </IonContent>
-
+        {authUser ? (
+          <>
+            <TopMenu />
+            <IonTabs>
+              <IonRouterOutlet id='main'>
+                <Redirect exact path="/" to="/home" />
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/Admin">
+                  {adminUser ? <AdminPage /> : <Redirect to="/home" />}
+                </Route>
+                <Route exact path="/QR" component={QRcode} />
+                <Route exact path="/sign-in" component={SignInPage} />
+                <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
+              </IonRouterOutlet>
+              <IonTabBar slot={'bottom'}>
+              </IonTabBar>
+            </IonTabs>
+          </>
+        ) : (
+          <IonRouterOutlet>
+            <Route exact path="/" component={LoginPage} />
+          </IonRouterOutlet>
+        )}
       </IonReactRouter>
     </IonApp>
   );

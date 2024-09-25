@@ -13,11 +13,11 @@ import {
   IonText,
   IonLoading,
 } from '@ionic/react';
-import { logOutOutline, close, calendarOutline, shieldHalf, home, personAdd, logOut, exit } from 'ionicons/icons';
-import Copyright from './CopyrightText';
-import { adminAuth, auth } from '../util/firebase';
+import { logOutOutline, close, calendarOutline, shieldHalf, home, personAdd, logOut, exit, qrCode } from 'ionicons/icons';
+import { Copyright } from './CopyrightText';
+import { adminAuth, auth } from '../../util/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { TopMenuButton } from './TopMenuButton';
+import { TopMenuButton } from '../TopMenuButton';
 import { useHistory } from 'react-router';
 
 const TopMenu: React.FC = () => {
@@ -56,19 +56,20 @@ const TopMenu: React.FC = () => {
 
   return (
     <>
-      <IonMenu contentId="main-content" swipeGesture={true}>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton color={'medium'}>
-                <IonIcon icon={close} />
-              </IonMenuButton>
-            </IonButtons>
-            <IonTitle>Stock & Associates</IonTitle>
-          </IonToolbar>
-        
+      <IonMenu contentId="main" swipeGesture={true}>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton color={'medium'}>
+              <IonIcon icon={close} />
+            </IonMenuButton>
+          </IonButtons>
+          <IonTitle>Stock & Associates</IonTitle>
+        </IonToolbar>
+
         <IonContent className="ion-padding">
           <TopMenuButton icon={home} text='Meeting Sign In' routerLink='/home' />
           <TopMenuButton icon={shieldHalf} text='Admin Portal' routerLink='/admin' />
+          <TopMenuButton icon={qrCode} text='QR Sign In' routerLink='/qr' />
           <TopMenuButton icon={close} color='danger' text='Log Out Application' onClick={handleLogout} />
           <IonLoading className='custom-loading' trigger='open-loading' isOpen={success} onDidDismiss={() => setSuccess(false)} message='Logging Out' duration={2000} />
           <Copyright />

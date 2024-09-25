@@ -4,55 +4,49 @@ import { firestore } from '../util/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { Keyboard } from '@capacitor/keyboard';
 import { arrowBack, arrowBackCircle, close } from 'ionicons/icons';
-import TopMenu from '../components/TopMenu';
-import GoBackOption from '../components/backButton';
+import TopMenu from '../components/UI/TopMenu';
+import GoBackOption from '../components/UI/backButton';
 import { useHistory } from 'react-router';
-import { first } from 'lodash';
+import { guestSignIn } from '../services/firestoreServices';
 
 const SignInPage: React.FC = () => {
   const [name, setName] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
-
-  const hour = new Date().toLocaleTimeString();
-  const date = (new Date().getMonth() + 1) + '-' + (new Date().getDate()) + '-' + new Date().getFullYear();
 
   const keyboard = Keyboard;
   const history = useHistory();
 
+  const getDate = async () => {
+    const month = new Date().getMonth() + 1;
+    const date = new Date().getDate();
+    const year = new Date().getFullYear();
+    return `${month}-${date}-${year}`;
+  }
+
   const handleFormSubmit = async () => {
-    try {
-      if (name && email) {
-        const docRef = await addDoc(collection(firestore, `guests`), {
-          firstName: name.split(' ')[0],
-          lastName: name.split(' ')[1],
-          email: email,
-          company: company,
-          date: `${date}`,
-          signInTime: `${time}`,
-          signOutTime: '',
-          notes: ''
-        });
-        console.log('Document written with ID: ', docRef.id);
+    const date = getDate();
+    const time = new Date().toLocaleTimeString();
+    if (name && email) {
+      try {
+        await guestSignIn(name, email, company);
         setSuccess(true);
         setName('');
         setEmail('');
         setCompany('');
         alert('You have been successfully signed in!\nWelcome to Stock & Associates!');
         history.push('/home');
-
-      } else {
-        setError(true);
-        alert('Unable to sign you in. Ensure name & email fields are filled out.');
       }
-    } catch (error) {
-      console.error('Error writing document: ', error);
+      catch {
+        setError(true);
+        error && alert('Unable to sign you in. Ensure name & email fields are filled out.');
+      }
+    }
+    else {
       setError(true);
+      alert('Unable to sign you in. Ensure name & email fields are filled out.');
     }
   }
 
