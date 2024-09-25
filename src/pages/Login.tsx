@@ -21,7 +21,7 @@ import {
   IonInputPasswordToggle,
 } from '@ionic/react';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { firebase } from '../util/firebase';
+import { auth } from '../util/firebase';
 import { close, eye, eyeOff, send } from 'ionicons/icons';
 import { Copyright } from '../components/UI/CopyrightText';
 import { IonRefresher } from '@ionic/react';
@@ -37,8 +37,6 @@ const LoginPage: React.FC = () => {
   const [invalid, setInvalid] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const auth = getAuth(firebase);
 
   const handleLogin = async () => {
     try {
@@ -68,9 +66,6 @@ const LoginPage: React.FC = () => {
         setEmailVerification('');
       });
   }
-
-
-
 
   return (
     // Main Login Form

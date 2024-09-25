@@ -19,6 +19,6 @@ export const adminAuth = [
   "RmgwiiugPWTEL3YyfJOyro3aq3I2",
 ];
 
-export const firebase = initializeApp(firebaseConfig);
-export const firestore = getFirestore(firebase);
-export const auth = getAuth(firebase);
+export const app = initializeApp(firebaseConfig);
+export const firestore = getFirestore(app);
+export const auth = getAuth(app);

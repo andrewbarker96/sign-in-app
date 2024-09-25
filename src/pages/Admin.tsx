@@ -24,6 +24,7 @@ import {
   IonTitle,
   IonList,
   IonInput,
+  IonMenuButton,
 } from "@ionic/react";
 import {
   close,
@@ -39,7 +40,6 @@ import {
   filter,
   trashBinOutline,
 } from "ionicons/icons";
-import { groupBy } from "lodash";
 import { IonSearchbar } from "@ionic/react";
 import TopMenu from "../components/UI/TopMenu";
 import './Admin.css'
@@ -147,16 +147,11 @@ export default function AdminPage() {
     }
   };
 
-  // Sort guest data by date
-  const sortedGuestData = Object.entries(groupBy(guestData, "date")).sort(([dateA], [dateB]) => {
-    return sortOrder === 'desc' ? new Date(dateA).getTime() - new Date(dateB).getTime() : new Date(dateB).getTime() - new Date(dateA).getTime();
-  });
-
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className="ion-no-border">
         <IonToolbar>
-          <TopMenu />
+          <IonMenuButton slot="start" />
           <IonTitle>Admin Portal</IonTitle>
           <IonButtons slot="end">
             <IonButton
@@ -181,156 +176,7 @@ export default function AdminPage() {
       </IonHeader>
       <IonContent className="ion-padding">
 
-        {/* Guest Entries Sorted by Date then Time */}
-        <IonAccordionGroup>
-          {sortedGuestData.map(([date, guests], index) => (
-            <IonAccordion key={index} value={date} className="accordion">
-              <IonItem slot="header" color={'clear'} lines="full">
-                <IonLabel><h2>{date}</h2></IonLabel>
-              </IonItem>
 
-              {/* Guest Information */}
-              <IonCardContent className="ion-padding" slot="content">
-
-                {guests.map((guest, index) => (
-                  <IonGrid key={index}>
-                    <IonRow>
-                      <IonCol>
-                        <IonList>
-                          <IonText>
-                            <div className="guestName">
-                              {editingGuestId === guest.id ? (
-                                <IonInput
-                                  onClick={(e) => e.stopPropagation()}
-                                  label="First Name"
-                                  labelPlacement="stacked"
-                                  color={"primary"}
-                                  value={guest.firstName}
-                                  onIonChange={(e) => handleGuestUpdate(guest.id, "firstName", e.detail.value!)}
-                                />
-                              ) : (
-                                <h2>{guest.firstName}</h2>
-                              )}
-                              {editingGuestId === guest.id ? (
-                                <IonInput
-                                  onClick={(e) => e.stopPropagation()}
-                                  label="Last Name"
-                                  labelPlacement="stacked"
-                                  color={"primary"}
-                                  value={guest.lastName}
-                                  onIonChange={(e) => handleGuestUpdate(guest.id, "firstName", e.detail.value!)}
-                                />
-                              ) : (
-                                <h2>{guest.lastName} </h2>
-                              )}
-                            </div>
-                          </IonText>
-                          <IonText>
-                            {editingGuestId === guest.id ? (
-                              <IonInput
-                                onClick={(e) => e.stopPropagation()}
-                                label="Company"
-                                labelPlacement="stacked"
-                                color={"primary"}
-                                value={guest.company}
-                                onIonChange={(e) => handleGuestUpdate(guest.id, "company", e.detail.value!)}
-                              />
-                            ) : (
-                              <p>{guest.company}</p>
-                            )}
-                          </IonText>
-                          <IonText color={"medium"}>
-                            {editingGuestId === guest.id ? (
-                              <IonInput
-
-                                onClick={(e) => e.stopPropagation()}
-                                label="Notes"
-                                labelPlacement="stacked"
-                                color={"primary"}
-                                value={guestNotes}
-                                onIonChange={(e) => setGuestNotes(e.detail.value!)}
-                              />
-                            ) : (
-                              <IonText>
-                                <p>{guest.notes}</p>
-                              </IonText>
-                            )}
-                          </IonText>
-                          <IonText color={"primary"}>
-                            <p>{guest.email}</p>
-                          </IonText>
-                          <IonText color={'success'}>
-                            <p>{guest.signInTime}</p>
-                          </IonText>
-                          <IonText color={'danger'}>
-                            <p>{guest.signOutTime}</p>
-                          </IonText>
-                        </IonList>
-                      </IonCol>
-                      <IonCol size="2">
-                        <IonItem lines="none">
-                          <IonButtons slot="end">
-                            {editingGuestId === guest.id ? (
-                              <IonButton
-                                size="large"
-                                slot="icon-only"
-                                fill="clear"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleGuestUpdate(guest.id, "notes", guestNotes || "");
-                                  setEditingGuestId(null);
-                                }}
-                              >
-                                <IonIcon icon={saveOutline} />
-                              </IonButton>
-                            ) : (
-                              <IonButton
-                                size="large"
-                                slot="icon-only"
-                                fill="clear"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setEditingGuestId(guest.id);
-                                  setGuestNotes(guest.notes || "");
-                                }}
-                              >
-                                <IonIcon icon={createOutline} />
-                              </IonButton>
-                            )}
-
-                            <IonButton
-                              size="large"
-                              slot="icon-only"
-                              fill="clear"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                signOutGuest(guest.id, guest.signOutTime);
-                              }}
-                            >
-                              <IonIcon icon={timeOutline} />
-                            </IonButton>
-                            <IonButton
-                              size="large"
-                              slot="icon-only"
-                              fill="clear"
-                              onClick={deleteGuestData.bind(null, guest.id)}
-                            >
-                              <IonIcon icon={trashBinOutline} />
-                            </IonButton>
-                          </IonButtons>
-                        </IonItem>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
-                ))}
-                <IonButton shape="round" expand="block" color={'primary'} fill="clear" onClick={() => handleExport(date)}>
-                  <IonIcon slot="end" icon={shareOutline} />
-                  <IonText>Export Guests for {date}</IonText>
-                </IonButton>
-              </IonCardContent>
-            </IonAccordion>
-          ))}
-        </IonAccordionGroup>
 
         {/* Search Bar Popover */}
         <IonPopover trigger="search-bar">

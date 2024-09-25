@@ -19,10 +19,7 @@ const HomePage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader className="ion-no-border">
-      </IonHeader>
       <IonImg src="https://stockassoc.com/wp-content/uploads/2023/11/Blue.svg" alt="Stock & Associates" style={{ height: '175px', marginTop: '5%' }} />
-
       <IonContent className='ion-padding'>
         <StockButton text='Guest Sign In' routerLink='/sign-in' />
         <StockButton text='Guest Sign Out' fill='outline' onClick={() => setSignOutModal(true)} />
